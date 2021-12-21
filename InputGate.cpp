@@ -2,9 +2,9 @@
 
 // Initialisation des attributs statiques
 const std::regex InputGate::format{ "[a - z]" };
-const std::string InputGate::nomDefaut{ "z" };
+const std::string InputGate::defaultName{ "z" };
 
 // CONSTRUCTEURS
-InputGate::InputGate(const std::string nom) : IOGate{ nom } {
-	this->formaterNom(nom, InputGate::format, InputGate::nomDefaut);
+InputGate::InputGate(const std::string name) : IOGate{ name } {
+	this->checkNameFormating(name, InputGate::format, InputGate::defaultName);
 }

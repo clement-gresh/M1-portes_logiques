@@ -6,11 +6,11 @@
 class OutputGate : public IOGate {
 private:
 	static const std::regex format;
-	static const std::string nomDefaut;
+	static const std::string defaultName;
 
 public:
 	// CONSTRUCTEURS
-	OutputGate(const std::string nom);
+	OutputGate(const std::string name);
 };
 
 #endif

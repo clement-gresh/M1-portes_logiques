@@ -1,7 +1,7 @@
 #include "Gate.hpp"
 
 // CONSTRUCTEURS
-Gate::Gate() : valeur{ false } {
+Gate::Gate() : value{ false } {
 	std::cout << "Construction d'une porte." << std::endl;
 }
 
@@ -16,6 +16,6 @@ Gate::Gate(const Gate* clone) : Gate{} {
 
 
 // ACCESSEURS
-const bool Gate::getValeur() const { return valeur; }
+const bool Gate::getValue() const { return value; }
 
-void Gate::setValeur(const bool valeur) { this->valeur = valeur; }
+void Gate::setValue(const bool value) { this->value = value; }

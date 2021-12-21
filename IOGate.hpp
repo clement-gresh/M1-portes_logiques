@@ -5,21 +5,21 @@
 
 class IOGate : public Gate {
 protected:
-	std::string nom;
+	std::string name;
 
 	// CONSTRUCTEURS
-	IOGate(const std::string nom);
+	IOGate(const std::string name);
 
 	// METHODES
-	void formaterNom(const std::string nom, const std::regex format, const std::string nomDefaut);
+	void checkNameFormating(const std::string name, const std::regex format, const std::string defaultName);
 
 public:
 	// ACCESSEURS
 	// Mise en public de setValeur() pour les portes I/O
-	using Gate::setValeur;
+	using Gate::setValue;
 
-	const std::string getNom() const;
-	void setNom(const std::string nom);
+	const std::string getName() const;
+	void setName(const std::string name);
 };
 
 

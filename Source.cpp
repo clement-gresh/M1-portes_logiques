@@ -19,12 +19,12 @@ int main(int argc, char** argv)
 	OutputGate* testOutput1 = new OutputGate("E");
 	OutputGate* testOutput2 = new OutputGate("zer");
 
-	testInput->setValeur(true);
-	testInput2->setValeur(true);
-	testInput3->getValeur();
+	testInput->setValue(true);
+	testInput2->setValue(true);
+	testInput3->getValue();
 
 	AndGate* and1 = new AndGate(testInput, testInput2);
-	std::cout <<  "La porte AND renvoie : " <<  and1->getValeur() << std::endl;
+	std::cout <<  "La porte AND renvoie : " <<  and1->getValue() << std::endl;
 
 	return 0;
 }

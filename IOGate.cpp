@@ -1,21 +1,21 @@
 #include "IOGate.hpp"
 
-// CONSTRUCTEURS
-IOGate::IOGate(const std::string nom) : Gate{}, nom { nom } {
-	std::cout << "Construction d'une porte entree/sortie : " << nom << std::endl; // debug
+// CONSTRUCTORS
+IOGate::IOGate(const std::string name) : Gate{}, name { name } {
+	std::cout << "Construction d'une porte entree/sortie : " << name << std::endl; // debug
 }
 
 
-// METHODES
-void IOGate::formaterNom(const std::string nom, const std::regex format, const std::string nomDefaut) {
-	if (!std::regex_match(nom, format)) {
-		this->nom = nomDefaut;
-		std::cout << "Attention : le nom \"" << nom << "\" est invalide pour cette porte. Nom donne a la porte : " << nomDefaut << std::endl;
+// METHODS
+void IOGate::checkNameFormating(const std::string name, const std::regex format, const std::string defaultName) {
+	if (!std::regex_match(name, format)) {
+		this->name = defaultName;
+		std::cout << "Attention : le nom \"" << name << "\" est invalide pour cette porte I/O. Nom donne a la porte : " << defaultName << std::endl;
 	}
 }
 
 
 // ACCESSEURS
-const std::string IOGate::getNom() const { return nom; }
+const std::string IOGate::getName() const { return name; }
 
-void IOGate::setNom(const std::string nom) { this->nom = nom; }
+void IOGate::setName(const std::string name) { this->name = name; }

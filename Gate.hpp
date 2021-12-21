@@ -7,18 +7,18 @@
 
 class Gate {
 protected:
-	bool valeur;
+	bool value;
 
-	// CONSTRUCTEURS
+	// CONSTRUCTORS
 	Gate();
 	Gate(const Gate& clone);
 	Gate(const Gate* clone);
 
-	// ACCESSEURS
-	void setValeur(const bool valeur);
+	// ACCESSORS
+	void setValue(const bool value);
 
 public:
-	const bool getValeur() const;
+	const bool getValue() const;
 };
 
 
