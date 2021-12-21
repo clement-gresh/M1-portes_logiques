@@ -6,11 +6,11 @@
 class InputGate : public IOGate {
 private:
 	static const std::regex format;
-	static const std::string defaultName;
+	static const char defaultName;
 
 public:
     // CONSTRUCTORS
-    InputGate(const std::string name);
+    InputGate(const char name);
 
 	// ACCESSORS
 	// setValue() set to public for input gates

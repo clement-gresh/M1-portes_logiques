@@ -1,10 +1,10 @@
 #include "InputGate.hpp"
 
-// Initialisation des attributs statiques
-const std::regex InputGate::format{ "[a - z]" };
-const std::string InputGate::defaultName{ "z" };
+// Initialisation of static attributes
+const std::regex InputGate::format{ "[a-z]" };
+const char InputGate::defaultName{ 'z' };
 
-// CONSTRUCTEURS
-InputGate::InputGate(const std::string name) : IOGate{ name } {
+// CONSTRUCTORS
+InputGate::InputGate(const char name) : IOGate{ name } {
 	this->checkNameFormating(name, InputGate::format, InputGate::defaultName);
 }
