@@ -1,4 +1,5 @@
 #include "InputGate.hpp"
+#include "OutputGate.hpp"
 #include "AndGate.hpp"
 
 #include <regex>
@@ -14,6 +15,9 @@ int main(int argc, char** argv)
 	InputGate& testInput5 = *testInput; //pas de copie
 	InputGate* testInput6 = testInput; //pas de copie
 	*/
+
+	OutputGate* testOutput1 = new OutputGate("E");
+	OutputGate* testOutput2 = new OutputGate("zer");
 
 	testInput->setValeur(true);
 	testInput2->setValeur(true);

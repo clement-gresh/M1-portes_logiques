@@ -1,11 +1,10 @@
 #include "InputGate.hpp"
 
+// Initialisation des attributs statiques
+const std::regex InputGate::format{ "[a - z]" };
+const std::string InputGate::nomDefaut{ "z" };
 
 // CONSTRUCTEURS
 InputGate::InputGate(const std::string nom) : IOGate{ nom } {
-	
-	if (!std::regex_match(nom, std::regex("[a - z]"))) {
-		this->nom = "z";
-		std::cout << "Attention : le nom \"" << nom << "\" est invalide pour une porte d'entree. Nom donne a la porte : \"z\"." << std::endl;
-	}
+	this->formaterNom(nom, InputGate::format, InputGate::nomDefaut);
 }

@@ -10,6 +10,9 @@ protected:
 	// CONSTRUCTEURS
 	IOGate(const std::string nom);
 
+	// METHODES
+	void formaterNom(const std::string nom, const std::regex format, const std::string nomDefaut);
+
 public:
 	// ACCESSEURS
 	// Mise en public de setValeur() pour les portes I/O
@@ -18,5 +21,7 @@ public:
 	const std::string getNom() const;
 	void setNom(const std::string nom);
 };
+
+
 
 #endif
