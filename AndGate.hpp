@@ -1,12 +1,14 @@
 #ifndef AND_GATE
 #define AND_GATE
 
-#include "Gate.hpp"
+#include "LogicalGate.hpp"
 
-class AndGate : public Gate {
+class AndGate : public LogicalGate {
+private:
+	static const bool logicalOperation(const bool input1, const bool input2);
+
 public:
 	AndGate(const Gate* a, const Gate *b);
 };
 
 #endif
-
