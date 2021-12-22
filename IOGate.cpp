@@ -17,5 +17,3 @@ void IOGate::checkNameFormating(const char name, const std::regex format, const 
 
 // ACCESSEURS
 const char IOGate::getName() const { return name; }
-
-void IOGate::setName(const char name) { this->name = name; }

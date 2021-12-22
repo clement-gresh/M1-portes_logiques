@@ -6,8 +6,12 @@ const std::regex OutputGate::format{ "[A-Z]" };
 const char OutputGate::defaultName{ 'Z' };
 
 // CONSTRUCTORS
-OutputGate::OutputGate(const char name, const Gate* gate) : IOGate{ name } {
+OutputGate::OutputGate(const char name, const LogicalGate* gate) : IOGate{ name }, logicalGate{ gate } {
 	this->checkNameFormating(name, OutputGate::format, OutputGate::defaultName);
-
-	this->value = gate->getValue();
 }
+
+void OutputGate::updateValue() {
+	this->value = this->getLogicalGate()->getValue();
+}
+
+const LogicalGate* OutputGate::getLogicalGate() const { return logicalGate; }

@@ -1,20 +1,12 @@
 #include "AndGate.hpp"
 
-const bool AndGate::logicalOperation(const bool input1, const bool input2) {
-	std::cout << "logicalOperation of AndGate" << std::endl;
-	return (input1 && input2);
+// CONSTRUCTORS
+AndGate::AndGate(const Gate* a, const Gate* b) : LogicalGate{a, b} {}
+
+
+// METHODS
+void AndGate::updateValue() {
+	this->setValue(
+		this->getGate1()->getValue() && this->getGate2()->getValue()
+	);
 }
-
-AndGate::AndGate(const Gate* a, const Gate* b) : LogicalGate{a, b, &logicalOperation} {}
-
-
-
-
-
-
-
-
-
-
-
-//const Gate* gate1, const Gate* gate2, const bool (AndGate::*function)(const bool, const bool)

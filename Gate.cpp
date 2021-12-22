@@ -12,7 +12,6 @@ Gate::Gate(const Gate* clone) : Gate{} {
 }
 
 
-
 // ACCESSEURS
 const bool Gate::getValue() const { return value; }
 

@@ -15,11 +15,7 @@ protected:
 
 public:
 	// ACCESSEURS
-	// Mise en public de setValeur() pour les portes I/O
-	using Gate::setValue;
-
 	const char getName() const;
-	void setName(const char name);
 };
 
 

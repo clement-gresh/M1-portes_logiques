@@ -5,7 +5,18 @@
 
 class LogicalGate : public Gate {
 protected:
-	LogicalGate(const Gate* gate1, const Gate* gate2, const bool (*function)(const bool, const bool));
+	const Gate* gate1;
+	const Gate* gate2;
+
+	// CONSTRUCTORS
+	LogicalGate(const Gate* gate1, const Gate* gate2);
+
+
+public:
+	// ACCESSORS
+	const Gate* getGate1() const;
+	const Gate* getGate2() const;
+
 };
 
 #endif

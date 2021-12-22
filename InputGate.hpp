@@ -7,6 +7,7 @@ class InputGate : public IOGate {
 private:
 	static const std::regex format;
 	static const char defaultName;
+	const std::string coucou; //debug
 
 public:
     // CONSTRUCTORS

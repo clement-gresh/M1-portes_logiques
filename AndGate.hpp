@@ -2,13 +2,15 @@
 #define AND_GATE
 
 #include "LogicalGate.hpp"
+#include "UpdateValueInterface.hpp"
 
-class AndGate : public LogicalGate {
-private:
-	static const bool logicalOperation(const bool input1, const bool input2);
-
+class AndGate : public LogicalGate, UpdateValueInterface {
 public:
+	// CONSTRUCTORS
 	AndGate(const Gate* a, const Gate *b);
+
+	// METHODS
+	void updateValue();
 };
 
 #endif
