@@ -10,24 +10,26 @@ void Circuit::addLogicalGate(LogicalGate* const logicalGate) {
 	this->logicalGates.push_back(logicalGate);
 }
 
+/*
 void Circuit::addCircuitGate(Gate* const gate){
 	this->circuitGates.push_back(gate);
 }
+*/
 
 void Circuit::simulateCircuit() {
-	// Reinitialization of the circuit
-	this->circuitGates.clear();
+	// Reinitializing of the circuit
 	for (LogicalGate* logicalGate : this->getLogicalGates()) {
 		logicalGate->setAlreadyUpdated(false);
 	}
 
-	// Adding the inputs to the circuit
+	// Assigning a value to each input
 	for (InputGate* gate : this->getInputGates()) {
-		std::cout << "Value of Gate \"" << gate->getName() << "\" (true / false)" << std::endl;
+		std::cout << "Please enter the value of Gate \"" << gate->getName() << "\" (0 / 1)" << std::endl;
+
 		bool newValue;
 		std::cin >> newValue;
+		std::cout << std::endl;
 		gate->setValue(newValue);
-		this->addCircuitGate(gate);
 	}
 
 	bool circuitCompleted = false;
@@ -41,7 +43,7 @@ void Circuit::simulateCircuit() {
 				bool canBeUpdated = true;
 
 				for (Gate* input : logicalGate->getGates()) {
-					if (std::find(this->getCircuitGates().begin(), this->getCircuitGates().end(), input) == this->getCircuitGates().end()) {
+					if (!input->getAlreadyUpdated()) {
 						canBeUpdated = false;
 						circuitCompleted = false;
 					}
@@ -50,26 +52,22 @@ void Circuit::simulateCircuit() {
 				if (canBeUpdated) {
 					logicalGate->updateValue();
 					logicalGate->setAlreadyUpdated(true);
-					this->addCircuitGate(logicalGate);
 
 					std::cout << "Value of Gate \"" << logicalGate->getType() << "\" : " << logicalGate->getValue();
-					std::cout << ". Press enter to update the next gate." << std::endl;
+					std::cout << ". Press any key then enter to update the next gate.";
 
 					std::string anyKey;
 					std::cin >> anyKey;
+					std::cout << std::endl;
 				}
 			}
 		}
 	}
 
-
-	/*
-	for (LogicalGate* logicalGate : this->getLogicalGates()) {
-		for (Gate* input : logicalGate->getGates()) {
-			if(input->getType() == GateType::INPUT) {}
-		}
+	for (OutputGate* gate : this->getOutputGates()) {
+		gate->updateValue();
+		std::cout << "The value of the Output Gate \"" << gate->getName() << "\"  is : " << gate->getValue() << std::endl;
 	}
-	*/
 
 	/* // debug : option 1
 	for (OutputGate* outputGate : this->getOutputGates()) {
@@ -108,4 +106,4 @@ const std::vector<LogicalGate*>& Circuit::getLogicalGates() const { return this-
 
 const std::vector<OutputGate*>& Circuit::getOutputGates() const { return this->outputGates; }
 
-const std::vector<Gate*>& Circuit::getCircuitGates() const { return this->circuitGates; }
+//const std::vector<Gate*>& Circuit::getCircuitGates() const { return this->circuitGates; }

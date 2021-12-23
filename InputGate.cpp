@@ -8,4 +8,5 @@ const char InputGate::defaultName{ 'z' };
 InputGate::InputGate(const char name) : IOGate{ name } {
 	this->type = GateType::INPUT;
 	this->checkNameFormating(name, InputGate::format, InputGate::defaultName);
+	this->alreadyUpdated = true;
 }

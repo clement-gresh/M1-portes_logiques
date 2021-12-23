@@ -1,9 +1,7 @@
 #include "IOGate.hpp"
 
 // CONSTRUCTORS
-IOGate::IOGate(const char name) : Gate{}, name { name } {
-	std::cout << "Construction d'une porte entree/sortie : " << name << std::endl; // debug
-}
+IOGate::IOGate(const char name) : Gate{}, name { name } {}
 
 // METHODS
 void IOGate::checkNameFormating(const char name, const std::regex format, const char defaultName) {

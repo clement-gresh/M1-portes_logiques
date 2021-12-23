@@ -11,6 +11,7 @@ class Gate {
 protected:
 	bool value;
 	GateType type;
+	bool alreadyUpdated;
 
 	// CONSTRUCTORS
 	Gate();
@@ -23,6 +24,9 @@ protected:
 public:
 	const bool getValue() const;
 	const GateType getType() const;
+	const bool getAlreadyUpdated() const;
+
+	void setAlreadyUpdated(const bool alreadyUpdated);
 };
 
 
