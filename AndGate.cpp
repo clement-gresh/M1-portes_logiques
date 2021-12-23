@@ -1,7 +1,9 @@
 #include "AndGate.hpp"
 
 // CONSTRUCTORS
-AndGate::AndGate(Gate* const a, Gate* const b) : LogicalGate{ {a, b} } {}
+AndGate::AndGate(Gate* const a, Gate* const b) : LogicalGate{ {a, b} } {
+	this->type = GateType::AND;
+}
 
 
 // METHODS

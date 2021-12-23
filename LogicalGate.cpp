@@ -2,11 +2,15 @@
 
 
 // CONSTRUCTORS
-LogicalGate::LogicalGate(const std::vector<Gate*> gates) : Gate{}, gates{ gates } {}
+LogicalGate::LogicalGate(const std::vector<Gate*> gates) : Gate{}, gates{ gates }, alreadyUpdated{ false } {}
 
 
 // ACCESSORS
 const std::vector<Gate*> LogicalGate::getGates() const { return this->gates; }
+
+const bool LogicalGate::getAlreadyUpdated() const { return this->alreadyUpdated; }
+
+void LogicalGate::setAlreadyUpdated(const bool alreadyUpdated) { this->alreadyUpdated = alreadyUpdated; }
 
 
 

@@ -1,13 +1,16 @@
 #ifndef GATE
 #define GATE
 
+#include "GateType.hpp"
+
 #include <string>
-#include <iostream>
 #include <regex>
+
 
 class Gate {
 protected:
 	bool value;
+	GateType type;
 
 	// CONSTRUCTORS
 	Gate();
@@ -19,6 +22,7 @@ protected:
 
 public:
 	const bool getValue() const;
+	const GateType getType() const;
 };
 
 

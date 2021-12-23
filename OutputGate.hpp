@@ -9,18 +9,18 @@ class OutputGate : public IOGate, UpdateValueInterface {
 private:
 	static const std::regex format;
 	static const char defaultName;
-	const LogicalGate* logicalGate;
+	LogicalGate* const logicalGate;
 
 
 public:
 	// CONSTRUCTORS
-	OutputGate(const char name, const LogicalGate* gate);
+	OutputGate(const char name, LogicalGate* const gate);
 
 	// METHODS
 	virtual void updateValue();
 
 	// ACCESSORS
-	const LogicalGate* getLogicalGate() const;
+	LogicalGate* const getLogicalGate() const;
 
 };
 

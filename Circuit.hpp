@@ -11,6 +11,7 @@ private:
 	std::vector<InputGate*> inputGates;
 	std::vector<LogicalGate*> logicalGates;
 	std::vector<OutputGate*> outputGates;
+    std::vector<Gate*> circuitGates; // Debug : ajouter accessors ?  // debug : option 1
 
 
 public:
@@ -18,13 +19,17 @@ public:
     Circuit(std::vector<InputGate*>& inputGates, std::vector<LogicalGate*> logicalGates, std::vector<OutputGate*> outputGates);
 
     // METHODS
-    void addLogicalGate(LogicalGate* logicalGate);
+    void addLogicalGate(LogicalGate* const logicalGate);
+    // debugg : ajouter addInputGate, addOutputGate et les remove pour les 3;
+    void addCircuitGate(Gate* const gate);
     void simulateCircuit();
+    // void nextGate(LogicalGate* const gate); // debug : option 1
 
     // ACCESSORS
     const std::vector<InputGate*>& getInputGates() const;
     const std::vector<LogicalGate*>& getLogicalGates() const;
     const std::vector<OutputGate*>& getOutputGates() const;
+    const std::vector<Gate*>& getCircuitGates() const;
 };
 
 #endif

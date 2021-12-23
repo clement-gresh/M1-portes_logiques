@@ -36,17 +36,12 @@ int main(int argc, char** argv)
 	std::vector<InputGate*> inputGates = { a, b };
 	std::vector<LogicalGate*> logicalGates = { orr, and1 };
 	std::vector<OutputGate*> outputGates = { A, B };
-
-	orr->updateValue();
 	
 	Circuit* circuit1 = new Circuit(inputGates, logicalGates, outputGates);
 
 	circuit1->addLogicalGate(and2);
 
-	std::cout << "Le circuit contient : " << std::endl;
-	for (LogicalGate* lgate : circuit1->getLogicalGates()) {
-		std::cout << "une porte AND : " << lgate->getValue() << std::endl;
-	}
+	circuit1->simulateCircuit();
 
 	return 0;
 }

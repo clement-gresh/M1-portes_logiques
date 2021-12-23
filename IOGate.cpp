@@ -5,7 +5,6 @@ IOGate::IOGate(const char name) : Gate{}, name { name } {
 	std::cout << "Construction d'une porte entree/sortie : " << name << std::endl; // debug
 }
 
-
 // METHODS
 void IOGate::checkNameFormating(const char name, const std::regex format, const char defaultName) {
 	if (!std::regex_match(&name, format)) {
