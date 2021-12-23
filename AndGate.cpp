@@ -1,12 +1,12 @@
 #include "AndGate.hpp"
 
 // CONSTRUCTORS
-AndGate::AndGate(const Gate* a, const Gate* b) : LogicalGate{a, b} {}
+AndGate::AndGate(Gate* const a, Gate* const b) : LogicalGate{ {a, b} } {}
 
 
 // METHODS
 void AndGate::updateValue() {
 	this->setValue(
-		this->getGate1()->getValue() && this->getGate2()->getValue()
+		this->getGates().at(0)->getValue() && this->getGates().at(1)->getValue()
 	);
 }

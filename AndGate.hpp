@@ -7,7 +7,8 @@
 class AndGate : public LogicalGate, UpdateValueInterface {
 public:
 	// CONSTRUCTORS
-	AndGate(const Gate* a, const Gate *b);
+	AndGate(Gate* const a, Gate* const b);
+
 
 	// METHODS
 	void updateValue();

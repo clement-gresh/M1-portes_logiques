@@ -5,17 +5,20 @@
 
 class LogicalGate : public Gate {
 protected:
-	const Gate* gate1;
-	const Gate* gate2;
+	const std::vector<Gate*> gates;
+	//const Gate* gate1;
+	//const Gate* gate2;
 
 	// CONSTRUCTORS
-	LogicalGate(const Gate* gate1, const Gate* gate2);
+	LogicalGate(const std::vector<Gate*> gates);
+	//LogicalGate(const Gate* gate1, const Gate* gate2);
 
 
 public:
 	// ACCESSORS
-	const Gate* getGate1() const;
-	const Gate* getGate2() const;
+	const std::vector<Gate*> getGates() const;
+	//const Gate* getGate1() const;
+	//const Gate* getGate2() const;
 
 };
 

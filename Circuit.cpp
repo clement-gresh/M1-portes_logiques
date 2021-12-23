@@ -11,8 +11,8 @@ void Circuit::addLogicalGate(LogicalGate* logicalGate) {
 }
 
 void Circuit::simulateCircuit() {
-	for (OutputGate* ogate : this->getOutputGates()) {
-		break; //debug
+	for (OutputGate* outputGate : this->getOutputGates()) {
+		outputGate->getLogicalGate();
 	}
 }
 
