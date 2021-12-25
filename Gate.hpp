@@ -12,6 +12,8 @@ protected:
 	bool value;
 	GateType type;
 	bool alreadyUpdated;
+	int gateLevel;
+	int gateDepth;
 
 	// CONSTRUCTORS
 	Gate();
@@ -25,8 +27,12 @@ public:
 	const bool getValue() const;
 	const GateType getType() const;
 	const bool getAlreadyUpdated() const;
+	const int getGateLevel() const;
+	const int getGateDepth() const;
 
 	void setAlreadyUpdated(const bool alreadyUpdated);
+	void setGateLevel(const int level);
+	void setGateDepth(const int depth);
 };
 
 
