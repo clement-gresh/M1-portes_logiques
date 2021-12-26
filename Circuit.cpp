@@ -140,9 +140,7 @@ void Circuit::simulateCircuit() {
 
 
 		// Calculating the depth and column of the gate
-		int gateDepth = this->getDepthPerLevel().at(gateLevel) + 1;
-		//logicalGate->setGateDepth(gateDepth);
-		this->depthPerLevel.at(gateLevel) = gateDepth;
+		int gateDepth = gate->getGateDepth();
 
 		this->addDepth(gateDepth);
 
@@ -151,7 +149,7 @@ void Circuit::simulateCircuit() {
 		int gateColumn = gateDepth * Circuit::GATE_WIDTH - 1;
 
 		this->circuitDrawing
-				.at(gateLine - (int)std::floor(Circuit::LEVEL_HEIGHT / 2.))
+				.at(gateLine - (int)std::floor(Circuit::LEVEL_HEIGHT * 2. / 3.))
 				.at(gateColumn - (int)std::floor(Circuit::GATE_WIDTH / 2.) + 1)
 				= gate->getName();
 
@@ -210,6 +208,8 @@ void Circuit::addWire(Gate* const prevGate, Gate* const nextGate, const int gate
 	unsigned int column = 0;
 	unsigned int line = 0;
 
+	unsigned int arrivalColumn;
+	unsigned int arrivalLine;
 	// debug 
 	/*
 	std::cout << "prevGate type, level, depth : " << prevGate->getType()
@@ -227,8 +227,8 @@ void Circuit::addWire(Gate* const prevGate, Gate* const nextGate, const int gate
 	if (prevGate->getType() == GateType::INPUT) {
 		line = prevGate->getGateLevel();
 
-		unsigned int arrivalColumn = nextGate->getGateDepth() * Circuit::GATE_WIDTH - (int) std::ceil(Circuit::GATE_WIDTH / 2.) +  gateNumber * 2;
-		unsigned int arrivalLine = this->getInputGates().size() + nextGate->getGateLevel() * Circuit::LEVEL_HEIGHT - (int)std::ceil(Circuit::LEVEL_HEIGHT / 2.);
+		arrivalColumn = nextGate->getGateDepth() * Circuit::GATE_WIDTH - (int) std::ceil(Circuit::GATE_WIDTH / 2.) +  gateNumber * 2;
+		arrivalLine = this->getInputGates().size() + nextGate->getGateLevel() * Circuit::LEVEL_HEIGHT - (int)std::ceil(Circuit::LEVEL_HEIGHT / 2.);
 
 		// Horizontal line coming from the input
 		for (column = 1; column < arrivalColumn; column++) {
@@ -245,27 +245,17 @@ void Circuit::addWire(Gate* const prevGate, Gate* const nextGate, const int gate
 		 // Adding the sign * when there is a change of direction
 		 this->circuitDrawing.at(line).at(column) = "*";
 		 line = line + 1;
-
-
-		// Vertical line going to the gate
-		for (line; line < arrivalLine; line++) {
-
-			if (this->circuitDrawing.at(line).at(column).compare("-") == 0) {
-				this->circuitDrawing.at(line).at(column) = "+";
-			}
-			else{ this->circuitDrawing.at(line).at(column) = "|"; }
-		}
 	}
 
 	else {
 		column = prevGate->getGateDepth() * Circuit::GATE_WIDTH - (int)std::floor(Circuit::GATE_WIDTH / 2.);
 		line = this->getInputGates().size() + prevGate->getGateLevel() * Circuit::LEVEL_HEIGHT - (int)std::floor(Circuit::LEVEL_HEIGHT / 2.);
 
-		unsigned int arrivalLine = this->getInputGates().size() + nextGate->getGateLevel() * Circuit::LEVEL_HEIGHT - (int)std::ceil(Circuit::LEVEL_HEIGHT / 2.);
 
 		if (nextGate->getType() != GateType::OUTPUT) {
+			arrivalLine = this->getInputGates().size() + nextGate->getGateLevel() * Circuit::LEVEL_HEIGHT - (int)std::ceil(Circuit::LEVEL_HEIGHT / 2.);
 
-			unsigned int arrivalColumn = nextGate->getGateDepth() * Circuit::GATE_WIDTH - (int)std::ceil(Circuit::GATE_WIDTH / 2.) + gateNumber * 2;
+			arrivalColumn = nextGate->getGateDepth() * Circuit::GATE_WIDTH - (int)std::ceil(Circuit::GATE_WIDTH / 2.) + gateNumber * 2;
 
 			int columnDifference = arrivalColumn - column;
 			int lineDifference = arrivalLine - line;
@@ -279,7 +269,6 @@ void Circuit::addWire(Gate* const prevGate, Gate* const nextGate, const int gate
 			*/
 
 			// Vertical line coming from the previous gate
-			
 			for (int i = 0; i < prevGate->getGateDepth(); i++) {
 				this->circuitDrawing.at(line).at(column) = "|";
 				line = line + 1;
@@ -324,15 +313,20 @@ void Circuit::addWire(Gate* const prevGate, Gate* const nextGate, const int gate
 			}
 		}
 
-		// Vertical line going to the next gate
-		for (line; line < arrivalLine; line++) {
+		// if the next gate is an output, the wire is shorter (1/3 of LEVEL_HEIGHT instead of 1/2)
+		else {
+			arrivalLine = this->getInputGates().size() + nextGate->getGateLevel() * Circuit::LEVEL_HEIGHT - (int)std::ceil(Circuit::LEVEL_HEIGHT * 2. / 3.);
+		}
+	}
 
-			if (this->circuitDrawing.at(line).at(column).compare("-") == 0) {
-				this->circuitDrawing.at(line).at(column) = "+";
-			}
-			else if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) { 
-				this->circuitDrawing.at(line).at(column) = "|";
-			}
+	// Vertical line going to the next gate
+	for (line; line < arrivalLine; line++) {
+
+		if (this->circuitDrawing.at(line).at(column).compare("-") == 0) {
+			this->circuitDrawing.at(line).at(column) = "+";
+		}
+		else if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) { 
+			this->circuitDrawing.at(line).at(column) = "|";
 		}
 	}
 }
