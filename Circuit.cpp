@@ -26,12 +26,14 @@ void Circuit::simulateCircuit() {
 	int i = 0;
 	for (InputGate* inputGate : this->getInputGates()) {
 		inputGate->setGateLevel(i);
-		std::cout << "Please enter the value of Gate \"" << inputGate->getName() << "\" (0 / 1)" << std::endl;
-
 		bool newValue;
+
+		std::cout << "Please enter the value of Gate \"" << inputGate->getName() << "\" (0 / 1) : ";
+
 		std::cin >> newValue;
-		std::cout << std::endl;
 		inputGate->setValue(newValue);
+		std::cout << inputGate->getName() << " : " << newValue << std::endl;
+		std::cin.ignore(1000, '\n');
 
 
 		std::vector<std::string> newLine = { std::string(1, inputGate->getName()) + ":" + std::string(1, inputGate->getValue()) + " " };
@@ -133,11 +135,9 @@ void Circuit::simulateCircuit() {
 					this->printCircuit();
 
 
-					// Press any key to continue (actually 1 key + enter)
-					std::cout << "Press any key then enter to update the next gate.";
-
-					std::string anyKey;
-					std::cin >> anyKey;
+					// Press enter to continue
+					std::cout << "Press enter to update the next gate.";
+					std::cin.ignore(1000, '\n');
 					std::cout << std::endl;
 				}
 			}
@@ -184,12 +184,11 @@ void Circuit::addWire(Gate* const prevGate, Gate* const nextGate, const int gate
 	if (prevGate->getType() == GateType::INPUT) {
 		line = prevGate->getGateLevel();
 
-		unsigned int wireColumnMax = nextGate->getGateDepth() * Circuit::GATE_WIDTH - (int) std::ceil(Circuit::GATE_WIDTH / 2.) +  gateNumber * 2;
-		unsigned int wireLineMax = this->getInputGates().size() + nextGate->getGateLevel() * Circuit::LEVEL_HEIGHT - (int)std::ceil(Circuit::LEVEL_HEIGHT / 2.);
-
+		unsigned int arrivalColumn = nextGate->getGateDepth() * Circuit::GATE_WIDTH - (int) std::ceil(Circuit::GATE_WIDTH / 2.) +  gateNumber * 2;
+		unsigned int arrivalLine = this->getInputGates().size() + nextGate->getGateLevel() * Circuit::LEVEL_HEIGHT - (int)std::ceil(Circuit::LEVEL_HEIGHT / 2.);
 
 		// Horizontal line coming from the input
-		for (column = 1; column < wireColumnMax; column++) {
+		for (column = 1; column < arrivalColumn; column++) {
 			
 			if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) {
 				this->circuitDrawing.at(line).at(column) = "-";
@@ -198,8 +197,6 @@ void Circuit::addWire(Gate* const prevGate, Gate* const nextGate, const int gate
 				this->circuitDrawing.at(line).at(column) = "+";
 			}
 		}
-		std::cout << "colonne max : " << wireColumnMax << std::endl; // debug
-		std::cout << "ligne max : " << wireLineMax << std::endl; // debug
 
 
 		// Adding the sign * when there is a change of direction
@@ -208,13 +205,67 @@ void Circuit::addWire(Gate* const prevGate, Gate* const nextGate, const int gate
 
 
 		// Vertical line going to the gate
-		for (line; line < wireLineMax; line++) {
-			std::cout << "colonne : " << column << ", ligne : " << line << std::endl; // debug
+		for (line; line < arrivalLine; line++) {
 
 			if (this->circuitDrawing.at(line).at(column).compare("-") == 0) {
 				this->circuitDrawing.at(line).at(column) = "+";
 			}
 			else{ this->circuitDrawing.at(line).at(column) = "|"; }
+		}
+	}
+
+	else {
+		column = prevGate->getGateDepth() * Circuit::GATE_WIDTH - (int)std::floor(Circuit::GATE_WIDTH / 2.);
+		line = this->getInputGates().size() + prevGate->getGateLevel() * Circuit::LEVEL_HEIGHT - (int)std::floor(Circuit::LEVEL_HEIGHT / 2.);
+
+		unsigned int arrivalColumn = nextGate->getGateDepth() * Circuit::GATE_WIDTH - (int)std::ceil(Circuit::GATE_WIDTH / 2.) + gateNumber * 2;
+		unsigned int arrivalLine = this->getInputGates().size() + nextGate->getGateLevel() * Circuit::LEVEL_HEIGHT - (int)std::ceil(Circuit::LEVEL_HEIGHT / 2.);
+
+		int columnDifference = arrivalColumn - column;
+		int lineDifference = arrivalLine - line;
+
+		std::cout << "colonne max : " << arrivalColumn << std::endl; // debug
+		std::cout << "ligne max : " << arrivalLine << std::endl; // debug
+
+		std::cout << "colonne diff : " << columnDifference << std::endl; // debug
+		std::cout << "ligne diff : " << lineDifference << std::endl; // debug
+
+
+		// Vertical line coming from the previsou gate
+		for (line; line < arrivalLine - lineDifference / 2; line++) {
+
+			if (this->circuitDrawing.at(line).at(column).compare("-") == 0) {
+				this->circuitDrawing.at(line).at(column) = "+";
+			}
+			else { this->circuitDrawing.at(line).at(column) = "|"; }
+		}
+
+		// Horizontal line coming from the previous gate
+		if (columnDifference > 0) {
+			for (column; column < arrivalColumn - columnDifference / 2; column++) {
+
+
+				std::cout << "colonne : " << column << ", ligne : " << line << std::endl; // debug
+
+				if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) {
+					this->circuitDrawing.at(line).at(column) = "-";
+				}
+				else if (this->circuitDrawing.at(line).at(column).compare("|") == 0) {
+					this->circuitDrawing.at(line).at(column) = "+";
+				}
+			}
+		}
+
+		else if (columnDifference < 0) {
+			for (column; column > arrivalColumn + columnDifference / 2; column--) {
+
+				if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) {
+					this->circuitDrawing.at(line).at(column) = "-";
+				}
+				else if (this->circuitDrawing.at(line).at(column).compare("|") == 0) {
+					this->circuitDrawing.at(line).at(column) = "+";
+				}
+			}
 		}
 	}
 }
