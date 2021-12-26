@@ -33,7 +33,7 @@ int main(int argc, char** argv)
 	AndGate* and1 = new AndGate(a, b);
 	AndGate* and2 = new AndGate(orr , and1);
 	AndGate* and3 = new AndGate(a, c);
-	AndGate* and4 = new AndGate(and3, and2);
+	AndGate* and4 = new AndGate(and3, and1);
 	OutputGate* A = new OutputGate('A', and2);
 	OutputGate* B = new OutputGate('d', orr);
 	OutputGate* C = new OutputGate('C', and3);

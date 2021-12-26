@@ -146,9 +146,13 @@ void Circuit::simulateCircuit() {
 	// Updating the value of the outputs
 	for (OutputGate* gate : this->getOutputGates()) {
 		gate->updateGate();
+		//this->addWire(gate, gate->getLogicalGate(), 0);
 		std::cout << "The value of the Output Gate \"" << gate->getName() << "\"  is : " << gate->getValue() << std::endl;
 		std::cout << "Logical function : " << gate->getLogicalFunction() << std::endl << std::endl;
 	}
+
+	// Displaying the final circuit on screen
+	this->printCircuit();
 
 	/* // debug : option 1
 	for (OutputGate* outputGate : this->getOutputGates()) {
@@ -199,7 +203,7 @@ void Circuit::addWire(Gate* const prevGate, Gate* const nextGate, const int gate
 		}
 
 
-		// Adding the sign * when there is a change of direction
+		 // Adding the sign * when there is a change of direction
 		 this->circuitDrawing.at(line).at(column) = "*";
 		 line = line + 1;
 
@@ -232,41 +236,55 @@ void Circuit::addWire(Gate* const prevGate, Gate* const nextGate, const int gate
 		std::cout << "ligne diff : " << lineDifference << std::endl; // debug
 		*/
 
-		// Vertical line coming from the previsou gate
-		for (line; line < arrivalLine - lineDifference / 2; line++) {
+		// Vertical line coming from the previous gate
+		this->circuitDrawing.at(line).at(column) = "|";
+		line = line + 1;
+
+		// Horizontal line coming from the previous gate
+		if (columnDifference != 0) {
+			this->circuitDrawing.at(line).at(column) = "*";
+
+			if (columnDifference > 0) {
+				column = column + 1;
+
+				for (column; column < arrivalColumn; column++) {
+
+					//std::cout << "colonne : " << column << ", ligne : " << line << std::endl; // debug
+
+					if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) {
+						this->circuitDrawing.at(line).at(column) = "-";
+					}
+					else if (this->circuitDrawing.at(line).at(column).compare("|") == 0) {
+						this->circuitDrawing.at(line).at(column) = "+";
+					}
+				}
+			}
+
+			else if (columnDifference < 0) {
+				column = column - 1;
+
+				for (column; column > arrivalColumn; column--) {
+
+					if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) {
+						this->circuitDrawing.at(line).at(column) = "-";
+					}
+					else if (this->circuitDrawing.at(line).at(column).compare("|") == 0) {
+						this->circuitDrawing.at(line).at(column) = "+";
+					}
+				}
+			}
+
+			this->circuitDrawing.at(line).at(column) = "*";
+			line = line + 1;
+		}
+
+		// Vertical line coming from the previous gate
+		for (line; line < arrivalLine; line++) {
 
 			if (this->circuitDrawing.at(line).at(column).compare("-") == 0) {
 				this->circuitDrawing.at(line).at(column) = "+";
 			}
 			else { this->circuitDrawing.at(line).at(column) = "|"; }
-		}
-
-		// Horizontal line coming from the previous gate
-		if (columnDifference > 0) {
-			for (column; column < arrivalColumn - columnDifference / 2; column++) {
-
-
-				//std::cout << "colonne : " << column << ", ligne : " << line << std::endl; // debug
-
-				if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) {
-					this->circuitDrawing.at(line).at(column) = "-";
-				}
-				else if (this->circuitDrawing.at(line).at(column).compare("|") == 0) {
-					this->circuitDrawing.at(line).at(column) = "+";
-				}
-			}
-		}
-
-		else if (columnDifference < 0) {
-			for (column; column > arrivalColumn + columnDifference / 2; column--) {
-
-				if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) {
-					this->circuitDrawing.at(line).at(column) = "-";
-				}
-				else if (this->circuitDrawing.at(line).at(column).compare("|") == 0) {
-					this->circuitDrawing.at(line).at(column) = "+";
-				}
-			}
 		}
 	}
 }
