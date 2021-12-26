@@ -5,6 +5,16 @@
 
 enum class GateType { DEFAULT, INPUT, OUTPUT, AND };
 
+inline std::string operator+(std::string gateName, GateType type) {
+	switch (type) {
+	case GateType::DEFAULT: gateName = "DEF"; break;
+	case GateType::INPUT: gateName = "INP"; break;
+	case GateType::OUTPUT: gateName = "OUT"; break;
+	case GateType::AND: gateName = "AND"; break;
+	}
+	return gateName;
+}
+
 inline std::ostream& operator<<(std::ostream& out, GateType type) {
 	switch (type) {
 		case GateType::DEFAULT: out << "DEFAULT"; break;
