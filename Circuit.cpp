@@ -77,19 +77,7 @@ void Circuit::simulateCircuit() {
 					// gateLine = number of input gates + gate level * LEVEL_HEIGHT - 1
 					unsigned int gateLine = this->getInputGates().size() + gateLevel * Circuit::LEVEL_HEIGHT - 1;
 
-					int maxDepth = this->getDepthPerLevel().at(0);
-
-
-					// Adding one level to the drawing if necessary (the fist column being larger)
-					if (gateLine > this->getCircuitDrawing().size()) {
-						for (int i = 0; i < Circuit::LEVEL_HEIGHT; i++) {
-
-							std::vector<std::string> newLine{ "    " };
-							for (int j = 1; j < Circuit::GATE_WIDTH * maxDepth; j++) newLine.push_back(" ");
-							this->circuitDrawing.push_back(newLine);
-						}
-						this->depthPerLevel.push_back(0);
-					}
+					this->addLevel(gateLine);
 
 
 					// Calculating the depth and column of the gate
@@ -97,16 +85,7 @@ void Circuit::simulateCircuit() {
 					logicalGate->setGateDepth(gateDepth);
 					this->depthPerLevel.at(gateLevel) = gateDepth;
 
-
-					// Adding one 'depth' to the whole drawing if necessary
-					if (gateDepth > maxDepth) {
-						this->depthPerLevel.at(0) = gateDepth;
-						maxDepth = gateDepth;
-
-						for (unsigned int i = 0; i < this->getCircuitDrawing().size(); i++) {
-							for (int j = 0; j < Circuit::GATE_WIDTH; j++) this->circuitDrawing.at(i).push_back(" ");
-						}
-					}
+					this->addDepth(gateDepth);
 
 
 					// Adding the name of the gate to the drawing
@@ -149,26 +128,15 @@ void Circuit::simulateCircuit() {
 		std::cout << "The value of the Output Gate \"" << gate->getName() << "\"  is : " << gate->getValue() << std::endl;
 		std::cout << "Logical function : " << gate->getLogicalFunction() << std::endl << std::endl;
 
-	// Adding the gate to the drawing
+	// Adding the output gate to the drawing
 		// Calculating the level and line of the gate
 		int gateLevel = gate->getGateLevel();
 
 		// gateLine = number of input gates + gate level * LEVEL_HEIGHT - 1
 		unsigned int gateLine = this->getInputGates().size() + gateLevel * Circuit::LEVEL_HEIGHT - 1;
 
-		int maxDepth = this->getDepthPerLevel().at(0);
 
-
-		// Adding one level to the drawing if necessary (the fist column being larger)
-		if (gateLine > this->getCircuitDrawing().size()) {
-			for (int i = 0; i < Circuit::LEVEL_HEIGHT; i++) {
-
-				std::vector<std::string> newLine{ "    " };
-				for (int j = 1; j < Circuit::GATE_WIDTH * maxDepth; j++) newLine.push_back(" ");
-				this->circuitDrawing.push_back(newLine);
-			}
-			this->depthPerLevel.push_back(0);
-		}
+		this->addLevel(gateLine);
 
 
 		// Calculating the depth and column of the gate
@@ -176,16 +144,7 @@ void Circuit::simulateCircuit() {
 		//logicalGate->setGateDepth(gateDepth);
 		this->depthPerLevel.at(gateLevel) = gateDepth;
 
-
-		// Adding one 'depth' to the whole drawing if necessary
-		if (gateDepth > maxDepth) {
-			this->depthPerLevel.at(0) = gateDepth;
-			maxDepth = gateDepth;
-
-			for (unsigned int i = 0; i < this->getCircuitDrawing().size(); i++) {
-				for (int j = 0; j < Circuit::GATE_WIDTH; j++) this->circuitDrawing.at(i).push_back(" ");
-			}
-		}
+		this->addDepth(gateDepth);
 
 
 		// Adding the name of the gate to the drawing
@@ -213,6 +172,37 @@ void Circuit::simulateCircuit() {
 		this->circuitGates.push_back(outputGate);
 	}
 	*/
+}
+
+// Add one level to the drawing if necessary (the fist column being larger)
+void Circuit::addLevel(const unsigned int gateLine) {
+
+	int maxDepth = this->getDepthPerLevel().at(0);
+
+	if (gateLine > this->getCircuitDrawing().size()) {
+		for (int i = 0; i < Circuit::LEVEL_HEIGHT; i++) {
+
+			std::vector<std::string> newLine{ "    " };
+			for (int j = 1; j < Circuit::GATE_WIDTH * maxDepth; j++) newLine.push_back(" ");
+			this->circuitDrawing.push_back(newLine);
+		}
+		this->depthPerLevel.push_back(0);
+	}
+}
+
+
+// Add one 'depth' to the whole drawing if necessary
+void Circuit::addDepth(const int gateDepth) {
+
+	int maxDepth = this->getDepthPerLevel().at(0);
+	
+	if (gateDepth > maxDepth) {
+		this->depthPerLevel.at(0) = gateDepth;
+
+		for (unsigned int i = 0; i < this->getCircuitDrawing().size(); i++) {
+			for (int j = 0; j < Circuit::GATE_WIDTH; j++) this->circuitDrawing.at(i).push_back(" ");
+		}
+	}
 }
 
 
@@ -377,11 +367,7 @@ void Circuit::nextGate(LogicalGate* const logicalGate) {
 
 // ACCESSORS
 const std::vector<InputGate*>& Circuit::getInputGates() const { return this->inputGates; }
-
 const std::vector<LogicalGate*>& Circuit::getLogicalGates() const { return this->logicalGates; }
-
 const std::vector<OutputGate*>& Circuit::getOutputGates() const { return this->outputGates; }
-
 const std::vector<std::vector<std::string>>& Circuit::getCircuitDrawing() const { return this->circuitDrawing; }
-
 const std::vector<int>& Circuit::getDepthPerLevel() const { return this->depthPerLevel; }

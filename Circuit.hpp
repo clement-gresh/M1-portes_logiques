@@ -26,6 +26,8 @@ public:
     void addLogicalGate(LogicalGate* const logicalGate);
     // debugg : ajouter addInputGate, addOutputGate et les remove pour les 3;
     void simulateCircuit();
+    void addLevel(const unsigned int gateLine);
+    void addDepth(const int gateDepth);
     void addWire(Gate* const prevGate, Gate* const nextGate, const int gateNumber);
     void printCircuit();
 
