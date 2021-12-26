@@ -3,9 +3,9 @@
 
 #include "IOGate.hpp"
 #include "LogicalGate.hpp"
-#include "UpdateValueInterface.hpp"
+#include "UpdateInterface.hpp"
 
-class OutputGate : public IOGate, UpdateValueInterface {
+class OutputGate : public IOGate, UpdateInterface {
 private:
 	static const std::regex format;
 	static const char defaultName;
@@ -17,7 +17,7 @@ public:
 	OutputGate(const char name, LogicalGate* const gate);
 
 	// METHODS
-	virtual void updateValue();
+	virtual void updateGate();
 
 	// ACCESSORS
 	LogicalGate* const getLogicalGate() const;

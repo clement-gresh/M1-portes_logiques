@@ -2,16 +2,16 @@
 #define AND_GATE
 
 #include "LogicalGate.hpp"
-#include "UpdateValueInterface.hpp"
+#include "UpdateInterface.hpp"
 
-class AndGate : public LogicalGate, UpdateValueInterface {
+class AndGate : public LogicalGate, UpdateInterface {
 public:
 	// CONSTRUCTORS
 	AndGate(Gate* const a, Gate* const b);
 
 
 	// METHODS
-	void updateValue();
+	void updateGate();
 };
 
 #endif

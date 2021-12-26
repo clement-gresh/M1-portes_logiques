@@ -27,15 +27,21 @@ int main(int argc, char** argv)
 
 	InputGate* a = new InputGate('a');
 	InputGate* b = new InputGate('w');
+	InputGate* c = new InputGate('c');
+	InputGate* d = new InputGate('F');
 	AndGate* orr = new AndGate(a, a);
 	AndGate* and1 = new AndGate(a, b);
 	AndGate* and2 = new AndGate(orr , and1);
-	OutputGate* A = new OutputGate('F', and2);
-	OutputGate* B = new OutputGate('W', orr);
+	AndGate* and3 = new AndGate(a, c);
+	AndGate* and4 = new AndGate(and3, and2);
+	OutputGate* A = new OutputGate('A', and2);
+	OutputGate* B = new OutputGate('d', orr);
+	OutputGate* C = new OutputGate('C', and3);
+	OutputGate* D = new OutputGate('D', and4);
 
-	std::vector<InputGate*> inputGates = { a, b };
-	std::vector<LogicalGate*> logicalGates = { orr, and1 };
-	std::vector<OutputGate*> outputGates = { A, B };
+	std::vector<InputGate*> inputGates = { a, b, c, d };
+	std::vector<LogicalGate*> logicalGates = { orr, and1, and3, and4 };
+	std::vector<OutputGate*> outputGates = { A, B, C, D };
 	
 	Circuit* circuit1 = new Circuit(inputGates, logicalGates, outputGates);
 

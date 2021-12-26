@@ -14,6 +14,7 @@ protected:
 	bool alreadyUpdated;
 	int gateLevel;
 	int gateDepth;
+	std::string logicalFunction;
 
 	// CONSTRUCTORS
 	Gate();
@@ -22,6 +23,7 @@ protected:
 
 	// ACCESSORS
 	void setValue(const bool value);
+	void setLogicalFunction(const std::string function);
 
 public:
 	const bool getValue() const;
@@ -29,6 +31,7 @@ public:
 	const bool getAlreadyUpdated() const;
 	const int getGateLevel() const;
 	const int getGateDepth() const;
+	const std::string getLogicalFunction() const;
 
 	void setAlreadyUpdated(const bool alreadyUpdated);
 	void setGateLevel(const int level);

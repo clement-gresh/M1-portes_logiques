@@ -11,8 +11,9 @@ OutputGate::OutputGate(const char name, LogicalGate* const gate) : IOGate{ name 
 	this->checkNameFormating(name, OutputGate::format, OutputGate::defaultName);
 }
 
-void OutputGate::updateValue() {
-	this->value = this->getLogicalGate()->getValue();
+void OutputGate::updateGate() {
+	this->setValue( this->getLogicalGate()->getValue() );
+	this->setLogicalFunction ( this->getLogicalGate()->getLogicalFunction() );
 }
 
 LogicalGate* const OutputGate::getLogicalGate() const { return this->logicalGate; }

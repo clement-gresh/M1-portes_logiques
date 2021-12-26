@@ -13,8 +13,7 @@ protected:
 
 public:
 	// METHODS
-	virtual void updateValue() {};
-	void updateLevel();
+	virtual void updateGate();
 
 	// ACCESSORS
 	const std::vector<Gate*> getGates() const;

@@ -32,11 +32,11 @@ void Circuit::simulateCircuit() {
 
 		std::cin >> newValue;
 		inputGate->setValue(newValue);
-		std::cout << inputGate->getName() << " : " << newValue << std::endl;
+		std::cout << inputGate->getName() << " : " << newValue << std::endl << std::endl;
 		std::cin.ignore(1000, '\n');
 
-
-		std::vector<std::string> newLine = { std::string(1, inputGate->getName()) + ":" + std::string(1, inputGate->getValue()) + " " };
+		std::string boolValue = (newValue) ? "1" : "0";
+		std::vector<std::string> newLine = { std::string(1, inputGate->getName()) + ":" + boolValue + " " };
 		for (int j = 1; j < Circuit::GATE_WIDTH; j++) newLine.push_back(" ");
 		this->circuitDrawing.push_back( newLine );
 
@@ -63,15 +63,15 @@ void Circuit::simulateCircuit() {
 				}
 
 				if (canBeUpdated) {
-					logicalGate->updateValue();
+					// Updating the gate (its level, logical function and value)
+					logicalGate->updateGate();
 					logicalGate->setAlreadyUpdated(true);
 					std::cout << "Value of Gate \"" << logicalGate->getType() << "\" : " << logicalGate->getValue() << std::endl;
+					std::cout << "Logical function : " << logicalGate->getLogicalFunction() << std::endl << std::endl;
 
 
-					// Adding the gate to the drawing
-
+				// Adding the gate to the drawing
 					// Calculating the level and line of the gate
-					logicalGate->updateLevel();
 					int gateLevel = logicalGate->getGateLevel();
 
 					// gateLine = number of input gates + gate level * LEVEL_HEIGHT - 1
@@ -92,10 +92,11 @@ void Circuit::simulateCircuit() {
 					}
 
 
-					// Calculating the depth, and column of the gate
+					// Calculating the depth and column of the gate
 					int gateDepth = this->getDepthPerLevel().at(gateLevel) + 1;
 					logicalGate->setGateDepth(gateDepth);
 					this->depthPerLevel.at(gateLevel) = gateDepth;
+
 
 					// Adding one 'depth' to the whole drawing if necessary
 					if (gateDepth > maxDepth) {
@@ -108,8 +109,7 @@ void Circuit::simulateCircuit() {
 					}
 
 
-
-					// Add the name of the gate to the drawing
+					// Adding the name of the gate to the drawing
 					std::string gateName = "";
 					gateName = gateName + logicalGate->getType();
 
@@ -123,7 +123,7 @@ void Circuit::simulateCircuit() {
 					}
 
 
-					// Add the "wires" between the gates
+					// Adding the "wires" between the gates
 					int gateNumber = 0;
 					for (Gate* gate : logicalGate->getGates()) {
 						this->addWire(gate, logicalGate, gateNumber);
@@ -131,9 +131,8 @@ void Circuit::simulateCircuit() {
 					}
 
 
-					// Display the current circuit on screen
+					// Displaying the current circuit on screen
 					this->printCircuit();
-
 
 					// Press enter to continue
 					std::cout << "Press enter to update the next gate.";
@@ -146,8 +145,9 @@ void Circuit::simulateCircuit() {
 
 	// Updating the value of the outputs
 	for (OutputGate* gate : this->getOutputGates()) {
-		gate->updateValue();
+		gate->updateGate();
 		std::cout << "The value of the Output Gate \"" << gate->getName() << "\"  is : " << gate->getValue() << std::endl;
+		std::cout << "Logical function : " << gate->getLogicalFunction() << std::endl << std::endl;
 	}
 
 	/* // debug : option 1
@@ -224,12 +224,13 @@ void Circuit::addWire(Gate* const prevGate, Gate* const nextGate, const int gate
 		int columnDifference = arrivalColumn - column;
 		int lineDifference = arrivalLine - line;
 
+		/*
 		std::cout << "colonne max : " << arrivalColumn << std::endl; // debug
 		std::cout << "ligne max : " << arrivalLine << std::endl; // debug
 
 		std::cout << "colonne diff : " << columnDifference << std::endl; // debug
 		std::cout << "ligne diff : " << lineDifference << std::endl; // debug
-
+		*/
 
 		// Vertical line coming from the previsou gate
 		for (line; line < arrivalLine - lineDifference / 2; line++) {
@@ -245,7 +246,7 @@ void Circuit::addWire(Gate* const prevGate, Gate* const nextGate, const int gate
 			for (column; column < arrivalColumn - columnDifference / 2; column++) {
 
 
-				std::cout << "colonne : " << column << ", ligne : " << line << std::endl; // debug
+				//std::cout << "colonne : " << column << ", ligne : " << line << std::endl; // debug
 
 				if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) {
 					this->circuitDrawing.at(line).at(column) = "-";
