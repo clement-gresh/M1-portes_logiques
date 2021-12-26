@@ -1,8 +1,8 @@
 #include "Circuit.hpp"
 
 // INITIALIZATION of constant static members
-const int Circuit::LEVEL_HEIGHT{ 5 };
-const int Circuit::GATE_WIDTH{ 5 };
+const int Circuit::LEVEL_HEIGHT{ 9 };
+const int Circuit::GATE_WIDTH{ 7 };
 
 
 // CONSTRUCTORS
@@ -146,9 +146,58 @@ void Circuit::simulateCircuit() {
 	// Updating the value of the outputs
 	for (OutputGate* gate : this->getOutputGates()) {
 		gate->updateGate();
-		//this->addWire(gate, gate->getLogicalGate(), 0);
 		std::cout << "The value of the Output Gate \"" << gate->getName() << "\"  is : " << gate->getValue() << std::endl;
 		std::cout << "Logical function : " << gate->getLogicalFunction() << std::endl << std::endl;
+
+	// Adding the gate to the drawing
+		// Calculating the level and line of the gate
+		int gateLevel = gate->getGateLevel();
+
+		// gateLine = number of input gates + gate level * LEVEL_HEIGHT - 1
+		unsigned int gateLine = this->getInputGates().size() + gateLevel * Circuit::LEVEL_HEIGHT - 1;
+
+		int maxDepth = this->getDepthPerLevel().at(0);
+
+
+		// Adding one level to the drawing if necessary (the fist column being larger)
+		if (gateLine > this->getCircuitDrawing().size()) {
+			for (int i = 0; i < Circuit::LEVEL_HEIGHT; i++) {
+
+				std::vector<std::string> newLine{ "    " };
+				for (int j = 1; j < Circuit::GATE_WIDTH * maxDepth; j++) newLine.push_back(" ");
+				this->circuitDrawing.push_back(newLine);
+			}
+			this->depthPerLevel.push_back(0);
+		}
+
+
+		// Calculating the depth and column of the gate
+		int gateDepth = this->getDepthPerLevel().at(gateLevel) + 1;
+		//logicalGate->setGateDepth(gateDepth);
+		this->depthPerLevel.at(gateLevel) = gateDepth;
+
+
+		// Adding one 'depth' to the whole drawing if necessary
+		if (gateDepth > maxDepth) {
+			this->depthPerLevel.at(0) = gateDepth;
+			maxDepth = gateDepth;
+
+			for (unsigned int i = 0; i < this->getCircuitDrawing().size(); i++) {
+				for (int j = 0; j < Circuit::GATE_WIDTH; j++) this->circuitDrawing.at(i).push_back(" ");
+			}
+		}
+
+
+		// Adding the name of the gate to the drawing
+		int gateColumn = gateDepth * Circuit::GATE_WIDTH - 1;
+
+		this->circuitDrawing
+				.at(gateLine - (int)std::floor(Circuit::LEVEL_HEIGHT / 2.))
+				.at(gateColumn - (int)std::floor(Circuit::GATE_WIDTH / 2.) + 1)
+				= gate->getName();
+
+
+		this->addWire(gate->getLogicalGate(), gate, 0);
 	}
 
 	// Displaying the final circuit on screen
@@ -222,69 +271,78 @@ void Circuit::addWire(Gate* const prevGate, Gate* const nextGate, const int gate
 		column = prevGate->getGateDepth() * Circuit::GATE_WIDTH - (int)std::floor(Circuit::GATE_WIDTH / 2.);
 		line = this->getInputGates().size() + prevGate->getGateLevel() * Circuit::LEVEL_HEIGHT - (int)std::floor(Circuit::LEVEL_HEIGHT / 2.);
 
-		unsigned int arrivalColumn = nextGate->getGateDepth() * Circuit::GATE_WIDTH - (int)std::ceil(Circuit::GATE_WIDTH / 2.) + gateNumber * 2;
 		unsigned int arrivalLine = this->getInputGates().size() + nextGate->getGateLevel() * Circuit::LEVEL_HEIGHT - (int)std::ceil(Circuit::LEVEL_HEIGHT / 2.);
 
-		int columnDifference = arrivalColumn - column;
-		int lineDifference = arrivalLine - line;
+		if (nextGate->getType() != GateType::OUTPUT) {
 
-		/*
-		std::cout << "colonne max : " << arrivalColumn << std::endl; // debug
-		std::cout << "ligne max : " << arrivalLine << std::endl; // debug
+			unsigned int arrivalColumn = nextGate->getGateDepth() * Circuit::GATE_WIDTH - (int)std::ceil(Circuit::GATE_WIDTH / 2.) + gateNumber * 2;
 
-		std::cout << "colonne diff : " << columnDifference << std::endl; // debug
-		std::cout << "ligne diff : " << lineDifference << std::endl; // debug
-		*/
+			int columnDifference = arrivalColumn - column;
+			int lineDifference = arrivalLine - line;
 
-		// Vertical line coming from the previous gate
-		this->circuitDrawing.at(line).at(column) = "|";
-		line = line + 1;
+			/*
+			std::cout << "colonne max : " << arrivalColumn << std::endl; // debug
+			std::cout << "ligne max : " << arrivalLine << std::endl; // debug
 
-		// Horizontal line coming from the previous gate
-		if (columnDifference != 0) {
-			this->circuitDrawing.at(line).at(column) = "*";
+			std::cout << "colonne diff : " << columnDifference << std::endl; // debug
+			std::cout << "ligne diff : " << lineDifference << std::endl; // debug
+			*/
 
-			if (columnDifference > 0) {
-				column = column + 1;
-
-				for (column; column < arrivalColumn; column++) {
-
-					//std::cout << "colonne : " << column << ", ligne : " << line << std::endl; // debug
-
-					if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) {
-						this->circuitDrawing.at(line).at(column) = "-";
-					}
-					else if (this->circuitDrawing.at(line).at(column).compare("|") == 0) {
-						this->circuitDrawing.at(line).at(column) = "+";
-					}
-				}
+			// Vertical line coming from the previous gate
+			
+			for (int i = 0; i < prevGate->getGateDepth(); i++) {
+				this->circuitDrawing.at(line).at(column) = "|";
+				line = line + 1;
 			}
 
-			else if (columnDifference < 0) {
-				column = column - 1;
+			// Horizontal line coming from the previous gate
+			if (columnDifference != 0) {
+				this->circuitDrawing.at(line).at(column) = "*";
 
-				for (column; column > arrivalColumn; column--) {
+				if (columnDifference > 0) {
+					column = column + 1;
 
-					if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) {
-						this->circuitDrawing.at(line).at(column) = "-";
-					}
-					else if (this->circuitDrawing.at(line).at(column).compare("|") == 0) {
-						this->circuitDrawing.at(line).at(column) = "+";
+					for (column; column < arrivalColumn; column++) {
+
+						//std::cout << "colonne : " << column << ", ligne : " << line << std::endl; // debug
+
+						if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) {
+							this->circuitDrawing.at(line).at(column) = "-";
+						}
+						else if (this->circuitDrawing.at(line).at(column).compare("|") == 0) {
+							this->circuitDrawing.at(line).at(column) = "+";
+						}
 					}
 				}
-			}
 
-			this->circuitDrawing.at(line).at(column) = "*";
-			line = line + 1;
+				else if (columnDifference < 0) {
+					column = column - 1;
+
+					for (column; column > arrivalColumn; column--) {
+
+						if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) {
+							this->circuitDrawing.at(line).at(column) = "-";
+						}
+						else if (this->circuitDrawing.at(line).at(column).compare("|") == 0) {
+							this->circuitDrawing.at(line).at(column) = "+";
+						}
+					}
+				}
+
+				this->circuitDrawing.at(line).at(column) = "*";
+				line = line + 1;
+			}
 		}
 
-		// Vertical line coming from the previous gate
+		// Vertical line going to the next gate
 		for (line; line < arrivalLine; line++) {
 
 			if (this->circuitDrawing.at(line).at(column).compare("-") == 0) {
 				this->circuitDrawing.at(line).at(column) = "+";
 			}
-			else { this->circuitDrawing.at(line).at(column) = "|"; }
+			else if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) { 
+				this->circuitDrawing.at(line).at(column) = "|";
+			}
 		}
 	}
 }
