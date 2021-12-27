@@ -1,14 +1,14 @@
 #include "Gate.hpp"
 
 // CONSTRUCTEURS
-Gate::Gate() : value{ false }, type{ GateType::DEFAULT }, alreadyUpdated{ false },
+Gate::Gate(const GateType type) : value{ false }, type{ type }, alreadyUpdated{ false },
 			   gateLevel{ 0 }, gateDepth{ 0 }, logicalFunction{ "" } {}
 
-Gate::Gate(const Gate& clone) : Gate{} {
+Gate::Gate(const Gate& clone) : Gate{ clone.getType() } {
 	std::cout << "Attention : construction d'une porte par COPIE (reference) !" << std::endl;
 }
 
-Gate::Gate(const Gate* clone) : Gate{} {
+Gate::Gate(const Gate* clone) : Gate{ clone->getType()} {
 	std::cout << "Attention : construction d'une porte par COPIE (pointeur) !" << std::endl;
 }
 

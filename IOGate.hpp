@@ -5,13 +5,13 @@
 
 class IOGate : public Gate {
 protected:
-	char name;
+	const char name;
 
 	// CONSTRUCTEURS
-	IOGate(const char name);
+	IOGate(const GateType type, const char name);
 
 	// METHODES
-	void checkNameFormating(const char name, const std::regex format, const char defaultName);
+	char checkNameFormating(const char name, const std::regex format, const char defaultName);
 
 public:
 	// ACCESSEURS

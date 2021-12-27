@@ -8,7 +8,7 @@ protected:
 	const std::vector<Gate*> gates;
 
 	// CONSTRUCTORS
-	LogicalGate(const std::vector<Gate*> gates);
+	LogicalGate(const GateType type, const std::vector<Gate*> gates);
 
 
 public:

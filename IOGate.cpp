@@ -1,14 +1,16 @@
 #include "IOGate.hpp"
 
 // CONSTRUCTORS
-IOGate::IOGate(const char name) : Gate{}, name { name } {}
+IOGate::IOGate(const GateType type, const char name) : Gate{type}, name { name } {}
 
 // METHODS
-void IOGate::checkNameFormating(const char name, const std::regex format, const char defaultName) {
+char IOGate::checkNameFormating(const char name, const std::regex format, const char defaultName) {
 	if (!std::regex_match(&name, format)) {
-		this->name = defaultName;
-		std::cout << "Attention : le nom \"" << name << "\" est invalide pour cette porte I/O. Nom donne a la porte : " << defaultName << std::endl;
+		std::cout << "Attention : le nom \"" << name << "\" est invalide pour cette porte I/O. Nom donne a la porte : "
+			<< defaultName << std::endl;
+		return defaultName;
 	}
+	return name;
 }
 
 

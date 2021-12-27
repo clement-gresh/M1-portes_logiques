@@ -10,14 +10,14 @@
 class Gate {
 protected:
 	bool value;
-	GateType type;
+	const GateType type;
 	bool alreadyUpdated;
 	int gateLevel;
 	int gateDepth;
 	std::string logicalFunction;
 
 	// CONSTRUCTORS
-	Gate();
+	Gate(const GateType type);
 	Gate(const Gate& clone);
 	Gate(const Gate* clone);
 

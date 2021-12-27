@@ -2,7 +2,7 @@
 
 
 // CONSTRUCTORS
-LogicalGate::LogicalGate(const std::vector<Gate*> gates) : Gate{}, gates{ gates } {}
+LogicalGate::LogicalGate(const GateType type, const std::vector<Gate*> gates) : Gate{ type }, gates{ gates } {}
 
 
 void LogicalGate::updateGate() {
