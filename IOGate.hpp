@@ -18,6 +18,4 @@ public:
 	const char getName() const;
 };
 
-
-
 #endif

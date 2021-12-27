@@ -26,17 +26,25 @@ void Circuit::simulateCircuit() {
 	int i = 0;
 	for (InputGate* inputGate : this->getInputGates()) {
 		inputGate->setGateLevel(i);
-		bool newValue;
 
+		// Asking the user to set a value to the input (and checking that value is valid)
 		std::cout << "Please enter the value of Gate \"" << inputGate->getName() << "\" (0 / 1) : ";
-
+		std::string newValue;
 		std::cin >> newValue;
-		inputGate->setValue(newValue);
-		std::cout << inputGate->getName() << " : " << newValue << std::endl << std::endl;
+
+		while (newValue.compare("0") != 0 && newValue.compare("1") != 0) {
+			std::cout << "Invalid value! Please enter the value of Gate \"" << inputGate->getName() << "\" (0 / 1) : ";
+			std::cin >> newValue;
+		}
 		std::cin.ignore(1000, '\n');
 
-		std::string boolValue = (newValue) ? "1" : "0";
-		std::vector<std::string> newLine = { std::string(1, inputGate->getName()) + ":" + boolValue + " " };
+		if (newValue.compare("0") == 0) { inputGate->setValue(0); }
+		else { inputGate->setValue(1); }
+		std::cout << inputGate->getName() << " : " << inputGate->getValue() << std::endl << std::endl;
+
+
+		// Adding the input to the drawing
+		std::vector<std::string> newLine = { std::string(1, inputGate->getName()) + ":" + newValue + " " };
 		for (int j = 1; j < Circuit::GATE_WIDTH; j++) newLine.push_back(" ");
 		this->circuitDrawing.push_back( newLine );
 
@@ -66,8 +74,7 @@ void Circuit::simulateCircuit() {
 					// Updating the gate (its level, logical function and value)
 					logicalGate->updateGate();
 					logicalGate->setAlreadyUpdated(true);
-					std::cout << "Value of Gate \"" << logicalGate->getType() << "\" : " << logicalGate->getValue() << std::endl;
-					std::cout << "Logical function : " << logicalGate->getLogicalFunction() << std::endl << std::endl;
+					std::cout << logicalGate;
 
 
 				// Adding the gate to the drawing
@@ -125,8 +132,7 @@ void Circuit::simulateCircuit() {
 	// Updating the value of the outputs
 	for (OutputGate* gate : this->getOutputGates()) {
 		gate->updateGate();
-		std::cout << "The value of the Output Gate \"" << gate->getName() << "\"  is : " << gate->getValue() << std::endl;
-		std::cout << "Logical function : " << gate->getLogicalFunction() << std::endl << std::endl;
+		std::cout << gate;
 
 	// Adding the output gate to the drawing
 		// Calculating the level and line of the gate

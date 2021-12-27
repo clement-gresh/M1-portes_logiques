@@ -37,3 +37,11 @@ void LogicalGate::updateGate() {
 
 // ACCESSORS
 const std::vector<Gate*> LogicalGate::getGates() const { return this->gates; }
+
+
+// Operator OVERLOAD
+std::ostream& operator<<(std::ostream& out, LogicalGate* const logicalGate) {
+	out << "Value of Gate \"" << logicalGate->getType() << "\" : " << logicalGate->getValue() << std::endl;
+	out << "Logical function : " << logicalGate->getLogicalFunction() << std::endl << std::endl;
+	return out;
+};

@@ -22,3 +22,12 @@ void OutputGate::updateGate() {
 }
 
 LogicalGate* const OutputGate::getLogicalGate() const { return this->logicalGate; }
+
+
+
+// operator OVERLOAD
+std::ostream& operator<<(std::ostream& out, OutputGate* const OutputGate) {
+	out << "The value of the Output Gate \"" << OutputGate->getName() << "\"  is : " << OutputGate->getValue() << std::endl;
+	out << "Logical function : " << OutputGate->getLogicalFunction() << std::endl << std::endl;
+	return out;
+}
