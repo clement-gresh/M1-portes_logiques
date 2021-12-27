@@ -14,8 +14,11 @@ OutputGate::OutputGate(const char name, LogicalGate* const gate) : IOGate{ name 
 void OutputGate::updateGate() {
 	// Same value, logical function and depth as its input
 	this->setValue( this->getLogicalGate()->getValue() );
-	this->setLogicalFunction ( this->getLogicalGate()->getLogicalFunction() );
 	this->setGateDepth(this->getLogicalGate()->getGateDepth());
+
+	// Add the output name and = to the logical function
+	std::string function = std::string(1, this->getName()) + "=" + this->getLogicalGate()->getLogicalFunction();
+	this->setLogicalFunction(function);
 
 	// One level above its input
 	this->setGateLevel(this->getLogicalGate()->getGateLevel() + 1);

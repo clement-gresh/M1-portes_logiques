@@ -6,6 +6,7 @@
 #include "OutputGate.hpp"
 
 #include <cmath>
+#include <fstream>
 
 class Circuit{
 private:
@@ -30,6 +31,7 @@ public:
     void addDepth(const int gateDepth);
     void addWire(Gate* const prevGate, Gate* const nextGate, const int gateNumber);
     void printCircuit();
+    void saveFile();
 
     // ACCESSORS
     const std::vector<InputGate*>& getInputGates() const;

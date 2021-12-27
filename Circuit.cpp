@@ -166,6 +166,14 @@ void Circuit::simulateCircuit() {
 	// Displaying the final circuit on screen
 	this->printCircuit();
 
+	// Saving the circuit in a file
+	std::cout << "Do you want to save the circuit? (y/n) ";
+	std::string save;
+	std::cin >> save;
+	std::cout << std::endl;
+
+	if (save.compare("y") == 0) { this->saveFile(); }
+
 	/* // debug : option 1
 	for (OutputGate* outputGate : this->getOutputGates()) {
 
@@ -346,6 +354,36 @@ void Circuit::printCircuit() {
 		std::cout << std::endl;
 	}
 }
+
+void Circuit::saveFile() {
+
+	std::cout << "Save as (name the file without the extension): ";
+	std::string save;
+	std::cin >> save;
+	std::cout << std::endl;
+
+	std::ofstream output_file;
+	output_file.open(save + ".txt");
+
+	for (OutputGate* outputGate : this->getOutputGates()) { 
+		output_file << outputGate->getLogicalFunction() << "\n";
+		output_file.flush();
+	}
+	output_file << std::endl << std::endl;
+	output_file.flush();
+
+	for (std::vector<std::string> line : this->getCircuitDrawing()) {
+		for (std::string column : line) {
+			output_file << column;
+			output_file.flush();
+		}
+		output_file << std::endl;
+		output_file.flush();
+	}
+
+	output_file.close();
+}
+
 
 /* // debug : option 1
 With a fex modifications, this method could allow to only enter the OutputGates in the circuit 
