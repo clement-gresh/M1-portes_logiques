@@ -21,8 +21,6 @@ void LogicalGate::updateGate() {
 	int gateNumber = 0;
 
 	for (Gate* gate : this->getGates()) {
-		//if (gateNumber == 0) { function = function + gate->getLogicalFunction(); }
-		//else { function = function + "," + gate->getLogicalFunction(); }
 
 		if (gateNumber == 0) { function.append(gate->getLogicalFunction()); }
 		else { function.append(",").append(gate->getLogicalFunction()); }
@@ -30,8 +28,6 @@ void LogicalGate::updateGate() {
 		gateNumber = gateNumber + 1;
 	}
 	function.append(")");
-	//function = function + ")";
-
 	this->setLogicalFunction(function);
 }
 

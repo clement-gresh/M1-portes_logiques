@@ -26,6 +26,7 @@ public:
     // METHODS
     void addLogicalGate(LogicalGate* const logicalGate);
     // debugg : ajouter addInputGate, addOutputGate et les remove pour les 3;
+    void buildCircuit(const std::string logicalFunction);
     void simulateCircuit();
     void addLevel(const unsigned int gateLine);
     void addDepth(const int gateDepth);

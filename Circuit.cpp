@@ -12,6 +12,10 @@ Circuit::Circuit(std::vector<InputGate*>& inputGates, std::vector<LogicalGate*> 
 
 
 // METHODS
+void Circuit::buildCircuit(const std::string logicalFunction) {
+	std::regex output{ "[A-Z](\\s)*=(\\s)*" };
+}
+
 void Circuit::addLogicalGate(LogicalGate* const logicalGate) {
 	this->logicalGates.push_back(logicalGate);
 }
