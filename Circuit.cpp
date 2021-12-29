@@ -2,7 +2,7 @@
 
 // INITIALIZATION of constant static members
 const int Circuit::LEVEL_HEIGHT{ 9 };
-const int Circuit::GATE_WIDTH{ 7 };
+const int Circuit::GATE_WIDTH{ 10 };
 
 
 // CONSTRUCTORS
@@ -175,6 +175,12 @@ void Circuit::simulateCircuit() {
 	std::string save;
 	std::cin >> save;
 	std::cout << std::endl;
+
+	while (save.compare("y") != 0 && save.compare("n") != 0) {
+		std::cout << "Invalid value! Do you want to save the circuit? (y/n) ";
+		std::cin >> save;
+	}
+	std::cin.ignore(1000, '\n');
 
 	if (save.compare("y") == 0) { this->saveFile(); }
 

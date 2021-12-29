@@ -23,7 +23,7 @@ void LogicalGate::updateGate() {
 	for (Gate* gate : this->getGates()) {
 
 		if (gateNumber == 0) { function.append(gate->getLogicalFunction()); }
-		else { function.append(",").append(gate->getLogicalFunction()); }
+		else { function.append(", ").append(gate->getLogicalFunction()); }
 		
 		gateNumber = gateNumber + 1;
 	}

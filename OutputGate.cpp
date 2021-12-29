@@ -20,7 +20,7 @@ void OutputGate::updateGate() {
 	this->setGateLevel(this->getLogicalGate()->getGateLevel() + 1);
 
 	// Add the output name and the sign equal '=' to the logical function of the input
-	std::string function = std::string(1, this->getName()) + "=" + this->getLogicalGate()->getLogicalFunction();
+	std::string function = std::string(1, this->getName()) + " = " + this->getLogicalGate()->getLogicalFunction();
 	this->setLogicalFunction(function);
 }
 
