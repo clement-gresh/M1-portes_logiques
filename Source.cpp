@@ -7,6 +7,13 @@
 
 
 
+std::vector< std::vector <std::regex> > createRegexList();
+std::vector<std::string> createErrorMessages();
+bool checkLogicalFunction(std::string expression);
+bool checkGateExpression(std::string expression);
+
+
+
 const int OUTPUT_NAME = 0;
 const int EQUAL_SIGN = 1;
 const int GATE_NAME = 2;
@@ -16,10 +23,8 @@ const int INPUT_NAME = 5;
 
 const std::vector<std::string> gateNames = { "and", "or" };
 
-
-bool checkLogicalFunction(std::string expression);
-bool checkGateExpression(std::string expression, const std::vector< std::vector <std::regex> > regexList,
-	const std::vector<std::string> expressionErrors);
+const std::vector< std::vector <std::regex> > regexList{ createRegexList() };
+const std::vector<std::string> expressionErrors{ createErrorMessages() };
 
 
 int main(int argc, char** argv)
@@ -88,39 +93,44 @@ int main(int argc, char** argv)
 }
 
 
-bool checkLogicalFunction(std::string expression) {
+// Creating the list of regex used to check the expression and the corresponding error messages
+std::vector< std::vector <std::regex> > createRegexList() {
+	std::vector< std::vector <std::regex> > regexListReturn;
 
-	// Creating the list of regex to check the expression
-	std::vector< std::vector <std::regex> > regexList;
-
-	regexList.push_back({ std::regex{ "^[A-Z](\\s)*" } });			// Output name
-	regexList.push_back({ std::regex{ "^=(\\s)*" } });				// Equal sign
+	regexListReturn.push_back({ std::regex{ "^[A-Z]" } });						// Output name
+	regexListReturn.push_back({ std::regex{ "^(\\s)*=(\\s)*" } });				// Equal sign
 
 	std::vector <std::regex> temp;
 	for (std::string gateName : gateNames) { temp.push_back(std::regex{ "^(\\s)*" + gateName + "(\\s)*" }); }		// Possible logical gate names
-	regexList.push_back(temp);
+	regexListReturn.push_back(temp);
 
-	regexList.push_back({ std::regex{ "^\\((\\s)*" } });			// Opening parenthesis
-	regexList.push_back({ std::regex{ "(\\s)*\\)(\\s)*$" } });		// Closing parenthesis
+	regexListReturn.push_back({ std::regex{ "^(\\s)*\\((\\s)*" } });			// Opening parenthesis
+	regexListReturn.push_back({ std::regex{ "(\\s)*\\)(\\s)*$" } });			// Closing parenthesis
 
-	regexList.push_back({ std::regex{ "^(\\s)*[a-z](\\s)*$" } });	// Input name
+	regexListReturn.push_back({ std::regex{ "^(\\s)*[a-z](\\s)*$" } });			// Input name
 
+	return regexListReturn;
+}
 
+std::vector<std::string> createErrorMessages() {
+	std::vector<std::string> expressionErrorsReturn;
 
-	// Creating the list of error messages
-	std::vector<std::string> expressionErrors;
-	expressionErrors.push_back("Expression must start with the name of the output (a single capital letter).");
-	expressionErrors.push_back("Expecting the sign equal '=' after the name of the output (a single capital letter).");
+	expressionErrorsReturn.push_back("Expression must start with the name of the output (a single capital letter).");
+	expressionErrorsReturn.push_back("Expecting the sign equal '=' after the name of the output (a single capital letter).");
 
 	std::string gateNameError{ "Expecting the name of an input (a single lower case letter) or a logical door : " };
 	for (std::string gateName : gateNames) { gateNameError.append(gateName + " "); }
-	expressionErrors.push_back(gateNameError);
+	expressionErrorsReturn.push_back(gateNameError);
 
-	expressionErrors.push_back("Expecting an opening parenthesis '(' before the parameter(s) of a logical gate.");
-	expressionErrors.push_back("Expecting a closing parenthesis ')' after the parameter(s) of a logical gate.");
+	expressionErrorsReturn.push_back("Expecting an opening parenthesis '(' before the parameter(s) of a logical gate.");
+	expressionErrorsReturn.push_back("Expecting a closing parenthesis ')' after the parameter(s) of a logical gate.");
+
+	return expressionErrorsReturn;
+}
 
 
 
+bool checkLogicalFunction(std::string expression) {
 
 	// Checking the number of opening and closing parenthesis
 	int parenthesis = 0;
@@ -150,13 +160,12 @@ bool checkLogicalFunction(std::string expression) {
 	}
 
 	
-	return checkGateExpression(expression, regexList, expressionErrors);
+	return checkGateExpression(expression);
 }
 
 
 // Checking the name and parameters a logical gate / input (recursiv function)
-bool checkGateExpression(std::string expression, const std::vector< std::vector <std::regex> > regexList,
-	const std::vector<std::string> expressionErrors) {
+bool checkGateExpression(std::string expression) {
 
 	// If the expression is an input
 	if (std::regex_search(expression, regexList.at(INPUT_NAME).at(0))) { return true; }
@@ -178,29 +187,31 @@ bool checkGateExpression(std::string expression, const std::vector< std::vector 
 		}
 
 		if (!expressionIsCorrect) {
-			std::cout << expression << " - " << expressionErrors.at(i) << std::endl;
+			std::cout << expression << " --> " << expressionErrors.at(i) << std::endl;
 			return false;
 		}
 	}
 
 
 
-	// Recursive calls on the different parameters of the gate
+	// Recursive calls on the parameter(s) of the logical gate
 	int parenthesis = 0;
 	for (unsigned int i = 0; i < expression.size(); i++) {
+		// Checking if all the parenthesis that were opened were also closed
 		if (expression.at(i) == '(') { parenthesis = parenthesis + 1; }
 		else if (expression.at(i) == ')') { parenthesis = parenthesis - 1; }
 
 		// If there are 2 parameters
 		else if (expression.at(i) == ',' && parenthesis == 0) {
-			bool testLeft = checkGateExpression(expression.substr(0, i) , regexList, expressionErrors);
+			bool testLeft = checkGateExpression(expression.substr(0, i));
 			if (!testLeft) { return testLeft; }
 
-			bool testRight = checkGateExpression(expression.substr(i+1), regexList, expressionErrors);
+			bool testRight = checkGateExpression(expression.substr(i+1));
 			return testRight;
 		}
 	}
 
 	// If there is only one parameter
-	return checkGateExpression(expression, regexList, expressionErrors);
+	return checkGateExpression(expression);
 }
+
