@@ -11,7 +11,7 @@ protected:
 	IOGate(const GateType type, const char name);
 
 	// METHODES
-	char checkNameFormating(const char name, const std::regex format, const char defaultName);
+	static char checkNameFormating(const char name, const std::regex format, const char defaultName);
 
 public:
 	// ACCESSEURS

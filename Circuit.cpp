@@ -16,14 +16,14 @@ void Circuit::buildCircuit(const std::string logicalFunction) {
 	std::regex output{ "[A-Z](\\s)*=(\\s)*" };
 }
 
-void Circuit::addLogicalGate(LogicalGate* const logicalGate) {
-	this->logicalGates.push_back(logicalGate);
+void Circuit::addLogicalGate(LogicalGate* const gate) {
+	this->logicalGates.push_back(gate);
 }
 
 void Circuit::simulateCircuit() {
 	// Reinitializing the circuit
-	for (LogicalGate* logicalGate : this->getLogicalGates()) {
-		logicalGate->setAlreadyUpdated(false);
+	for (LogicalGate* gate : this->getLogicalGates()) {
+		gate->setAlreadyUpdated(false);
 	}
 
 	// Assigning a value to each input and adding them to the drawing
@@ -164,7 +164,7 @@ void Circuit::simulateCircuit() {
 				= gate->getName();
 
 
-		this->addWire(gate->getLogicalGate(), gate, 0);
+		this->addWire(gate->getGate(), gate, 0);
 	}
 
 	// Displaying the final circuit on screen
@@ -234,8 +234,8 @@ void Circuit::addWire(Gate* const prevGate, Gate* const nextGate, const int gate
 
 	unsigned int arrivalColumn;
 	unsigned int arrivalLine;
-	// debug 
-	/*
+
+	// debug
 	std::cout << "prevGate type, level, depth : " << prevGate->getType()
 		<< ", " << prevGate->getGateLevel()
 		<< ", " << prevGate->getGateDepth() << std::endl;
@@ -244,7 +244,7 @@ void Circuit::addWire(Gate* const prevGate, Gate* const nextGate, const int gate
 	std::cout << "nextGate type, level, depth : " << nextGate->getType()
 		<< ", " << nextGate->getGateLevel()
 		<< ", " << nextGate->getGateDepth() << std::endl;
-	*/
+	
 	// fin debug
 
 

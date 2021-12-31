@@ -9,24 +9,24 @@ class OutputGate : public IOGate, UpdateInterface {
 private:
 	static const std::regex format;
 	static const char defaultName;
-	LogicalGate* const logicalGate;
+	Gate* const gate;
 
 
 public:
 	// CONSTRUCTORS
-	OutputGate(const char name, LogicalGate* const gate);
+	OutputGate(const char name, Gate* const gate);
 
 	// METHODS
 	virtual void updateGate();
 
 	// ACCESSORS
-	LogicalGate* const getLogicalGate() const;
+	Gate* const getGate() const;
 
 };
 
 
 // operator OVERLOAD
-std::ostream& operator<<(std::ostream& out, OutputGate* const logicalGate);
+std::ostream& operator<<(std::ostream& out, OutputGate* const gate);
 
 #endif
 

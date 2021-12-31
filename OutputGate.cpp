@@ -7,24 +7,28 @@ const char OutputGate::defaultName{ 'Z' };
 
 
 // CONSTRUCTORS
-OutputGate::OutputGate(const char name, LogicalGate* const gate) : 
-	IOGate{ GateType::OUTPUT, checkNameFormating(name, OutputGate::format, OutputGate::defaultName) },
-	logicalGate{ gate } {}
+OutputGate::OutputGate(const char name, Gate* const gate) :
+	IOGate{ GateType::OUTPUT, IOGate::checkNameFormating(name, OutputGate::format, OutputGate::defaultName) },
+	gate{ gate } {}
 
 void OutputGate::updateGate() {
-	// Same value and depth as its input
-	this->setValue( this->getLogicalGate()->getValue() );
-	this->setGateDepth(this->getLogicalGate()->getGateDepth());
+	// Same value its input
+	this->setValue( this->getGate()->getValue() );
+	
+	// Same depth as its input (or at least 1)
+	this->setGateDepth( std::max(this->getGate()->getGateDepth(), 1) );
 
 	// One level above its input
-	this->setGateLevel(this->getLogicalGate()->getGateLevel() + 1);
+	int max = 0;
+	if (gate->getGateLevel() > max && gate->getType() != GateType::INPUT) { max = gate->getGateLevel(); }
+	this->setGateLevel(max + 1);
 
 	// Add the output name and the sign equal '=' to the logical function of the input
-	std::string function = std::string(1, this->getName()) + " = " + this->getLogicalGate()->getLogicalFunction();
+	std::string function = std::string(1, this->getName()) + " = " + this->getGate()->getLogicalFunction();
 	this->setLogicalFunction(function);
 }
 
-LogicalGate* const OutputGate::getLogicalGate() const { return this->logicalGate; }
+Gate* const OutputGate::getGate() const { return this->gate; }
 
 
 // operator OVERLOAD

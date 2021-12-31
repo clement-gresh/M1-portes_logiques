@@ -36,8 +36,8 @@ const std::vector<Gate*> LogicalGate::getGates() const { return this->gates; }
 
 
 // Operator OVERLOAD
-std::ostream& operator<<(std::ostream& out, LogicalGate* const logicalGate) {
-	out << "Value of Gate \"" << logicalGate->getType() << "\" : " << logicalGate->getValue() << std::endl;
-	out << "Logical function : " << logicalGate->getLogicalFunction() << std::endl << std::endl;
+std::ostream& operator<<(std::ostream& out, LogicalGate* const gate) {
+	out << "Value of Gate \"" << gate->getType() << "\" : " << gate->getValue() << std::endl;
+	out << "Logical function : " << gate->getLogicalFunction() << std::endl << std::endl;
 	return out;
 };

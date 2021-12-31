@@ -24,7 +24,7 @@ public:
     Circuit(std::vector<InputGate*>& inputGates, std::vector<LogicalGate*> logicalGates, std::vector<OutputGate*> outputGates);
 
     // METHODS
-    void addLogicalGate(LogicalGate* const logicalGate);
+    void addLogicalGate(LogicalGate* const gate);
     // debugg : ajouter addInputGate, addOutputGate et les remove pour les 3;
     void buildCircuit(const std::string logicalFunction);
     void simulateCircuit();

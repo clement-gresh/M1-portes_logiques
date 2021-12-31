@@ -21,6 +21,6 @@ public:
 };
 
 // operator OVERLOAD
-std::ostream& operator<<(std::ostream& out, LogicalGate* const logicalGate);
+std::ostream& operator<<(std::ostream& out, LogicalGate* const gate);
 
 #endif
