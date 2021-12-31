@@ -60,14 +60,16 @@ int main(int argc, char** argv)
 			expressionIsCorrect = checkLogicalFunction(expression);
 			std::cout << std::endl;
 		}
-		
+
+
+		if (expressionIsCorrect) {
+			std::cout << "The syntax of the expression is correct, now creating the circuit." << std::endl;
+			createCircuit(expression);
+			return 0;
+		}
 	}
 
-	std::cout << "Syntax of the expression is correct" << std::endl; // debug
-
-	createCircuit(expression);
-
-	std::cout << std::endl;
+	std::cout << std::endl << "Loading pre-existing circuit." << std::endl;
 
 
 	InputGate* a = new InputGate('a');
@@ -231,7 +233,6 @@ void createCircuit(std::string expression) {
 
 	std::regex_search(expression, match, regexList.at(OUTPUT_NAME).at(0));
 	outputName = match[0];
-	std::cout << outputName << std::endl; // debug
 
 	expression = std::regex_replace(expression, regexList.at(OUTPUT_NAME).at(0), "");
 
@@ -246,6 +247,8 @@ void createCircuit(std::string expression) {
 
 
 Gate* const nextGates(std::string expression) {
+
+	std::cout << "Call to nextGate() with expression : " << expression << std::endl;
 
 	// If the expression matches an input
 	if (std::regex_search(	expression,	regexList.at(INPUT_NAME).at(0))) {

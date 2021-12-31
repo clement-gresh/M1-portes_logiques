@@ -80,46 +80,7 @@ void Circuit::simulateCircuit() {
 					logicalGate->setAlreadyUpdated(true);
 					std::cout << logicalGate;
 
-
-				// Adding the gate to the drawing
-					// Calculating the level and line of the gate
-					int gateLevel = logicalGate->getGateLevel();
-
-					// gateLine = number of input gates + gate level * LEVEL_HEIGHT - 1
-					unsigned int gateLine = this->getInputGates().size() + gateLevel * Circuit::LEVEL_HEIGHT - 1;
-
-					this->addLevel(gateLine);
-
-
-					// Calculating the depth and column of the gate
-					int gateDepth = this->getDepthPerLevel().at(gateLevel) + 1;
-					logicalGate->setGateDepth(gateDepth);
-					this->depthPerLevel.at(gateLevel) = gateDepth;
-
-					this->addDepth(gateDepth);
-
-
-					// Adding the name of the gate to the drawing
-					std::string gateName = "";
-					gateName = gateName + logicalGate->getType();
-
-					int gateColumn = gateDepth * Circuit::GATE_WIDTH - 1;
-
-					for (int i = 0; i < 3; i++) {
-						this->circuitDrawing
-							.at(gateLine - (int)std::floor(Circuit::LEVEL_HEIGHT / 2.))
-							.at(gateColumn - (int)std::floor(Circuit::GATE_WIDTH / 2.) + i)
-							= gateName[i];
-					}
-
-
-					// Adding the "wires" between the gates
-					int gateNumber = 0;
-					for (Gate* gate : logicalGate->getGates()) {
-						this->addWire(gate, logicalGate, gateNumber);
-						gateNumber = gateNumber + 1;
-					}
-
+					this->updateCircuit(logicalGate);
 
 					// Displaying the current circuit on screen
 					this->printCircuit();
@@ -134,41 +95,15 @@ void Circuit::simulateCircuit() {
 	}
 
 	// Updating the value of the outputs
-	for (OutputGate* gate : this->getOutputGates()) {
-		gate->updateGate();
-		std::cout << gate;
-
-	// Adding the output gate to the drawing
-		// Calculating the level and line of the gate
-		int gateLevel = gate->getGateLevel();
-
-		// gateLine = number of input gates + gate level * LEVEL_HEIGHT - 1
-		unsigned int gateLine = this->getInputGates().size() + gateLevel * Circuit::LEVEL_HEIGHT - 1;
-
-
-		this->addLevel(gateLine);
-
-
-		// Calculating the depth and column of the gate
-		int gateDepth = gate->getGateDepth();
-
-		this->addDepth(gateDepth);
-
-
-		// Adding the name of the gate to the drawing
-		int gateColumn = gateDepth * Circuit::GATE_WIDTH - 1;
-
-		this->circuitDrawing
-				.at(gateLine - (int)std::floor(Circuit::LEVEL_HEIGHT * 2. / 3.))
-				.at(gateColumn - (int)std::floor(Circuit::GATE_WIDTH / 2.) + 1)
-				= gate->getName();
-
-
-		this->addWire(gate->getGate(), gate, 0);
+	for (OutputGate* outputGate : this->getOutputGates()) {
+		outputGate->updateGate();
+		std::cout << outputGate;
+		this->updateCircuit(outputGate);
 	}
 
 	// Displaying the final circuit on screen
 	this->printCircuit();
+
 
 	// Saving the circuit in a file
 	std::cout << "Do you want to save the circuit? (y/n) ";
@@ -184,6 +119,7 @@ void Circuit::simulateCircuit() {
 
 	if (save.compare("y") == 0) { this->saveFile(); }
 
+
 	/* // debug : option 1
 	for (OutputGate* outputGate : this->getOutputGates()) {
 
@@ -195,6 +131,83 @@ void Circuit::simulateCircuit() {
 	}
 	*/
 }
+
+// Adding the gate to the drawing
+void Circuit::updateCircuit(LogicalGate* const newGate) {
+
+	// Calculating the level and line of the gate
+	int gateLevel = newGate->getGateLevel();
+
+	// gateLine = number of input gates + gate level * LEVEL_HEIGHT - 1
+	unsigned int gateLine = this->getInputGates().size() + gateLevel * Circuit::LEVEL_HEIGHT - 1;
+
+	this->addLevel(gateLine);
+
+
+	// Calculating the depth and column of the gate
+	int gateDepth = this->getDepthPerLevel().at(gateLevel) + 1;
+	newGate->setGateDepth(gateDepth);
+	this->depthPerLevel.at(gateLevel) = gateDepth;
+
+	this->addDepth(gateDepth);
+
+
+	// Adding the name of the gate to the drawing
+	std::string gateName = "";
+	gateName = gateName + newGate->getType();
+
+	int gateColumn = gateDepth * Circuit::GATE_WIDTH - 1;
+
+	for (int i = 0; i < 3; i++) {
+		this->circuitDrawing
+			.at(gateLine - (int)std::floor(Circuit::LEVEL_HEIGHT / 2.))
+			.at(gateColumn - (int)std::floor(Circuit::GATE_WIDTH / 2.) + i)
+			= gateName[i];
+	}
+
+
+	// Adding the "wires" between the gates
+	int gateNumber = 0;
+	for (Gate* gate : newGate->getGates()) {
+		this->addWire(gate, newGate, gateNumber);
+		gateNumber = gateNumber + 1;
+	}
+
+}
+
+
+// Adding the gate to the drawing
+void Circuit::updateCircuit(OutputGate* const newGate) {
+
+	// Adding the output gate to the drawing
+		// Calculating the level and line of the gate
+	int gateLevel = newGate->getGateLevel();
+
+	// gateLine = number of input gates + gate level * LEVEL_HEIGHT - 1
+	unsigned int gateLine = this->getInputGates().size() + gateLevel * Circuit::LEVEL_HEIGHT - 1;
+
+
+	this->addLevel(gateLine);
+
+
+	// Calculating the depth and column of the gate
+	int gateDepth = newGate->getGateDepth();
+
+	this->addDepth(gateDepth);
+
+
+	// Adding the name of the gate to the drawing
+	int gateColumn = gateDepth * Circuit::GATE_WIDTH - 1;
+
+	this->circuitDrawing
+		.at(gateLine - (int)std::floor(Circuit::LEVEL_HEIGHT * 2. / 3.))
+		.at(gateColumn - (int)std::floor(Circuit::GATE_WIDTH / 2.) + 1)
+		= newGate->getName();
+
+
+	this->addWire(newGate->getGate(), newGate, 0);
+}
+
 
 // Add one level to the drawing if necessary (the fist column being larger)
 void Circuit::addLevel(const unsigned int gateLine) {
