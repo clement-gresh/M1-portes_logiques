@@ -24,6 +24,7 @@ public:
     Circuit(std::vector<InputGate*>& inputGates, std::vector<LogicalGate*> logicalGates, std::vector<OutputGate*> outputGates);
 
     // METHODS
+    static const std::string userInput(const std::string message, const std::regex regex);
     void addLogicalGate(LogicalGate* const gate);
     // debugg : ajouter addInputGate, addOutputGate et les remove pour les 3;
     void buildCircuit(const std::string logicalFunction);
@@ -43,5 +44,6 @@ public:
     const std::vector<std::vector<std::string>>& getCircuitDrawing() const;
     const std::vector<int>& getDepthPerLevel() const;
 };
+
 
 #endif

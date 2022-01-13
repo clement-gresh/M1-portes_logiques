@@ -6,9 +6,9 @@
 #include <regex>
 
 
-
 const std::vector< std::vector <std::regex> > createRegexList();
 const std::vector<std::string> createErrorMessages();
+//static const std::string userInput(const std::string message, const std::regex regex);
 bool checkLogicalFunction(std::string expression);
 bool checkGateExpression(std::string expression);
 void createCircuit(std::string expression);
@@ -32,39 +32,32 @@ const std::vector<std::string> errorList{ createErrorMessages() };
 int main(int argc, char** argv)
 {
 	// Asking the user to enter the logical expression of the circuit
-	std::cout << "Do you want to write down the logical expression of the circuit (e.g. \"A = or( a, and (b ,c) )\") ? "
-		<<  "Otherwise the default circuit will be loaded. (y/n) ";
-	std::string enterExpression;
-	std::string expression;
+	std::string s = "Do you want to write down the logical expression of the circuit (e.g. \"A = or( a, and (b ,c) )\") ?\n";
+	s = s + "Otherwise the default circuit will be loaded. (y / n) ";
 
-	std::cin >> enterExpression;
-	std::cin.clear();
-	std::cin.ignore(1000, '\n');
-	std::cout << std::endl;
-
-	while (enterExpression.compare("y") != 0 && enterExpression.compare("n") != 0) {
-		std::cout << "Invalid value! Do you want to write down the logical expression of the circuit? (y/n) ";
-		std::cin >> enterExpression;
-	}
+	std::string input = Circuit::userInput(s, std::regex{ "^[yn]$" });
 
 	// Checking the syntax of the logical expression entered by the user
-	if (enterExpression.compare("y") == 0) {
+	if (input.compare("y") == 0) {
+		std::cin.clear();
+		std::cin.ignore(1000, '\n');
+
 		bool expressionIsCorrect = false;
 
 		while (!expressionIsCorrect) {
 			std::cout << "Enter the logical expression of the circuit (type 'exit' to load the default circuit) : ";
-			std::getline(std::cin, expression);
+			std::getline(std::cin, input);
 
-			if (expression.compare("exit") == 0) { break; }
+			if (input.compare("exit") == 0) { break; }
 		
-			expressionIsCorrect = checkLogicalFunction(expression);
+			expressionIsCorrect = checkLogicalFunction(input);
 			std::cout << std::endl;
 		}
 
 
 		if (expressionIsCorrect) {
 			std::cout << "The syntax of the expression is correct, now creating the circuit." << std::endl;
-			createCircuit(expression);
+			createCircuit(input);
 			return 0;
 		}
 	}
@@ -101,7 +94,7 @@ int main(int argc, char** argv)
 }
 
 
-// Creating the list of regex used to check the expression and the corresponding error messages
+// Creating the list of regex used to check the expression
 const std::vector< std::vector <std::regex> > createRegexList() {
 	std::vector< std::vector <std::regex> > regexListReturn;
 
@@ -120,6 +113,8 @@ const std::vector< std::vector <std::regex> > createRegexList() {
 	return regexListReturn;
 }
 
+
+// Creating the list of error messages corresponding to the regex used to check the expression
 const std::vector<std::string> createErrorMessages() {
 	std::vector<std::string> expressionErrorsReturn;
 
@@ -135,7 +130,6 @@ const std::vector<std::string> createErrorMessages() {
 
 	return expressionErrorsReturn;
 }
-
 
 
 bool checkLogicalFunction(std::string expression) {
