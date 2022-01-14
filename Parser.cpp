@@ -163,7 +163,7 @@ const bool parser::checkGateExpression(std::string expression) {
 }
 
 // Creating the circuit (must be done after having checked that the logical expression is correct)
-void parser::createCircuit(std::string expression){
+Circuit* parser::createCircuit(std::string expression){
 
 	// Getting the output gate name
 	std::smatch match;
@@ -178,14 +178,10 @@ void parser::createCircuit(std::string expression){
 	//Creating the output gate
 	Gate* gate = parser::nextGates(expression);
 	outputGates.push_back(new OutputGate(outputName[0], gate));
-
-	//return new Circuit(inputGates, logicalGates, outputGates);
+	return new Circuit(inputGates, logicalGates, outputGates);
 }
 
 Gate* const parser::nextGates(std::string expression) {
-
-	std::cout << "Call to nextGate() with expression : " << expression << std::endl; // debug
-
 	// If the expression matches an input
 	if (std::regex_search(expression, regexList.at(INPUT_NAME).at(0))) {
 		std::smatch match;
@@ -249,6 +245,7 @@ Gate* const parser::nextGates(std::string expression) {
 Gate* const parser::createGate(const int gateType, std::vector<Gate*> const gates) {
 	LogicalGate* lg;
 	switch (gateType) {
+	// The cases match the logical gate names in parser::gateNames (e.g. 0 = first cell of gateNames = "and")
 	case 0:
 		lg = new AndGate(gates.at(0), gates.at(1));
 	}

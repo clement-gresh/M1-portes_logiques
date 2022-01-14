@@ -8,6 +8,7 @@
 
 #include <regex>
 
+class Circuit;
 
 namespace parser {
 	extern const int OUTPUT_NAME;
@@ -30,7 +31,7 @@ namespace parser {
 	const std::string userInput(const std::string message, const std::regex regex);
 	const bool checkLogicalFunction(std::string expression);
 	const bool checkGateExpression(std::string expression);
-	void createCircuit(std::string expression);
+	Circuit* createCircuit(std::string expression);
 	Gate* const nextGates(std::string expression);
 	Gate* const createGate(const int gateType, std::vector<Gate*> const gates);
 }
