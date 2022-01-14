@@ -1,7 +1,5 @@
 #include "Circuit.hpp"
 
-
-
 // INITIALIZATION of constant static members
 const int Circuit::LEVEL_HEIGHT{ 9 };
 const int Circuit::GATE_WIDTH{ 10 };
@@ -12,16 +10,7 @@ Circuit::Circuit(std::vector<InputGate*>& inputGates, std::vector<LogicalGate*> 
 	: inputGates{ inputGates }, logicalGates{ logicalGates }, outputGates{ outputGates },
 	circuitDrawing{ std::vector<std::vector<std::string>>() }, depthPerLevel{ {1} } {}
 
-
 // METHODS
-void Circuit::buildCircuit(const std::string logicalFunction) {
-	std::regex output{ "[A-Z](\\s)*=(\\s)*" };
-}
-
-void Circuit::addLogicalGate(LogicalGate* const gate) {
-	this->logicalGates.push_back(gate);
-}
-
 void Circuit::simulateCircuit() {
 	// Reinitializing the circuit
 	for (LogicalGate* gate : this->getLogicalGates()) {
@@ -75,6 +64,7 @@ void Circuit::simulateCircuit() {
 					// Updating the gate (its level, logical function and value)
 					logicalGate->updateGate();
 					logicalGate->setAlreadyUpdated(true);
+					std::cout << "---------------------------------------------------------" << std::endl << std::endl;
 					std::cout << logicalGate;
 
 					this->updateCircuit(logicalGate);
@@ -106,18 +96,6 @@ void Circuit::simulateCircuit() {
 	std::string s = "Do you want to save this circuit in a file? (y/n) ";
 	std::string save = parser::userInput(s, std::regex{ "^[yn]$" });
 	if (save.compare("y") == 0) { this->saveFile(); }
-
-
-	/* // debug : option 1
-	for (OutputGate* outputGate : this->getOutputGates()) {
-
-		LogicalGate* logicalGate = outputGate->getLogicalGate();
-		
-		nextGate(logicalGate);
-
-		this->circuitGates.push_back(outputGate);
-	}
-	*/
 }
 
 // Adding the gate to the drawing
@@ -237,6 +215,7 @@ void Circuit::addWire(Gate* const prevGate, Gate* const nextGate, const int gate
 	unsigned int arrivalLine;
 
 	// debug
+	/*
 	std::cout << "prevGate type, level, depth : " << prevGate->getType()
 		<< ", " << prevGate->getGateLevel()
 		<< ", " << prevGate->getGateDepth() << std::endl;
@@ -245,7 +224,7 @@ void Circuit::addWire(Gate* const prevGate, Gate* const nextGate, const int gate
 	std::cout << "nextGate type, level, depth : " << nextGate->getType()
 		<< ", " << nextGate->getGateLevel()
 		<< ", " << nextGate->getGateDepth() << std::endl;
-	
+	*/
 	// fin debug
 
 
@@ -368,7 +347,7 @@ void Circuit::printCircuit() {
 
 void Circuit::saveFile() {
 
-	std::cout << "Save as (name the file without the extension): ";
+	std::cout << "Save as (enter the name the file without the extension): ";
 	std::string save;
 	std::cin >> save;
 	std::cout << std::endl;
@@ -394,25 +373,6 @@ void Circuit::saveFile() {
 
 	output_file.close();
 }
-
-
-/* // debug : option 1
-With a fex modifications, this method could allow to only enter the OutputGates in the circuit 
-(then the Input and Logical Gates can be fetched automatically)
-
-void Circuit::nextGate(LogicalGate* const logicalGate) {
-	this->circuitGates.push_back(logicalGate);
-
-	for (Gate* next : logicalGate->getGates()) {
-
-		if (next->getType() != GateType::INPUT) {
-			nextGate((LogicalGate * ) next);
-		}
-
-		this->circuitGates.push_back(next);
-	}
-}
-*/
 
 // ACCESSORS
 const std::vector<InputGate*>& Circuit::getInputGates() const { return this->inputGates; }

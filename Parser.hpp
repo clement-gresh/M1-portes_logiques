@@ -4,6 +4,7 @@
 #include "InputGate.hpp"
 #include "OutputGate.hpp"
 #include "AndGate.hpp"
+#include "Circuit.hpp"
 
 #include <regex>
 
@@ -20,10 +21,13 @@ namespace parser {
 	extern const std::vector< std::vector <std::regex> > regexList;
 	extern const std::vector<std::string> errorList;
 
+	extern std::vector<InputGate*> inputGates;
+	extern std::vector<LogicalGate*> logicalGates;
+	extern std::vector<OutputGate*> outputGates;
+
 	const std::vector< std::vector <std::regex> > createRegexList();
 	const std::vector<std::string> createErrorMessages();
 	const std::string userInput(const std::string message, const std::regex regex);
-
 	const bool checkLogicalFunction(std::string expression);
 	const bool checkGateExpression(std::string expression);
 	void createCircuit(std::string expression);

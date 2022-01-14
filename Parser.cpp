@@ -14,6 +14,9 @@ const std::vector<std::string> parser::gateNames{ "and", "or" } ;
 const std::vector< std::vector <std::regex> > parser::regexList{ createRegexList() };
 const std::vector<std::string> parser::errorList{ createErrorMessages() };
 
+std::vector<InputGate*> parser::inputGates{};
+std::vector<LogicalGate*> parser::logicalGates{};
+std::vector<OutputGate*> parser::outputGates{};
 
 
 // Creating the list of regex used to check the expression
@@ -61,9 +64,10 @@ const std::string parser::userInput(const std::string message, const std::regex 
 
 	while (!std::regex_match(input, regex)) {
 		if (first) { first = false; }
-		else { std::cout << std::endl << "Invalid value. "; }
+		else { std::cout << "Invalid value. "; }
 		std::cout << message;
 		std::cin >> input;
+		std::cout << std::endl;
 	}
 	std::cin.clear();
 	std::cin.ignore(1000, '\n');
@@ -158,14 +162,12 @@ const bool parser::checkGateExpression(std::string expression) {
 	return parser::checkGateExpression(expression);
 }
 
-
 // Creating the circuit (must be done after having checked that the logical expression is correct)
-void parser::createCircuit(std::string expression) {
+void parser::createCircuit(std::string expression){
 
 	// Getting the output gate name
 	std::smatch match;
 	std::string outputName;
-
 	std::regex_search(expression, match, regexList.at(OUTPUT_NAME).at(0));
 	outputName = match[0];
 
@@ -175,9 +177,10 @@ void parser::createCircuit(std::string expression) {
 
 	//Creating the output gate
 	Gate* gate = parser::nextGates(expression);
-	OutputGate* output = new OutputGate(outputName[0], gate);
-}
+	outputGates.push_back(new OutputGate(outputName[0], gate));
 
+	//return new Circuit(inputGates, logicalGates, outputGates);
+}
 
 Gate* const parser::nextGates(std::string expression) {
 
@@ -191,7 +194,9 @@ Gate* const parser::nextGates(std::string expression) {
 		std::regex_search(expression, match, std::regex{ "[a-z]" }); // Look for the input name without any white space
 		inputName = match[0];
 
-		return new InputGate(inputName[0]);
+		InputGate* input = new InputGate(inputName[0]);
+		inputGates.push_back(input);
+		return input;
 	}
 
 
@@ -242,8 +247,11 @@ Gate* const parser::nextGates(std::string expression) {
 
 
 Gate* const parser::createGate(const int gateType, std::vector<Gate*> const gates) {
+	LogicalGate* lg;
 	switch (gateType) {
 	case 0:
-		return new AndGate(gates.at(0), gates.at(1));
+		lg = new AndGate(gates.at(0), gates.at(1));
 	}
+	logicalGates.push_back(lg);
+	return lg;
 }
