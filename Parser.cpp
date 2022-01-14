@@ -190,6 +190,11 @@ Gate* const parser::nextGates(std::string expression) {
 		std::regex_search(expression, match, std::regex{ "[a-z]" }); // Look for the input name without any white space
 		inputName = match[0];
 
+		for (InputGate* ig : inputGates) {
+			if (ig->getName() == inputName[0]) {
+				return ig;
+			}
+		}
 		InputGate* input = new InputGate(inputName[0]);
 		inputGates.push_back(input);
 		return input;
