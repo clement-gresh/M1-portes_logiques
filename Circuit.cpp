@@ -10,6 +10,18 @@ Circuit::Circuit(std::vector<InputGate*>& inputGates, std::vector<LogicalGate*> 
 	: inputGates{ inputGates }, logicalGates{ logicalGates }, outputGates{ outputGates },
 	circuitDrawing{ std::vector<std::vector<std::string>>() }, depthPerLevel{ {1} } {}
 
+Circuit::~Circuit(){
+	for (InputGate* ig : this->inputGates) { delete ig; }
+	for (LogicalGate* lg : this->logicalGates) { delete lg; }
+	for (OutputGate* og : this->outputGates) { delete og; }
+	this->inputGates.clear();
+	this->logicalGates.clear();
+	this->outputGates.clear();
+	std::vector<InputGate*>().swap(this->inputGates);
+	std::vector<LogicalGate*>().swap(this->logicalGates);
+	std::vector<OutputGate*>().swap(this->outputGates);
+}
+
 // METHODS
 void Circuit::simulateCircuit() {
 	// Reinitializing the circuit

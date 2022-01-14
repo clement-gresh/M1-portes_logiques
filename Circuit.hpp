@@ -21,6 +21,8 @@ public:
     // CONSTRUCTORS
     Circuit(std::vector<InputGate*>& inputGates, std::vector<LogicalGate*> logicalGates, std::vector<OutputGate*> outputGates);
 
+    virtual ~Circuit();
+
     // METHODS
     void simulateCircuit();
     void updateCircuit(LogicalGate* const newGate);

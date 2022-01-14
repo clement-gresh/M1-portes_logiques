@@ -4,17 +4,16 @@
 
 int main(int argc, char** argv)
 {
+	Circuit* circuit;
+
 	// Asking the user if they want to enter the logical expression of the circuit
 	std::string s = "Do you want to write down the logical expression of the circuit - e.g.    A = or(a, and(b, c)) ?\n";
 	s = s + "Otherwise the default circuit will be loaded. (y / n) ";
 	std::string input = parser::userInput(s, std::regex{ "^[yn]$" });
-
 	bool expressionIsCorrect = false;
-	Circuit* circuit;
 
 	if (input.compare("y") == 0) {
 		// Checking the syntax of the logical expression entered by the user
-
 		while (!expressionIsCorrect) {
 			std::cout << "Enter the logical expression of the circuit (type 'exit' to load the default circuit) : ";
 			std::getline(std::cin, input);
@@ -26,12 +25,13 @@ int main(int argc, char** argv)
 		}
 	}
 
-
+	// Creating a circuit from the logical expression
 	if (expressionIsCorrect) {
 		std::cout << "The syntax of the expression is correct, now creating the circuit." << std::endl;
 		circuit = parser::createCircuit(input);
 	}
 
+	// Creating a circuit by creating gates
 	else {
 		std::cout << std::endl << "Loading pre-existing circuit." << std::endl;
 
