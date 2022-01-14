@@ -23,6 +23,7 @@ namespace parser {
 	const std::vector< std::vector <std::regex> > createRegexList();
 	const std::vector<std::string> createErrorMessages();
 	const std::string userInput(const std::string message, const std::regex regex);
+
 	const bool checkLogicalFunction(std::string expression);
 	const bool checkGateExpression(std::string expression);
 	void createCircuit(std::string expression);

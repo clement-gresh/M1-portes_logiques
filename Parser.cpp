@@ -10,7 +10,7 @@ const int parser::OPENING_PARENTHESIS{ 3 };
 const int parser::CLOSING_PARENTHESIS{ 4 };
 const int parser::INPUT_NAME{ 5 };
 
-const std::vector<std::string> parser::gateNames{ { "and", "or" } };
+const std::vector<std::string> parser::gateNames{ "and", "or" } ;
 const std::vector< std::vector <std::regex> > parser::regexList{ createRegexList() };
 const std::vector<std::string> parser::errorList{ createErrorMessages() };
 
@@ -65,6 +65,9 @@ const std::string parser::userInput(const std::string message, const std::regex 
 		std::cout << message;
 		std::cin >> input;
 	}
+	std::cin.clear();
+	std::cin.ignore(1000, '\n');
+
 	return input;
 }
 
@@ -79,7 +82,7 @@ const bool parser::checkLogicalFunction(std::string expression) {
 		else if (expression.at(i) == ')') { parenthesis = parenthesis - 1; }
 	}
 	if (parenthesis != 0) {
-		std::cout << "The number of parenthesis is incorrect." << std::endl;
+		std::cout << expression << " --> The number of parenthesis is incorrect." << std::endl;
 		return false;
 	}
 
@@ -94,7 +97,7 @@ const bool parser::checkLogicalFunction(std::string expression) {
 		}
 
 		if (!expressionIsCorrect) {
-			std::cout << expression << " - " << errorList.at(i) << std::endl;
+			std::cout << expression << " --> " << errorList.at(i) << std::endl;
 			return false;
 		}
 	}

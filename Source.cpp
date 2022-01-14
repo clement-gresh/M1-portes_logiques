@@ -11,8 +11,8 @@ int main(int argc, char** argv)
 
 	if (input.compare("y") == 0) {
 		// Checking the syntax of the logical expression entered by the user
-		std::cin.clear();
-		std::cin.ignore(1000, '\n');
+		//std::cin.clear();
+		//std::cin.ignore(1000, '\n');
 
 		bool expressionIsCorrect = false;
 
