@@ -1,9 +1,7 @@
 #ifndef CIRCUIT
 #define CIRCUIT
 
-#include "InputGate.hpp"
-#include "LogicalGate.hpp"
-#include "OutputGate.hpp"
+#include "Parser.hpp"
 
 #include <cmath>
 #include <fstream>
@@ -24,7 +22,6 @@ public:
     Circuit(std::vector<InputGate*>& inputGates, std::vector<LogicalGate*> logicalGates, std::vector<OutputGate*> outputGates);
 
     // METHODS
-    static const std::string userInput(const std::string message, const std::regex regex);
     void addLogicalGate(LogicalGate* const gate);
     // debugg : ajouter addInputGate, addOutputGate et les remove pour les 3;
     void buildCircuit(const std::string logicalFunction);

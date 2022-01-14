@@ -14,21 +14,6 @@ Circuit::Circuit(std::vector<InputGate*>& inputGates, std::vector<LogicalGate*> 
 
 
 // METHODS
-
-// Asking the user for an input untill it matches what is expected
-const std::string Circuit::userInput(const std::string message, const std::regex regex) {
-	std::string input;
-	int first = true;
-
-	while (!std::regex_match(input, regex)) {
-		if (first) { first = false; }
-		else { std::cout << std::endl << "Invalid value. "; }
-		std::cout << message;
-		std::cin >> input;
-	}
-	return input;
-}
-
 void Circuit::buildCircuit(const std::string logicalFunction) {
 	std::regex output{ "[A-Z](\\s)*=(\\s)*" };
 }
@@ -52,7 +37,7 @@ void Circuit::simulateCircuit() {
 		std::string s1 = "Please enter the value of Gate \"";
 		s1.push_back(inputGate->getName());
 		s1 = s1 + "\" (0 / 1) : ";
-		std::string newValue = Circuit::userInput(s1, std::regex{ "^[01]$" } );
+		std::string newValue = parser::userInput(s1, std::regex{ "^[01]$" } );
 
 		if (newValue.compare("0") == 0) { inputGate->setValue(0); }
 		else { inputGate->setValue(1); }
@@ -119,7 +104,7 @@ void Circuit::simulateCircuit() {
 
 	// Saving the circuit in a file
 	std::string s = "Do you want to save this circuit in a file? (y/n) ";
-	std::string save = Circuit::userInput(s, std::regex{ "^[yn]$" });
+	std::string save = parser::userInput(s, std::regex{ "^[yn]$" });
 	if (save.compare("y") == 0) { this->saveFile(); }
 
 
