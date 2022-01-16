@@ -1,14 +1,9 @@
 #include "Circuit.hpp"
 
-// INITIALIZATION of constant static members
-//const int Circuit::LEVEL_HEIGHT{ 9 };
-//const int Circuit::GATE_WIDTH{ 10 };
-
-
 // CONSTRUCTORS
-Circuit::Circuit(std::vector<InputGate*>& inputGates, std::vector<LogicalGate*> logicalGates, std::vector<OutputGate*> outputGates)
-	: inputGates{ inputGates }, logicalGates{ logicalGates }, outputGates{ outputGates }
-	/*circuitDrawing{std::vector<std::vector<std::string>>()}, depthPerLevel{{1}}*/ {}
+Circuit::Circuit(std::vector<InputGate*>& inputGates,
+	std::vector<LogicalGate*> logicalGates, std::vector<OutputGate*> outputGates)
+	: inputGates{ inputGates }, logicalGates{ logicalGates }, outputGates{ outputGates } {}
 
 Circuit::~Circuit(){
 	for (InputGate* ig : this->inputGates) { delete ig; }
@@ -44,14 +39,6 @@ void Circuit::simulateCircuit() {
 		else { inputGate->setValue(1); }
 		std::cout << inputGate->getName() << " : " << inputGate->getValue() << std::endl << std::endl;
 
-
-		// Adding the input to the drawing
-		/*
-		std::vector<std::string> newLine = { std::string(1, inputGate->getName()) + ":" + newValue + " " };
-		for (int j = 1; j < Circuit::GATE_WIDTH; j++) newLine.push_back(" ");
-		this->circuitDrawing.push_back( newLine );
-		*/
-
 		i = i + 1;
 	}
 
@@ -81,11 +68,6 @@ void Circuit::simulateCircuit() {
 					std::cout << "---------------------------------------------------------" << std::endl << std::endl;
 					std::cout << logicalGate;
 
-					//this->updateCircuit(logicalGate);
-
-					// Displaying the current circuit on screen
-					//this->printCircuit();
-
 					// Press enter to continue
 					std::cout << "Press enter to update the next gate.";
 					std::cin.ignore(1000, '\n');
@@ -101,12 +83,7 @@ void Circuit::simulateCircuit() {
 	for (OutputGate* outputGate : this->getOutputGates()) {
 		outputGate->updateGate();
 		std::cout << outputGate;
-		//this->updateCircuit(outputGate);
 	}
-
-	// Displaying the final circuit on screen
-	//this->printCircuit();
-
 
 	// Saving the circuit in a file
 	std::string s = "Do you want to save this circuit in a file? (y/n) ";
@@ -114,244 +91,10 @@ void Circuit::simulateCircuit() {
 	if (save.compare("y") == 0) { this->saveFile(); }
 }
 
-/*
-// Adding the gate to the drawing
-void Circuit::updateCircuit(LogicalGate* const newGate) {
-
-	// Calculating the level and line of the gate
-	int gateLevel = newGate->getGateLevel();
-
-	// gateLine = number of input gates + gate level * LEVEL_HEIGHT - 1
-	unsigned int gateLine = this->getInputGates().size() + gateLevel * Circuit::LEVEL_HEIGHT - 1;
-
-	//this->addLevel(gateLine);
-
-
-	// Calculating the depth and column of the gate
-	int gateDepth = this->getDepthPerLevel().at(gateLevel) + 1;
-	newGate->setGateDepth(gateDepth);
-	this->depthPerLevel.at(gateLevel) = gateDepth;
-
-	//this->addDepth(gateDepth);
-
-
-	// Adding the name of the gate to the drawing
-	std::string gateName =  newGate->getName();
-
-	int gateColumn = gateDepth * Circuit::GATE_WIDTH - 1;
-
-	for (int i = 0; i < 3; i++) {
-		this->circuitDrawing
-			.at(gateLine - (int)std::floor(Circuit::LEVEL_HEIGHT / 2.))
-			.at(gateColumn - (int)std::floor(Circuit::GATE_WIDTH / 2.) + i)
-			= gateName[i];
-	}
-
-
-	// Adding the "wires" between the gates
-	int gateNumber = 0;
-	for (Gate* gate : newGate->getGates()) {
-		//this->drawLine(gate, newGate, gateNumber);
-		gateNumber = gateNumber + 1;
-	}
-
-}
-
-
-// Adding the gate to the drawing
-void Circuit::updateCircuit(OutputGate* const newGate) {
-
-	// Adding the output gate to the drawing
-		// Calculating the level and line of the gate
-	int gateLevel = newGate->getGateLevel();
-
-	// gateLine = number of input gates + gate level * LEVEL_HEIGHT - 1
-	unsigned int gateLine = this->getInputGates().size() + gateLevel * Circuit::LEVEL_HEIGHT - 1;
-
-
-	//this->addLevel(gateLine);
-
-
-	// Calculating the depth and column of the gate
-	int gateDepth = newGate->getGateDepth();
-
-	//this->addDepth(gateDepth);
-
-
-	// Adding the name of the gate to the drawing
-	int gateColumn = gateDepth * Circuit::GATE_WIDTH - 1;
-
-	this->circuitDrawing
-		.at(gateLine - (int)std::floor(Circuit::LEVEL_HEIGHT * 2. / 3.))
-		.at(gateColumn - (int)std::floor(Circuit::GATE_WIDTH / 2.) + 1)
-		= newGate->getName();
-
-
-	//this->addWire(newGate->getGate(), newGate, 0);
-}
-*/
-/*
-// Add one level to the drawing if necessary (the fist column being larger)
-void Circuit::addLevel(const unsigned int gateLine) {
-
-	int maxDepth = this->getDepthPerLevel().at(0);
-
-	if (gateLine > this->getCircuitDrawing().size()) {
-		for (int i = 0; i < Circuit::LEVEL_HEIGHT; i++) {
-
-			std::vector<std::string> newLine{ "    " };
-			for (int j = 1; j < Circuit::GATE_WIDTH * maxDepth; j++) newLine.push_back(" ");
-			this->circuitDrawing.push_back(newLine);
-		}
-		this->depthPerLevel.push_back(0);
-	}
-}
-
-
-// Add one 'depth' to the whole drawing if necessary
-void Circuit::addDepth(const int gateDepth) {
-
-	int maxDepth = this->getDepthPerLevel().at(0);
-	
-	if (gateDepth > maxDepth) {
-		this->depthPerLevel.at(0) = gateDepth;
-
-		for (unsigned int i = 0; i < this->getCircuitDrawing().size(); i++) {
-			for (int j = 0; j < Circuit::GATE_WIDTH; j++) this->circuitDrawing.at(i).push_back(" ");
-		}
-	}
-}
-*/
-/*
-void Circuit::drawLine(InputGate* const prevGate, Gate* const nextGate, const int gateNumber) {
-	unsigned int line = prevGate->getGateLevel();
-	unsigned int column;
-
-	unsigned int arrivalColumn = nextGate->getGateDepth() * Circuit::GATE_WIDTH - (int)std::ceil(Circuit::GATE_WIDTH / 2.) + gateNumber * 2;
-	unsigned int arrivalLine = this->getInputGates().size() + nextGate->getGateLevel() * Circuit::LEVEL_HEIGHT - (int)std::ceil(Circuit::LEVEL_HEIGHT / 2.);
-
-	// Horizontal line coming from the input
-	for (column = 1; column < arrivalColumn; column++) {
-
-		if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) {
-			this->circuitDrawing.at(line).at(column) = "-";
-		}
-		else if (this->circuitDrawing.at(line).at(column).compare("|") == 0) {
-			this->circuitDrawing.at(line).at(column) = "+";
-		}
-	}
-
-	// Adding the sign * when there is a change of direction
-	this->circuitDrawing.at(line).at(column) = "*";
-	line = line + 1;
-
-
-	this->verticalLine(line, column, arrivalLine);
-}
-
-void Circuit::drawLine(LogicalGate* const prevGate, LogicalGate* const nextGate, const int gateNumber) {
-	unsigned column = prevGate->getGateDepth() * Circuit::GATE_WIDTH - (int)std::floor(Circuit::GATE_WIDTH / 2.);
-	unsigned line = this->getInputGates().size() + prevGate->getGateLevel() * Circuit::LEVEL_HEIGHT - (int)std::floor(Circuit::LEVEL_HEIGHT / 2.);
-
-	unsigned arrivalLine = this->getInputGates().size() + nextGate->getGateLevel() * Circuit::LEVEL_HEIGHT - (int)std::ceil(Circuit::LEVEL_HEIGHT / 2.);
-	unsigned arrivalColumn = nextGate->getGateDepth() * Circuit::GATE_WIDTH - (int)std::ceil(Circuit::GATE_WIDTH / 2.) + gateNumber * 2;
-
-	int columnDifference = arrivalColumn - column;
-	int lineDifference = arrivalLine - line;
-
-	/*
-	std::cout << "colonne max : " << arrivalColumn << std::endl; // debug
-	std::cout << "ligne max : " << arrivalLine << std::endl; // debug
-
-	std::cout << "colonne diff : " << columnDifference << std::endl; // debug
-	std::cout << "ligne diff : " << lineDifference << std::endl; // debug
-	
-
-	// Vertical line coming from the previous gate
-	for (int i = 0; i < prevGate->getGateDepth(); i++) {
-		this->circuitDrawing.at(line).at(column) = "|";
-		line = line + 1;
-	}
-
-	// Horizontal line coming from the previous gate
-	if (columnDifference != 0) {
-		this->circuitDrawing.at(line).at(column) = "*";
-
-		if (columnDifference > 0) {
-			column = column + 1;
-
-			for (column; column < arrivalColumn; column++) {
-
-				//std::cout << "colonne : " << column << ", ligne : " << line << std::endl; // debug
-
-				if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) {
-					this->circuitDrawing.at(line).at(column) = "-";
-				}
-				else if (this->circuitDrawing.at(line).at(column).compare("|") == 0) {
-					this->circuitDrawing.at(line).at(column) = "+";
-				}
-			}
-		}
-
-		else if (columnDifference < 0) {
-			column = column - 1;
-
-			for (column; column > arrivalColumn; column--) {
-
-				if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) {
-					this->circuitDrawing.at(line).at(column) = "-";
-				}
-				else if (this->circuitDrawing.at(line).at(column).compare("|") == 0) {
-					this->circuitDrawing.at(line).at(column) = "+";
-				}
-			}
-		}
-
-		this->circuitDrawing.at(line).at(column) = "*";
-		line = line + 1;
-	}
-
-	this->verticalLine(line, column, arrivalLine);
-}
-
-
-void Circuit::drawLine(LogicalGate* const prevGate, OutputGate* const nextGate, const int gateNumber) {
-	unsigned column = prevGate->getGateDepth() * Circuit::GATE_WIDTH - (int)std::floor(Circuit::GATE_WIDTH / 2.);
-	unsigned line = this->getInputGates().size() + prevGate->getGateLevel() * Circuit::LEVEL_HEIGHT - (int)std::floor(Circuit::LEVEL_HEIGHT / 2.);
-
-	unsigned int arrivalLine = this->getInputGates().size() + nextGate->getGateLevel() * Circuit::LEVEL_HEIGHT - (int)std::ceil(Circuit::LEVEL_HEIGHT * 2. / 3.);
-
-	this->verticalLine(line, column, arrivalLine);
-}
-
-void Circuit::verticalLine(unsigned int line, const unsigned int column, const unsigned int arrivalLine){
-	for (line; line < arrivalLine; line++) {
-
-		if (this->circuitDrawing.at(line).at(column).compare("-") == 0) {
-			this->circuitDrawing.at(line).at(column) = "+";
-		}
-		else if (this->circuitDrawing.at(line).at(column).compare(" ") == 0) {
-			this->circuitDrawing.at(line).at(column) = "|";
-		}
-	}
-}
-*/
-/*
-void Circuit::printCircuit() {
-	for ( std::vector<std::string> line : this->getCircuitDrawing()) {
-		for (std::string column : line) {
-			std::cout << column;
-		}
-		std::cout << std::endl;
-	}
-}
-*/
 void Circuit::saveFile() {
 
-	std::cout << "Save as (enter the name the file without the extension): ";
-	std::string save;
-	std::cin >> save;
-	std::cout << std::endl;
+	std::string s = "Save as (enter the name of the file without the extension) : ";
+	std::string save = parser::userInput(s, std::regex{ "^[_0-9a-zA-Z-]+$" });
 
 	std::ofstream output_file;
 	output_file.open(save + ".txt");
@@ -360,18 +103,6 @@ void Circuit::saveFile() {
 		output_file << outputGate->getLogicalFunction() << "\n";
 		output_file.flush();
 	}
-	output_file << std::endl << std::endl;
-	output_file.flush();
-	/*
-	for (std::vector<std::string> line : this->getCircuitDrawing()) {
-		for (std::string column : line) {
-			output_file << column;
-			output_file.flush();
-		}
-		output_file << std::endl;
-		output_file.flush();
-	}
-	*/
 	output_file.close();
 }
 
@@ -379,5 +110,3 @@ void Circuit::saveFile() {
 const std::vector<InputGate*>& Circuit::getInputGates() const { return this->inputGates; }
 const std::vector<LogicalGate*>& Circuit::getLogicalGates() const { return this->logicalGates; }
 const std::vector<OutputGate*>& Circuit::getOutputGates() const { return this->outputGates; }
-//const std::vector<std::vector<std::string>>& Circuit::getCircuitDrawing() const { return this->circuitDrawing; }
-//const std::vector<int>& Circuit::getDepthPerLevel() const { return this->depthPerLevel; }
