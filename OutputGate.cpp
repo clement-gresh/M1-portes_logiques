@@ -16,12 +16,12 @@ void OutputGate::updateGate() {
 	this->setValue( this->getGate()->getValue() );
 	
 	// Same depth as its input (or at least 1)
-	this->setGateDepth( std::max(this->getGate()->getGateDepth(), 1) );
+	this->setGateColumn( std::max(this->getGate()->getGateColumn(), 1) );
 
 	// One level above its input
 	int max = 0;
-	if (gate->getGateLevel() > max) { max = gate->getGateLevel(); }
-	this->setGateLevel(max + 1);
+	if (gate->getGateLine() > max) { max = gate->getGateLine(); }
+	this->setGateLine(max + 1);
 
 	// Add the output name and the sign equal '=' to the logical function of the input
 	std::string function = std::string(1, this->getName()) + " = " + this->getGate()->getLogicalFunction();

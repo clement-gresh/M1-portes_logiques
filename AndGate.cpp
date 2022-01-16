@@ -17,5 +17,3 @@ void AndGate::updateGate() {
 		this->getGates().at(0)->getValue() && this->getGates().at(1)->getValue()
 	);
 }
-
-std::string const AndGate::getName(){ return "AND"; }

@@ -11,7 +11,6 @@ public:
 
 	// METHODS
 	virtual void updateGate();
-	virtual std::string const getName();
 };
 
 #endif

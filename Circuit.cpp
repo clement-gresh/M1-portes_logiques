@@ -2,8 +2,8 @@
 
 // CONSTRUCTORS
 Circuit::Circuit(std::vector<InputGate*>& inputGates,
-	std::vector<LogicalGate*> logicalGates, std::vector<OutputGate*> outputGates)
-	: inputGates{ inputGates }, logicalGates{ logicalGates }, outputGates{ outputGates } {}
+	std::vector<LogicalGate*>& logicalGates, std::vector<OutputGate*>& outputGates)
+	: inputGates{ inputGates }, logicalGates{ logicalGates }, outputGates{ outputGates }, drawing{} {}
 
 Circuit::~Circuit(){
 	for (InputGate* ig : this->inputGates) { delete ig; }
@@ -25,11 +25,9 @@ void Circuit::simulateCircuit() {
 	}
 
 	// Assigning a value to each input and adding them to the drawing
-	int i = 0;
+	int line = 0;
 	for (InputGate* inputGate : this->getInputGates()) {
-		inputGate->setGateLevel(i);
-
-		// Asking the user to set a value to the input (and checking that value is valid)
+		// Asking the user to set a value to the input
 		std::string s1 = "Please enter the value of Gate \"";
 		s1.push_back(inputGate->getName());
 		s1 = s1 + "\" (0 / 1) : ";
@@ -39,9 +37,16 @@ void Circuit::simulateCircuit() {
 		else { inputGate->setValue(1); }
 		std::cout << inputGate->getName() << " : " << inputGate->getValue() << std::endl << std::endl;
 
-		i = i + 1;
+		// Updating the drawing
+		inputGate->setGateLine(line);
+		inputGate->setGateColumn(0);
+		this->drawing.addLine(1);
+		inputGate->drawGate(this->drawing);
+
+		line = line + 1;
 	}
 
+	this->drawing.print();
 
 	// Updating the logical gates and adding them to the drawing
 	bool circuitCompleted = false;

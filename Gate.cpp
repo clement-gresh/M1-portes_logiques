@@ -1,7 +1,7 @@
 #include "Gate.hpp"
 
 // CONSTRUCTEURS
-Gate::Gate() : value{ false }, alreadyUpdated{ false }, gateLevel{ 0 }, gateDepth{ 0 }, logicalFunction{ "" } {}
+Gate::Gate() : value{ false }, alreadyUpdated{ false }, gateLine{ 0 }, gateColumn{ 0 }, logicalFunction{ "" } {}
 
 Gate::Gate(const Gate& clone) : Gate{} {
 	std::cout << "Attention : construction d'une porte par COPIE (reference) !" << std::endl;
@@ -20,10 +20,10 @@ void Gate::setLogicalFunction(const std::string function) { this->logicalFunctio
 // public
 const bool Gate::getValue() const { return value; }
 const bool Gate::getAlreadyUpdated() const { return this->alreadyUpdated; }
-const int Gate::getGateLevel() const { return this->gateLevel; }
-const int Gate::getGateDepth() const { return this->gateDepth; }
+const int Gate::getGateLine() const { return this->gateLine; }
+const int Gate::getGateColumn() const { return this->gateColumn; }
 const std::string Gate::getLogicalFunction() const { return this->logicalFunction; }
 
 void Gate::setAlreadyUpdated(const bool alreadyUpdated) { this->alreadyUpdated = alreadyUpdated; }
-void Gate::setGateLevel(const int level) { this->gateLevel = level; }
-void Gate::setGateDepth(const int depth) { this->gateDepth = depth; }
+void Gate::setGateLine(const int level) { this->gateLine = level; }
+void Gate::setGateColumn(const int depth) { this->gateColumn = depth; }

@@ -5,12 +5,14 @@
 #include <regex>
 #include <iostream>
 
+#include "Drawing.hpp"
+
 class Gate {
 protected:
 	bool value;
 	bool alreadyUpdated;
-	int gateLevel;
-	int gateDepth;
+	int gateLine;
+	int gateColumn;
 	std::string logicalFunction;
 
 	// CONSTRUCTORS
@@ -25,13 +27,13 @@ protected:
 public:
 	const bool getValue() const;
 	const bool getAlreadyUpdated() const;
-	const int getGateLevel() const;
-	const int getGateDepth() const;
+	const int getGateLine() const;
+	const int getGateColumn() const;
 	const std::string getLogicalFunction() const;
 
 	void setAlreadyUpdated(const bool alreadyUpdated);
-	void setGateLevel(const int level);
-	void setGateDepth(const int depth);
+	void setGateLine(const int level);
+	void setGateColumn(const int depth);
 };
 
 

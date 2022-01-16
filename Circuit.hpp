@@ -2,6 +2,7 @@
 #define CIRCUIT
 
 #include "Parser.hpp"
+#include "Drawing.hpp"
 
 #include <cmath>
 #include <fstream>
@@ -11,11 +12,12 @@ private:
 	std::vector<InputGate*> inputGates;
 	std::vector<LogicalGate*> logicalGates;
 	std::vector<OutputGate*> outputGates;
+    Drawing drawing;
 
 
 public:
     // CONSTRUCTORS
-    Circuit(std::vector<InputGate*>& inputGates, std::vector<LogicalGate*> logicalGates, std::vector<OutputGate*> outputGates);
+    Circuit(std::vector<InputGate*>& inputGates, std::vector<LogicalGate*>& logicalGates, std::vector<OutputGate*>& outputGates);
 
     virtual ~Circuit();
 

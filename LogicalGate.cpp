@@ -9,10 +9,10 @@ void LogicalGate::updateGate() {
 	// Updating the level of the gate in the drawing
 	int max = 0;
 	for (Gate* gate : this->getGates()) {
-		if (gate->getGateLevel() > max)
-			max = gate->getGateLevel();
+		if (gate->getGateLine() > max)
+			max = gate->getGateLine();
 	}
-	this->setGateLevel(max + 1);
+	this->setGateLine(max + 1);
 }
 
 // Return the logical function corresponding to the gate

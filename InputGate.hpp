@@ -13,8 +13,11 @@ public:
     // CONSTRUCTORS
     InputGate(const char name);
 
+	// METHODS
+	void drawGate(Drawing& d);
+
 	// ACCESSORS
-	// setValue() set to public for input gates
+	// setting setValue() to public for input gates
 	using Gate::setValue;
 };
 

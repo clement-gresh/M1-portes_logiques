@@ -17,6 +17,9 @@ namespace parser {
 	extern const int OPENING_PARENTHESIS;
 	extern const int CLOSING_PARENTHESIS;
 	extern const int INPUT_NAME;
+	extern const int PARAMETER_NUMBER;
+
+	extern const int GATE_NOT;
 
 	extern const std::vector<std::string> gateNames;
 	extern const std::vector< std::vector <std::regex> > regexList;

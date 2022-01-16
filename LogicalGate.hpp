@@ -14,7 +14,6 @@ protected:
 public:
 	// METHODS
 	virtual void updateGate();
-	virtual std::string const getName() = 0;
 	std::string const logicalFunction(std::string const door);
 
 	// ACCESSORS
