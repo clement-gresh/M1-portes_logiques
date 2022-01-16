@@ -4,7 +4,7 @@
 #include "LogicalGate.hpp"
 #include "UpdateInterface.hpp"
 
-class AndGate : public LogicalGate, UpdateInterface {
+class AndGate : public LogicalGate {
 public:
 	// CONSTRUCTORS
 	AndGate(Gate* const a, Gate* const b);

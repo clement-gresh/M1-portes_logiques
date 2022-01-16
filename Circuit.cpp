@@ -1,9 +1,9 @@
 #include "Circuit.hpp"
 
 // CONSTRUCTORS
-Circuit::Circuit(std::vector<InputGate*>& inputGates,
-	std::vector<LogicalGate*>& logicalGates, std::vector<OutputGate*>& outputGates)
-	: inputGates{ inputGates }, logicalGates{ logicalGates }, outputGates{ outputGates }, drawing{} {}
+Circuit::Circuit(std::vector<InputGate*>& inputGates, std::vector<LogicalGate*>& logicalGates,
+				 std::vector<OutputGate*>& outputGates)
+	: inputGates{ inputGates }, logicalGates{ logicalGates }, outputGates{ outputGates }, drawing{ inputGates.size() } {}
 
 Circuit::~Circuit(){
 	for (InputGate* ig : this->inputGates) { delete ig; }
@@ -40,13 +40,14 @@ void Circuit::simulateCircuit() {
 		// Updating the drawing
 		inputGate->setGateLine(line);
 		inputGate->setGateColumn(0);
-		this->drawing.addLine(1);
 		inputGate->drawGate(this->drawing);
-
 		line = line + 1;
 	}
 
+	//debug
+	std::cout << "-----------------------INPUTS-----------------------" << std::endl << std::endl;
 	this->drawing.print();
+	//fin debug
 
 	// Updating the logical gates and adding them to the drawing
 	bool circuitCompleted = false;
@@ -73,6 +74,12 @@ void Circuit::simulateCircuit() {
 					std::cout << "---------------------------------------------------------" << std::endl << std::endl;
 					std::cout << logicalGate;
 
+
+					// Updating the drawing
+					this->drawing.findCoordinates(logicalGate);
+					std::cout << std::endl << "logical gate line / column : " <<  logicalGate->getGateLine()
+						<< ", " <<  logicalGate->getGateColumn() << std::endl; //debug
+
 					// Press enter to continue
 					std::cout << "Press enter to update the next gate.";
 					std::cin.ignore(1000, '\n');
@@ -83,7 +90,7 @@ void Circuit::simulateCircuit() {
 	}
 
 	// Updating the value of the outputs
-	std::cout << "---------------------------------------------------------" << std::endl << std::endl;
+	std::cout << "-----------------------OUTPUTS-----------------------" << std::endl << std::endl;
 
 	for (OutputGate* outputGate : this->getOutputGates()) {
 		outputGate->updateGate();

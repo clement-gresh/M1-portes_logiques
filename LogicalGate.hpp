@@ -2,8 +2,9 @@
 #define LOGICAL_GATE
 
 #include "Gate.hpp"
+#include "UpdateInterface.hpp"
 
-class LogicalGate : public Gate {
+class LogicalGate : public Gate, public UpdateInterface {
 protected:
 	const std::vector<Gate*> gates;
 
@@ -13,7 +14,6 @@ protected:
 
 public:
 	// METHODS
-	virtual void updateGate();
 	std::string const logicalFunction(std::string const door);
 
 	// ACCESSORS

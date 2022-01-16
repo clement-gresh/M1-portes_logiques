@@ -5,8 +5,6 @@
 #include <regex>
 #include <iostream>
 
-#include "Drawing.hpp"
-
 class Gate {
 protected:
 	bool value;
@@ -20,11 +18,13 @@ protected:
 	Gate(const Gate& clone);
 	Gate(const Gate* clone);
 
+
 	// ACCESSORS
 	void setValue(const bool value);
 	void setLogicalFunction(const std::string function);
 
-public:
+public:	
+	// ACCESSORS
 	const bool getValue() const;
 	const bool getAlreadyUpdated() const;
 	const int getGateLine() const;

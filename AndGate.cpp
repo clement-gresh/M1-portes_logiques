@@ -6,8 +6,6 @@ AndGate::AndGate(Gate* const a, Gate* const b) : LogicalGate{ {a, b} } {}
 
 // METHODS
 void AndGate::updateGate() {
-	LogicalGate::updateGate();
-
 	// Updating the logical function corresponding to this gate
 	std::string function = this->logicalFunction("and");
 	this->setLogicalFunction(function);

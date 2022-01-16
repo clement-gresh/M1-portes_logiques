@@ -4,17 +4,7 @@
 // CONSTRUCTORS
 LogicalGate::LogicalGate(const std::vector<Gate*> gates) : Gate{}, gates{ gates } {}
 
-
-void LogicalGate::updateGate() {
-	// Updating the level of the gate in the drawing
-	int max = 0;
-	for (Gate* gate : this->getGates()) {
-		if (gate->getGateLine() > max)
-			max = gate->getGateLine();
-	}
-	this->setGateLine(max + 1);
-}
-
+// METHODS
 // Return the logical function corresponding to the gate
 std::string const LogicalGate::logicalFunction(std::string const door) {
 	std::string function = door + "(";
