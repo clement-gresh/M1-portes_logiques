@@ -7,7 +7,7 @@ int main(int argc, char** argv)
 	Circuit* circuit;
 
 	// Asking the user if they want to enter the logical expression of the circuit
-	std::string s = "Do you want to write down the logical expression of the circuit - e.g.    A = or(a, and(b, c)) ?\n";
+	std::string s = "Do you want to write down the logical expression of the circuit - e.g.  A = or(a, and(b, c))  ?\n";
 	s = s + "Otherwise the default circuit will be loaded. (y / n) ";
 	std::string input = parser::userInput(s, std::regex{ "^[yn]$" });
 	bool expressionIsCorrect = false;

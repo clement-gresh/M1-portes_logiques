@@ -8,7 +8,7 @@ protected:
 	const char name;
 
 	// CONSTRUCTEURS
-	IOGate(const GateType type, const char name);
+	IOGate(const char name);
 
 	// METHODES
 	static char checkNameFormating(const char name, const std::regex format, const char defaultName);

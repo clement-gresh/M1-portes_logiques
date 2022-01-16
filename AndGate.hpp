@@ -9,9 +9,9 @@ public:
 	// CONSTRUCTORS
 	AndGate(Gate* const a, Gate* const b);
 
-
 	// METHODS
-	void updateGate();
+	virtual void updateGate();
+	virtual std::string const getName();
 };
 
 #endif

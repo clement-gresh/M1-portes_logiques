@@ -1,23 +1,20 @@
 #ifndef GATE
 #define GATE
 
-#include "GateType.hpp"
-
 #include <string>
 #include <regex>
-
+#include <iostream>
 
 class Gate {
 protected:
 	bool value;
-	const GateType type;
 	bool alreadyUpdated;
 	int gateLevel;
 	int gateDepth;
 	std::string logicalFunction;
 
 	// CONSTRUCTORS
-	Gate(const GateType type);
+	Gate();
 	Gate(const Gate& clone);
 	Gate(const Gate* clone);
 
@@ -27,7 +24,6 @@ protected:
 
 public:
 	const bool getValue() const;
-	const GateType getType() const;
 	const bool getAlreadyUpdated() const;
 	const int getGateLevel() const;
 	const int getGateDepth() const;

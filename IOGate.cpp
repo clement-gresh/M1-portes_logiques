@@ -1,7 +1,7 @@
 #include "IOGate.hpp"
 
 // CONSTRUCTORS
-IOGate::IOGate(const GateType type, const char name) : Gate{type}, name { name } {}
+IOGate::IOGate(const char name) : Gate{}, name { name } {}
 
 // METHODS
 char IOGate::checkNameFormating(const char name, const std::regex format, const char defaultName) {

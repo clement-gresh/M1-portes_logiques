@@ -8,12 +8,14 @@ protected:
 	const std::vector<Gate*> gates;
 
 	// CONSTRUCTORS
-	LogicalGate(const GateType type, const std::vector<Gate*> gates);
+	LogicalGate(const std::vector<Gate*> gates);
 
 
 public:
 	// METHODS
 	virtual void updateGate();
+	virtual std::string const getName() = 0;
+	std::string const logicalFunction(std::string const door);
 
 	// ACCESSORS
 	const std::vector<Gate*> getGates() const;
