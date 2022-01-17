@@ -1,7 +1,7 @@
 #include "Drawing.hpp"
 
-const int Drawing::GATE_HEIGHT{ 9 };
-const int Drawing::GATE_WIDTH{ 10 };
+const int Drawing::GATE_HEIGHT{ 11 };
+const int Drawing::GATE_WIDTH{ 12 };
 
 Drawing::Drawing(int const inputNumber) : inputNumber{inputNumber}, height { inputNumber }, width{ 1 },
 					 drawingArray{ std::vector <std::vector <std::string>>(inputNumber, std::vector <std::string>(1, ""))} {}
@@ -76,19 +76,21 @@ void Drawing::findCoordinates(LogicalGate* const lg){
 }
 
 void Drawing::addWire(LogicalGate* const lg){
-	int offset = -1;
+	int offsetC = -1;
+	int gateNumber = 1;
 	int arrivalLine = lg->getGateLine() - 1;
 
 	for (Gate* gate : lg->getGates()) {
-		int arrivalColumn = lg->getGateColumn() + offset;
+		int arrivalColumn = lg->getGateColumn() + offsetC;
 		int column = gate->getGateColumn();
 		int line = gate->getGateLine();
 
 		// Starts with a vertical line coming from the gate (if its not an input)
 		if (line > this->inputNumber) {
-			this->drawVLine(column, line + 1, line + 3);
-			this->draw(line + 4, column, "*");
-			line = line + 4;
+			int offsetL = 2 * column / GATE_WIDTH;
+			this->drawVLine(column, line + 1, line + offsetL);
+			line = line + offsetL + 1;
+			this->draw(line, column, "*");
 		}
 
 		// Then an horizontal line
@@ -97,16 +99,24 @@ void Drawing::addWire(LogicalGate* const lg){
 
 		if (columnDifference != 0) {
 			if (columnDifference > 0) { this->drawHLine(line, column + 1, arrivalColumn - 1); }
-			else { this->drawHLine(line, arrivalColumn + 1, column - 1); }
+			else {
+				// If the first input is on the right of the gate, then it gets connected to the right "entrance" of the gate
+				if (gateNumber == 1) {
+					arrivalColumn = arrivalColumn + 2;
+					offsetC = -3;
+				}
+				this->drawHLine(line, arrivalColumn + 1, column - 1);
+			}
 
 			this->draw(line, arrivalColumn, "*");
 			line = line + 1;
+			gateNumber = gateNumber + 1;
 		}
 
 		// Then a vertical line
 		this->drawVLine(arrivalColumn, line, arrivalLine);
 
-		offset = offset + 2;
+		offsetC = offsetC + 2;
 	}	
 }
 
@@ -144,4 +154,5 @@ void Drawing::print(){
 		}
 		std::cout << std::endl;
 	}
+	std::cout << std::endl << std::endl << std::endl;
 }
