@@ -44,7 +44,7 @@ void Drawing::findCoordinates(LogicalGate* const lg){
 	for (Gate* gate : lg->getGates()) {
 		if (gate->getGateColumn() == 0) {
 			this->addColumn(GATE_WIDTH);
-			lg->setGateColumn(this->width - 3);
+			lg->setGateColumn(this->width - 5);
 			break;
 		}
 		number = number + 1;
@@ -56,11 +56,10 @@ void Drawing::findCoordinates(LogicalGate* const lg){
 		bool found = false;
 
 		while (!found) {
-			// Checking that 5 consecutive cells are empty
-			if (column + 3 > this->width) { this->addColumn(GATE_WIDTH); }
+			// Checking that 7 consecutive cells are empty
+			if (column + 5 > this->width) { this->addColumn(GATE_WIDTH); }
 
-			for (int i = -2; i < 3; i++) {
-				std::cout << i << " " << column + i << ", "; //debug
+			for (int i = -3; i < 4; i++) {
 				std::string content = this->drawingArray.at(lg->getGateLine()).at(column + i);
 				found = true;
 
