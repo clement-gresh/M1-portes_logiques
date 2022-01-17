@@ -29,6 +29,7 @@ public:
     const std::vector<InputGate*>& getInputGates() const;
     const std::vector<LogicalGate*>& getLogicalGates() const;
     const std::vector<OutputGate*>& getOutputGates() const;
+    const Drawing getDrawing() const; // returns a copy of the attribute 'drawing'
 };
 
 

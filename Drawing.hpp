@@ -30,6 +30,9 @@ public:
 	void drawHLine(int line, int columnBegin, int columnEnd);
 	void draw(int line, int column, std::string s);
 	void print();
+
+	// ACCESSORS
+	const std::vector <std::vector <std::string>> getDrawingArray() const;
 };
 
 #endif

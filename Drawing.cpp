@@ -73,7 +73,7 @@ void Drawing::findCoordinates(LogicalGate* const lg){
 					break;
 				}
 			}
-			if (!found) { column = column + GATE_WIDTH / 2; }
+			if (!found) { column = column + GATE_WIDTH; }
 		}
 		lg->setGateColumn(column);
 	}
@@ -124,9 +124,9 @@ void Drawing::addWire(LogicalGate* const lg){
 
 		// Starts with a vertical line coming from the gate (if its not an input)
 		if (line > this->inputNumber) {
-			int offsetL = 2 * column / GATE_WIDTH;
-			this->drawVLine(column, line + 1, line + offsetL);
-			line = line + offsetL + 1;
+			int offsetL = column / GATE_WIDTH;
+			this->drawVLine(column, line + 1, line + offsetL + 1);
+			line = line + offsetL + 2;
 			this->draw(line, column, "*");
 		}
 
@@ -215,3 +215,5 @@ void Drawing::print(){
 	}
 	std::cout << std::endl << std::endl << std::endl;
 }
+
+const std::vector<std::vector<std::string>> Drawing::getDrawingArray() const { return this->drawingArray; }

@@ -111,13 +111,22 @@ void Circuit::simulateCircuit() {
 void Circuit::saveFile() {
 
 	std::string s = "Save as (enter the name of the file without the extension) : ";
-	std::string save = parser::userInput(s, std::regex{ "^[_0-9a-zA-Z-]+$" });
+	std::string save = parser::userInput(s, std::regex{ "^[/.//_0-9a-zA-Z-]+$" });
 
 	std::ofstream output_file;
 	output_file.open(save + ".txt");
 
 	for (OutputGate* outputGate : this->getOutputGates()) { 
 		output_file << outputGate->getLogicalFunction() << "\n";
+		output_file.flush();
+	}
+
+	for (std::vector<std::string> line : this->drawing.getDrawingArray()) {
+		for (std::string column : line) {
+			output_file << column;
+			output_file.flush();
+		}
+		output_file << std::endl;
 		output_file.flush();
 	}
 	output_file.close();
@@ -127,3 +136,4 @@ void Circuit::saveFile() {
 const std::vector<InputGate*>& Circuit::getInputGates() const { return this->inputGates; }
 const std::vector<LogicalGate*>& Circuit::getLogicalGates() const { return this->logicalGates; }
 const std::vector<OutputGate*>& Circuit::getOutputGates() const { return this->outputGates; }
+const Drawing Circuit::getDrawing() const { return this->drawing; }
