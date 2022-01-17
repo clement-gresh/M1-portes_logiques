@@ -21,6 +21,9 @@ public:
 	void addLine(int nbr);
 	void addColumn(int nbr);
 	void findCoordinates(LogicalGate* const lg);
+	void addWire(LogicalGate* const lg);
+	void drawVLine(int column, int lineBegin, int lineEnd);
+	void drawHLine(int line, int columnBegin, int columnEnd);
 	void draw(int line, int column, std::string s);
 	void print();
 };

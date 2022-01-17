@@ -11,6 +11,7 @@ OutputGate::OutputGate(const char name, Gate* const gate) :
 	IOGate{ IOGate::checkNameFormating(name, OutputGate::format, OutputGate::defaultName) },
 	gate{ gate } {}
 
+// METHODS
 void OutputGate::updateGate() {
 	// Same value its input
 	this->setValue( this->getGate()->getValue() );
@@ -28,6 +29,9 @@ void OutputGate::updateGate() {
 	this->setLogicalFunction(function);
 }
 
+void OutputGate::drawGate(Drawing& d) {	d.draw(this->gateLine, this->gateColumn, std::string(1, this->name)); }
+
+// ACCESSORS
 Gate* const OutputGate::getGate() const { return this->gate; }
 
 

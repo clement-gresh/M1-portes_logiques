@@ -3,6 +3,7 @@
 
 #include "LogicalGate.hpp"
 #include "UpdateInterface.hpp"
+#include "Drawing.hpp"
 
 class AndGate : public LogicalGate {
 public:
@@ -11,6 +12,7 @@ public:
 
 	// METHODS
 	virtual void updateGate();
+	virtual void drawGate(Drawing& d);
 };
 
 #endif

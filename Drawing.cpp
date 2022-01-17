@@ -50,7 +50,7 @@ void Drawing::findCoordinates(LogicalGate* const lg){
 		number = number + 1;
 		average = average + (gate->getGateColumn() - average) / number;
 	}
-	// Else, the gate column is between the input gates if no other gate is already there
+	// Else, the gate column is between the input gates (if no other gate is already there)
 	if (number == lg->getGates().size()) {
 		int column = static_cast<int>(average);
 		bool found = false;
@@ -75,11 +75,69 @@ void Drawing::findCoordinates(LogicalGate* const lg){
 	}
 }
 
+void Drawing::addWire(LogicalGate* const lg){
+	int offset = -1;
+	int arrivalLine = lg->getGateLine() - 1;
+
+	for (Gate* gate : lg->getGates()) {
+		int arrivalColumn = lg->getGateColumn() + offset;
+		int column = gate->getGateColumn();
+		int line = gate->getGateLine();
+
+		// Starts with a vertical line coming from the gate (if its not an input)
+		if (line > this->inputNumber) {
+			this->drawVLine(column, line + 1, line + 3);
+			this->draw(line + 4, column, "*");
+			line = line + 4;
+		}
+
+		// Then an horizontal line
+		int columnDifference = arrivalColumn - column;
+		int lineDifference = arrivalLine - line;
+
+		if (columnDifference != 0) {
+			if (columnDifference > 0) { this->drawHLine(line, column + 1, arrivalColumn - 1); }
+			else { this->drawHLine(line, arrivalColumn + 1, column - 1); }
+
+			this->draw(line, arrivalColumn, "*");
+			line = line + 1;
+		}
+
+		// Then a vertical line
+		this->drawVLine(arrivalColumn, line, arrivalLine);
+
+		offset = offset + 2;
+	}	
+}
+
+void Drawing::drawVLine(int column, int lineBegin, int lineEnd){
+	for (int line = lineBegin; line <= lineEnd; line++) {
+		if (this->drawingArray.at(line).at(column).compare("-") == 0) {
+			this->draw(line, column, "+");
+		}
+		else if (this->drawingArray.at(line).at(column).compare(" ") == 0) {
+			this->draw(line, column, "|");
+		}
+	}
+}
+
+void Drawing::drawHLine(int line, int columnBegin, int columnEnd){
+	for (int column = columnBegin; column <= columnEnd; column++) {
+		if (this->drawingArray.at(line).at(column).compare("|") == 0) {
+			this->draw(line, column, "+");
+		}
+		else if (this->drawingArray.at(line).at(column).compare(" ") == 0) {
+			this->draw(line, column, "-");
+		}
+	}
+}
+
 void Drawing::draw(int line, int column, std::string s){
 	this->drawingArray.at(line).at(column) = s;
 }
 
 void Drawing::print(){
+	std::cout << std::endl ;
 	for (std::vector<std::string> line : this->drawingArray) {
 		for (std::string column : line) {
 			std::cout << column;

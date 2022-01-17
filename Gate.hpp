@@ -5,6 +5,8 @@
 #include <regex>
 #include <iostream>
 
+class Drawing;
+
 class Gate {
 protected:
 	bool value;
@@ -24,6 +26,9 @@ protected:
 	void setLogicalFunction(const std::string function);
 
 public:	
+	// METHODS
+	virtual void drawGate(Drawing& d) = 0;
+
 	// ACCESSORS
 	const bool getValue() const;
 	const bool getAlreadyUpdated() const;

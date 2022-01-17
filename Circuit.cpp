@@ -77,8 +77,9 @@ void Circuit::simulateCircuit() {
 
 					// Updating the drawing
 					this->drawing.findCoordinates(logicalGate);
-					std::cout << std::endl << "logical gate line / column : " <<  logicalGate->getGateLine()
-						<< ", " <<  logicalGate->getGateColumn() << std::endl; //debug
+					logicalGate->drawGate(this->drawing);
+					this->drawing.addWire(logicalGate);
+					this->drawing.print();
 
 					// Press enter to continue
 					std::cout << "Press enter to update the next gate.";

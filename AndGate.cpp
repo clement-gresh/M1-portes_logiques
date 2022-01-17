@@ -15,3 +15,10 @@ void AndGate::updateGate() {
 		this->getGates().at(0)->getValue() && this->getGates().at(1)->getValue()
 	);
 }
+
+
+void AndGate::drawGate(Drawing& d) {
+	d.draw(this->gateLine, this->gateColumn - 1, "A");
+	d.draw(this->gateLine, this->gateColumn, "N");
+	d.draw(this->gateLine, this->gateColumn + 1, "D");
+}

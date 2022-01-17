@@ -1,6 +1,7 @@
 #ifndef OUTPUT_GATE
 #define OUTPUT_GATE
 
+#include "Drawing.hpp"
 #include "IOGate.hpp"
 #include "LogicalGate.hpp"
 #include "UpdateInterface.hpp"
@@ -18,10 +19,10 @@ public:
 
 	// METHODS
 	virtual void updateGate();
+	virtual void drawGate(Drawing& d);
 
 	// ACCESSORS
 	Gate* const getGate() const;
-
 };
 
 
