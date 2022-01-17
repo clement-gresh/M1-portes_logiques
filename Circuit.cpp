@@ -91,12 +91,16 @@ void Circuit::simulateCircuit() {
 	}
 
 	// Updating the value of the outputs
-	std::cout << "-----------------------OUTPUTS-----------------------" << std::endl << std::endl;
-
 	for (OutputGate* outputGate : this->getOutputGates()) {
 		outputGate->updateGate();
+		this->drawing.findCoordinates(outputGate);
+		outputGate->drawGate(this->drawing);
+		this->drawing.addWire(outputGate);
 		std::cout << outputGate;
 	}
+
+	std::cout << "-----------------------OUTPUTS-----------------------" << std::endl << std::endl;
+	this->drawing.print();
 
 	// Saving the circuit in a file
 	std::string s = "Do you want to save this circuit in a file? (y/n) ";

@@ -2,7 +2,9 @@
 #define DRAWING
 
 #include "LogicalGate.hpp"
+#include "OutputGate.hpp"
 
+class OutputGate;
 
 class Drawing{
 private:
@@ -21,7 +23,9 @@ public:
 	void addLine(int nbr);
 	void addColumn(int nbr);
 	void findCoordinates(LogicalGate* const lg);
+	void findCoordinates(OutputGate* const og);
 	void addWire(LogicalGate* const lg);
+	void addWire(OutputGate* const lg);
 	void drawVLine(int column, int lineBegin, int lineEnd);
 	void drawHLine(int line, int columnBegin, int columnEnd);
 	void draw(int line, int column, std::string s);

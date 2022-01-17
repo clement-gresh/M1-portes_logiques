@@ -1,11 +1,15 @@
 #include "Drawing.hpp"
 
+// STATIC ATTRIBUTES
 const int Drawing::GATE_HEIGHT{ 11 };
 const int Drawing::GATE_WIDTH{ 12 };
 
+// CONSTRUCTOR
 Drawing::Drawing(int const inputNumber) : inputNumber{inputNumber}, height { inputNumber }, width{ 1 },
 					 drawingArray{ std::vector <std::vector <std::string>>(inputNumber, std::vector <std::string>(1, ""))} {}
 
+// METHODS
+// Adds a certain number of lines to the drawing
 void Drawing::addLine(int nbr){
 	for (int i = 0; i < nbr; i++) {
 		this->height = this->height + 1;
@@ -17,6 +21,7 @@ void Drawing::addLine(int nbr){
 	}
 }
 
+// Adds a certain number of columns to the drawing
 void Drawing::addColumn(int nbr) {
 	for (int i = 0; i < this->height; i++) {
 		for (int j = 0; j < nbr; j++) {
@@ -26,7 +31,7 @@ void Drawing::addColumn(int nbr) {
 	this->width = this->width + nbr;
 }
 
-// Finds the line and column of the gates (and add lines and columns to the drawing if necessary)
+// Finds the line and column of the logical gate (and adds lines and columns to the drawing if necessary)
 void Drawing::findCoordinates(LogicalGate* const lg){
 	// Line
 	int max = this->inputNumber - 1;
@@ -74,6 +79,39 @@ void Drawing::findCoordinates(LogicalGate* const lg){
 	}
 }
 
+// Finds the line and column of the output gate (and adds lines and columns to the drawing if necessary)
+void Drawing::findCoordinates(OutputGate* const og){
+	// Column
+	int column = og->getGate()->getGateColumn();
+	if (column == 0) {
+		og->setGateColumn(GATE_WIDTH - 5);
+		if (this->width < GATE_WIDTH) { this->addColumn(GATE_WIDTH); }
+	}
+	else { og->setGateColumn(column); }
+
+	// Line
+	int line = og->getGate()->getGateLine();
+	std::cout << "Drawing line / column : " << this->height << ", " << this->width << std::endl;
+	std::cout << "line debut : " << line << std::endl; // debug
+
+	if (line < this->inputNumber) {
+		line = this->inputNumber + GATE_HEIGHT - 2;
+		og->setGateLine(line);
+	}
+	else{
+		line = line + GATE_HEIGHT - 2;
+		og->setGateLine(line);
+	}
+	if (line + 2 > this->height) { this->addLine(GATE_HEIGHT); }
+
+	//debug
+	std::cout << "line fin : " << line << std::endl;
+	std::cout << "Drawing line / column : " << this->height << ", " <<  this->width <<  std::endl;
+	std::cout << "OutputGate line / column : " << og->getGateLine() << ", " << og->getGateColumn() << std::endl;
+	//fin debug
+}
+
+// Adds the "wires" between the logical gate and its input(s)
 void Drawing::addWire(LogicalGate* const lg){
 	int offsetC = -1;
 	int gateNumber = 1;
@@ -119,6 +157,25 @@ void Drawing::addWire(LogicalGate* const lg){
 	}	
 }
 
+
+// Adds the "wires" between the ouptut gate and its input
+void Drawing::addWire(OutputGate* const og){
+	int arrivalLine = og->getGateLine();
+	int arrivalColumn = og->getGateColumn();
+	int line = og->getGate()->getGateLine();
+	int column = og->getGateColumn();
+
+	// Starts with an horizontal line coming from the gate (if its an input)
+	if (line < this->inputNumber) {
+		this->drawHLine(line, column + 1, arrivalColumn - 1);
+		this->draw(line, arrivalColumn, "*");
+	}
+
+	// Then a vertical line
+	this->drawVLine(arrivalColumn, line + 1, arrivalLine - 1);
+}
+
+// Draws a vertical line
 void Drawing::drawVLine(int column, int lineBegin, int lineEnd){
 	for (int line = lineBegin; line <= lineEnd; line++) {
 		if (this->drawingArray.at(line).at(column).compare("-") == 0) {
@@ -130,6 +187,7 @@ void Drawing::drawVLine(int column, int lineBegin, int lineEnd){
 	}
 }
 
+// Draws an horizontal line
 void Drawing::drawHLine(int line, int columnBegin, int columnEnd){
 	for (int column = columnBegin; column <= columnEnd; column++) {
 		if (this->drawingArray.at(line).at(column).compare("|") == 0) {
@@ -141,10 +199,12 @@ void Drawing::drawHLine(int line, int columnBegin, int columnEnd){
 	}
 }
 
+// Draws a string on a specifi cell
 void Drawing::draw(int line, int column, std::string s){
 	this->drawingArray.at(line).at(column) = s;
 }
 
+// Prints the current drawing on the screen
 void Drawing::print(){
 	std::cout << std::endl ;
 	for (std::vector<std::string> line : this->drawingArray) {
