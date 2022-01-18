@@ -221,7 +221,6 @@ Gate* const parser::nextGates(std::string expression) {
 		return input;
 	}
 
-
 	// Else finding what kind of logical gate the expression matches
 	int gateType = -1;
 	for (unsigned int j = 0; j < regexList.at(GATE_NAME).size(); j++) {
@@ -232,12 +231,10 @@ Gate* const parser::nextGates(std::string expression) {
 		}
 	}
 
-
 	// Removing the parenthesis
 	for (unsigned int i = OPENING_PARENTHESIS; i <= CLOSING_PARENTHESIS; i++) {
 		expression = std::regex_replace(expression, regexList.at(i).at(0), "");
 	}
-
 
 	// Recursive calls on the parameter(s) of the logical gate
 	std::vector<Gate*> gates;
@@ -263,7 +260,6 @@ Gate* const parser::nextGates(std::string expression) {
 		Gate* onlyGate = parser::nextGates(expression);
 		gates.push_back(onlyGate);
 	}
-
 	return parser::createGate(gateType, gates);
 }
 
@@ -272,8 +268,15 @@ Gate* const parser::createGate(const int gateType, std::vector<Gate*> const gate
 	LogicalGate* lg;
 	switch (gateType) {
 	// The cases match the logical gate names in parser::gateNames (e.g. 0 = first cell of gateNames = "and")
+	case 0:
+		lg = new NotGate(gates.at(0));
+		break;
 	case 1:
 		lg = new AndGate(gates.at(0), gates.at(1));
+		break;
+	case 2:
+		lg = new OrGate(gates.at(0), gates.at(1));
+		break;
 	}
 	logicalGates.push_back(lg);
 	return lg;

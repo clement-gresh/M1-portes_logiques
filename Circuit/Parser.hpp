@@ -3,7 +3,9 @@
 
 #include "../Gates/IOGates/InputGate.hpp"
 #include "../Gates/IOGates/OutputGate.hpp"
+#include "../Gates/LogicalGates/NotGate.hpp"
 #include "../Gates/LogicalGates/AndGate.hpp"
+#include "../Gates/LogicalGates/OrGate.hpp"
 #include "Circuit.hpp"
 
 #include <regex>
