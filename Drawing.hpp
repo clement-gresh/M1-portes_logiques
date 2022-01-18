@@ -1,10 +1,13 @@
 #ifndef DRAWING
 #define DRAWING
 
-#include "LogicalGate.hpp"
-#include "OutputGate.hpp"
+#include <string>
+#include <regex>
+#include <iostream>
 
 class OutputGate;
+class LogicalGate;
+class Gate;
 
 class Drawing{
 private:
@@ -32,7 +35,11 @@ public:
 	void print();
 
 	// ACCESSORS
+	const int getInputNumber() const;
+	const int getHeight() const;
+	const int getWidth() const;
 	const std::vector <std::vector <std::string>> getDrawingArray() const;
 };
 
 #endif
+

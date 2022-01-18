@@ -12,8 +12,4 @@ InputGate::InputGate(const char name) :
 	this->logicalFunction = std::string(1, this->name);
 }
 
-void InputGate::drawGate(Drawing& d){
-	std::string val = this->value ? "1" : "0";
-	std::string s{ std::string(1, this->name) + ":" + val + " " };
-	d.draw(this->gateLine, this->gateColumn, s);
-}
+void InputGate::drawGate(Drawing& d){ this->draw(d, std::string(1, this->name), 0); }

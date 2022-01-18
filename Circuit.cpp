@@ -5,6 +5,7 @@ Circuit::Circuit(std::vector<InputGate*>& inputGates, std::vector<LogicalGate*>&
 				 std::vector<OutputGate*>& outputGates)
 	: inputGates{ inputGates }, logicalGates{ logicalGates }, outputGates{ outputGates }, drawing{ inputGates.size() } {}
 
+// DESTRUCTOR
 Circuit::~Circuit(){
 	for (InputGate* ig : this->inputGates) { delete ig; }
 	for (LogicalGate* lg : this->logicalGates) { delete lg; }
@@ -18,6 +19,7 @@ Circuit::~Circuit(){
 }
 
 // METHODS
+// Updates all the gates composing the circuit and displays them on the screen
 void Circuit::simulateCircuit() {
 	// Reinitializing the circuit
 	for (LogicalGate* gate : this->getLogicalGates()) {
@@ -33,7 +35,7 @@ void Circuit::simulateCircuit() {
 		s1 = s1 + "\" (0 / 1) : ";
 		std::string newValue = parser::userInput(s1, std::regex{ "^[01]$" } );
 
-		if (newValue.compare("0") == 0) { inputGate->setValue(0); }
+		if (newValue.compare("0") == 0) { inputGate->setValue(0); } // debug : to check
 		else { inputGate->setValue(1); }
 		std::cout << inputGate->getName() << " : " << inputGate->getValue() << std::endl << std::endl;
 
@@ -136,4 +138,4 @@ void Circuit::saveFile() {
 const std::vector<InputGate*>& Circuit::getInputGates() const { return this->inputGates; }
 const std::vector<LogicalGate*>& Circuit::getLogicalGates() const { return this->logicalGates; }
 const std::vector<OutputGate*>& Circuit::getOutputGates() const { return this->outputGates; }
-const Drawing Circuit::getDrawing() const { return this->drawing; }
+const Drawing& Circuit::getDrawing() const { return this->drawing; }

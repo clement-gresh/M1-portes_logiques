@@ -16,11 +16,4 @@ void AndGate::updateGate() {
 	);
 }
 
-
-void AndGate::drawGate(Drawing& d) {
-	d.draw(this->gateLine, this->gateColumn - 1, "A");
-	d.draw(this->gateLine, this->gateColumn, "N");
-	d.draw(this->gateLine, this->gateColumn + 1, "D");
-	d.draw(this->gateLine, this->gateColumn + 2, ":");
-	d.draw(this->gateLine, this->gateColumn + 3, this->value ? "1" : "0");
-}
+void AndGate::drawGate(Drawing& d) { this->draw(d, "AND", 1); }

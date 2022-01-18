@@ -29,11 +29,7 @@ void OutputGate::updateGate() {
 	this->setLogicalFunction(function);
 }
 
-void OutputGate::drawGate(Drawing& d) {	
-	d.draw(this->gateLine, this->gateColumn, std::string(1, this->name));
-	d.draw(this->gateLine, this->gateColumn+1, ":");
-	d.draw(this->gateLine, this->gateColumn + 2, this->value ? "1" : "0");
-}
+void OutputGate::drawGate(Drawing& d) { this->draw(d, std::string(1, this->name), 0); }
 
 // ACCESSORS
 Gate* const OutputGate::getGate() const { return this->gate; }

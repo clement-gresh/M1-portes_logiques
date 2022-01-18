@@ -19,6 +19,7 @@ public:
     // CONSTRUCTORS
     Circuit(std::vector<InputGate*>& inputGates, std::vector<LogicalGate*>& logicalGates, std::vector<OutputGate*>& outputGates);
 
+    // DESTRUCTOR
     virtual ~Circuit();
 
     // METHODS
@@ -29,7 +30,7 @@ public:
     const std::vector<InputGate*>& getInputGates() const;
     const std::vector<LogicalGate*>& getLogicalGates() const;
     const std::vector<OutputGate*>& getOutputGates() const;
-    const Drawing getDrawing() const; // returns a copy of the attribute 'drawing'
+    const Drawing& getDrawing() const;
 };
 
 

@@ -1,11 +1,7 @@
 #ifndef GATE
 #define GATE
 
-#include <string>
-#include <regex>
-#include <iostream>
-
-class Drawing;
+#include "Drawing.hpp"
 
 class Gate {
 protected:
@@ -28,6 +24,7 @@ protected:
 public:	
 	// METHODS
 	virtual void drawGate(Drawing& d) = 0;
+	void draw(Drawing& d, const std::string s, const int offset);
 
 	// ACCESSORS
 	const bool getValue() const;

@@ -1,19 +1,22 @@
 #include "Drawing.hpp"
+#include "LogicalGate.hpp"
+#include "OutputGate.hpp"
+
 
 // STATIC ATTRIBUTES
-const int Drawing::GATE_HEIGHT{ 11 };
+const int Drawing::GATE_HEIGHT{ 9 };
 const int Drawing::GATE_WIDTH{ 12 };
 
 // CONSTRUCTOR
 Drawing::Drawing(int const inputNumber) : inputNumber{inputNumber}, height { inputNumber }, width{ 1 },
-					 drawingArray{ std::vector <std::vector <std::string>>(inputNumber, std::vector <std::string>(1, ""))} {}
+					 drawingArray{ std::vector <std::vector <std::string>>(inputNumber, std::vector <std::string>(GATE_WIDTH, " "))} {}
 
 // METHODS
 // Adds a certain number of lines to the drawing
 void Drawing::addLine(int nbr){
 	for (int i = 0; i < nbr; i++) {
 		this->height = this->height + 1;
-		this->drawingArray.push_back({"    "});
+		this->drawingArray.push_back({" "});
 
 		for (int j = 1; j < this->width; j++) {
 			this->drawingArray.at(this->height - 1).push_back(" ");
@@ -216,4 +219,9 @@ void Drawing::print(){
 	std::cout << std::endl << std::endl << std::endl;
 }
 
+
+// ACCESSORS
+const int Drawing::getInputNumber() const { return this->inputNumber; }
+const int Drawing::getHeight() const { return this->height; }
+const int Drawing::getWidth() const { return this->width; }
 const std::vector<std::vector<std::string>> Drawing::getDrawingArray() const { return this->drawingArray; }
