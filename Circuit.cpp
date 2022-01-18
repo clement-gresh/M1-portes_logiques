@@ -36,8 +36,7 @@ void Circuit::simulateCircuit() {
 		s1 = s1 + "\" (0 / 1) : ";
 		std::string newValue = parser::userInput(s1, std::regex{ "^[01]$" } );
 
-		if (newValue.compare("0") == 0) { inputGate->setValue(0); } // debug : to check
-		else { inputGate->setValue(1); }
+		inputGate->setValue( (newValue.compare("0") == 0) ? 0 : 1 );
 		std::cout << inputGate->getName() << " : " << inputGate->getValue() << std::endl << std::endl;
 
 		// Updating the drawing
@@ -49,8 +48,10 @@ void Circuit::simulateCircuit() {
 
 	// Updating the logical gates and adding them to the drawing
 	bool circuitCompleted = false;
+	unsigned int counter = 0;
 
 	while (!circuitCompleted) {
+		if (counter > this->getLogicalGates().size()) { throw std::invalid_argument{"Invalid list of logical gates : the program cannot end."}; }
 		circuitCompleted = true;
 
 		// Updating the logical gates for which the inputs are ready (i.e. intpus are either InputGate or updated LogicalGate)
@@ -69,7 +70,7 @@ void Circuit::simulateCircuit() {
 					// Updating the gate (its level, logical function and value)
 					logicalGate->updateGate();
 					logicalGate->setAlreadyUpdated(true);
-					std::cout << "---------------------------------------------------------" << std::endl << std::endl;
+					std::cout << "-----------------------------------------------------" << std::endl << std::endl;
 					std::cout << logicalGate;
 
 
@@ -86,6 +87,7 @@ void Circuit::simulateCircuit() {
 				}
 			}
 		}
+		counter = counter + 1;
 	}
 	// Updating the value of the outputs
 	std::cout << "-----------------------OUTPUTS-----------------------" << std::endl << std::endl;

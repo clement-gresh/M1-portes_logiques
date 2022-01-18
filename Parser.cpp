@@ -17,7 +17,6 @@ const std::vector<std::string> parser::gateNames{ "not", "and", "or" } ;
 const std::vector< std::vector <std::regex> > parser::regexList{ createRegexList() };
 const std::vector<std::string> parser::errorList{ createErrorMessages() };
 
-//debug : voir si le programme fonctionne sans ces 3 lignes
 std::vector<InputGate*> parser::inputGates{};
 std::vector<LogicalGate*> parser::logicalGates{};
 std::vector<OutputGate*> parser::outputGates{};

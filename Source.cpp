@@ -58,7 +58,12 @@ int main(int argc, char** argv)
 		circuit = new Circuit(inputGates, logicalGates, outputGates);
 	}
 
-	circuit->simulateCircuit();
+	try { circuit->simulateCircuit(); }
+	catch (const std::invalid_argument& e) {
+		std::cout << std::endl << "-----------------------------------------------------" << std::endl << std::endl;
+		std::cout << "!!! Exception thrown !!!" << std::endl << e.what() << std::endl;
+		std::cout << std::endl << "-----------------------------------------------------" << std::endl << std::endl;
+	}
 
 	return 0;
 }
