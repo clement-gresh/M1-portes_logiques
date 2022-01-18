@@ -1,7 +1,7 @@
 #ifndef IO_GATE
 #define IO_GATE
 
-#include "Gate.hpp"
+#include "../Gate.hpp"
 
 class IOGate : public Gate {
 protected:

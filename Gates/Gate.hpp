@@ -1,7 +1,7 @@
 #ifndef GATE
 #define GATE
 
-#include "Drawing.hpp"
+#include "../Circuit/Drawing.hpp"
 
 class Gate {
 protected:

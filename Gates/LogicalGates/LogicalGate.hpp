@@ -1,8 +1,8 @@
 #ifndef LOGICAL_GATE
 #define LOGICAL_GATE
 
-#include "Gate.hpp"
-#include "UpdateInterface.hpp"
+#include "../Gate.hpp"
+#include "../UpdateInterface.hpp"
 
 class LogicalGate : public Gate, public UpdateInterface {
 protected:

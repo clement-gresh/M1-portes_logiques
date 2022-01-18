@@ -1,9 +1,9 @@
 #ifndef PARSER
 #define PARSER
 
-#include "InputGate.hpp"
-#include "OutputGate.hpp"
-#include "AndGate.hpp"
+#include "../Gates/IOGates/InputGate.hpp"
+#include "../Gates/IOGates/OutputGate.hpp"
+#include "../Gates/LogicalGates/AndGate.hpp"
 #include "Circuit.hpp"
 
 #include <regex>

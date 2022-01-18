@@ -1,6 +1,6 @@
 #include "Drawing.hpp"
-#include "LogicalGate.hpp"
-#include "OutputGate.hpp"
+#include "../Gates/LogicalGates/LogicalGate.hpp"
+#include "../Gates/IOGates/OutputGate.hpp"
 
 
 // STATIC ATTRIBUTES

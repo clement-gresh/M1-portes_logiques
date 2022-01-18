@@ -102,8 +102,8 @@ void Circuit::simulateCircuit() {
 			&& std::find(this->getLogicalGates().begin(), this->getLogicalGates().end(), outputGate->getGate())
 			== this->getLogicalGates().end())
 		{
-			throw std::invalid_argument{ "Invalid list of gates. The program cannot end because the input of the following gate is not present : "
-				+ outputGate->getName() };
+			throw std::invalid_argument{ "Invalid list of gates. The program cannot end because the input of the following output gate is not present : "
+				+ std::string(1, outputGate->getName()) };
 		}
 		outputGate->updateGate();
 		this->drawing.findCoordinates(outputGate);

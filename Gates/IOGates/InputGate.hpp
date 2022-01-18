@@ -2,7 +2,7 @@
 #define INPUT_GATE
 
 #include "IOGate.hpp"
-#include "Drawing.hpp"
+#include "../../Circuit/Drawing.hpp"
 
 class InputGate : public IOGate {
 private:

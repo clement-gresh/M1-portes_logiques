@@ -2,8 +2,8 @@
 #define AND_GATE
 
 #include "LogicalGate.hpp"
-#include "UpdateInterface.hpp"
-#include "Drawing.hpp"
+#include "../UpdateInterface.hpp"
+#include "../../Circuit/Circuit.hpp"
 
 class AndGate : public LogicalGate {
 private:

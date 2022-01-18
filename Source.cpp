@@ -1,4 +1,4 @@
-#include "Circuit.hpp"
+#include "Circuit/Circuit.hpp"
 
 #include <regex>
 

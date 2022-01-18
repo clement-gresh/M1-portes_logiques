@@ -1,10 +1,10 @@
 #ifndef OUTPUT_GATE
 #define OUTPUT_GATE
 
-#include "Drawing.hpp"
+#include "../../Circuit/Drawing.hpp"
 #include "IOGate.hpp"
-#include "LogicalGate.hpp"
-#include "UpdateInterface.hpp"
+#include "../LogicalGates/LogicalGate.hpp"
+#include "../UpdateInterface.hpp"
 
 class OutputGate : public IOGate, UpdateInterface {
 private:
