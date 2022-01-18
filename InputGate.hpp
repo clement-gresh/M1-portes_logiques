@@ -9,8 +9,12 @@ private:
 	static const std::regex format;
 	static const char defaultName;
 
+	// CONSTRUCTORS
+	InputGate(const InputGate& clone);
+	InputGate(const InputGate* clone);
+	InputGate();
+
 public:
-    // CONSTRUCTORS
     InputGate(const char name);
 
 	// METHODS

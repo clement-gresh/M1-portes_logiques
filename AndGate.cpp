@@ -1,7 +1,13 @@
 #include "AndGate.hpp"
 
 // CONSTRUCTORS
+// private
+AndGate::AndGate() : LogicalGate{ std::vector<Gate*>{} } {}
+
+//public
 AndGate::AndGate(Gate* const a, Gate* const b) : LogicalGate{ {a, b} } {}
+AndGate::AndGate(const AndGate& clone) : AndGate{ clone.getGates().at(0), clone.getGates().at(1) } {}
+AndGate::AndGate(const AndGate* clone) : AndGate{ clone->getGates().at(0), clone->getGates().at(1) } {}
 
 
 // METHODS

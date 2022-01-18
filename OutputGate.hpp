@@ -12,8 +12,12 @@ private:
 	static const char defaultName;
 	Gate* const gate;
 
-public:
 	// CONSTRUCTORS
+	OutputGate(const OutputGate& clone);
+	OutputGate(const OutputGate* clone);
+	OutputGate();
+
+public:
 	OutputGate(const char name, Gate* const gate);
 
 	// METHODS

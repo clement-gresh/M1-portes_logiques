@@ -6,9 +6,14 @@
 #include "Drawing.hpp"
 
 class AndGate : public LogicalGate {
-public:
+private:
 	// CONSTRUCTORS
+	AndGate();
+
+public:
 	AndGate(Gate* const a, Gate* const b);
+	AndGate(const AndGate& clone);
+	AndGate(const AndGate* clone);
 
 	// METHODS
 	virtual void updateGate();

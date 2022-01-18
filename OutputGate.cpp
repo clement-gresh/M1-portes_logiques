@@ -7,6 +7,20 @@ const char OutputGate::defaultName{ 'Z' };
 
 
 // CONSTRUCTORS
+// private
+OutputGate::OutputGate(const OutputGate& clone) : IOGate{ clone.getName() }, gate{ clone.getGate() } {
+	std::cout << "Attention : construction d'une porte de sortie par COPIE (reference) !" << std::endl;
+}
+
+OutputGate::OutputGate(const OutputGate* clone) : IOGate{ clone->getName() }, gate{ clone->getGate() } {
+	std::cout << "Attention : construction d'une porte de sortie par COPIE (pointeur) !" << std::endl;
+}
+
+OutputGate::OutputGate() : IOGate{ ' ' }, gate{ nullptr } {
+	std::cout << "Attention : construction d'une porte de sortie par defaut !" << std::endl;
+}
+
+// public
 OutputGate::OutputGate(const char name, Gate* const gate) :
 	IOGate{ IOGate::checkNameFormating(name, OutputGate::format, OutputGate::defaultName) },
 	gate{ gate } {}

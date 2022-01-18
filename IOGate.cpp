@@ -1,6 +1,20 @@
 #include "IOGate.hpp"
 
 // CONSTRUCTORS
+// private
+IOGate::IOGate(const IOGate& clone) : Gate{}, name{ ' ' } {
+	std::cout << "Attention : construction d'une porte I/O par COPIE (reference) !" << std::endl;
+}
+
+IOGate::IOGate(const IOGate* clone) : Gate{}, name{ ' ' } {
+	std::cout << "Attention : construction d'une porte I/O par COPIE (pointeur) !" << std::endl;
+}
+
+IOGate::IOGate() : Gate{}, name{ ' ' } {
+	std::cout << "Attention : construction d'une porte I/O par defaut !" << std::endl;
+}
+
+// protected
 IOGate::IOGate(const char name) : Gate{}, name { name } {}
 
 // METHODS

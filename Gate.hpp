@@ -11,11 +11,13 @@ protected:
 	int gateColumn;
 	std::string logicalFunction;
 
+private:
 	// CONSTRUCTORS
-	Gate();
 	Gate(const Gate& clone);
 	Gate(const Gate* clone);
 
+protected:
+	Gate();
 
 	// ACCESSORS
 	void setValue(const bool value);

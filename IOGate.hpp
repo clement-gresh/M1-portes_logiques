@@ -7,10 +7,16 @@ class IOGate : public Gate {
 protected:
 	const char name;
 
-	// CONSTRUCTEURS
+private:
+	// CONSTRUCTORS
+	IOGate(const IOGate& clone);
+	IOGate(const IOGate* clone);
+	IOGate();
+
+protected:
 	IOGate(const char name);
 
-	// METHODES
+	// METHODS
 	static char checkNameFormating(const char name, const std::regex format, const char defaultName);
 
 public:

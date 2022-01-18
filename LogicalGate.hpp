@@ -8,9 +8,14 @@ class LogicalGate : public Gate, public UpdateInterface {
 protected:
 	const std::vector<Gate*> gates;
 
+private:
 	// CONSTRUCTORS
-	LogicalGate(const std::vector<Gate*> gates);
+	LogicalGate(const LogicalGate& clone);
+	LogicalGate(const LogicalGate* clone);
+	LogicalGate();
 
+protected:
+	LogicalGate(const std::vector<Gate*> gates);
 
 public:
 	// METHODS

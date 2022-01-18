@@ -2,6 +2,20 @@
 
 
 // CONSTRUCTORS
+// private
+LogicalGate::LogicalGate(const LogicalGate& clone) : Gate{}, gates{ clone.getGates() } {
+	std::cout << "Attention : construction d'une porte logique par COPIE (reference) !" << std::endl;
+}
+
+LogicalGate::LogicalGate(const LogicalGate* clone) : Gate{}, gates{ clone->getGates() } {
+	std::cout << "Attention : construction d'une porte logique par COPIE (pointeur) !" << std::endl;
+}
+
+LogicalGate::LogicalGate() : Gate{}, gates{ std::vector<Gate*>{} } {
+	std::cout << "Attention : construction d'une porte logique par defaut !" << std::endl;
+}
+
+// protected
 LogicalGate::LogicalGate(const std::vector<Gate*> gates) : Gate{}, gates{ gates } {}
 
 // METHODS

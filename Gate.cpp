@@ -1,8 +1,7 @@
 #include "Gate.hpp"
 
 // CONSTRUCTEURS
-Gate::Gate() : value{ false }, alreadyUpdated{ false }, gateLine{ 0 }, gateColumn{ 0 }, logicalFunction{ "" } {}
-
+// private
 Gate::Gate(const Gate& clone) : Gate{} {
 	std::cout << "Attention : construction d'une porte par COPIE (reference) !" << std::endl;
 }
@@ -11,9 +10,13 @@ Gate::Gate(const Gate* clone) : Gate{} {
 	std::cout << "Attention : construction d'une porte par COPIE (pointeur) !" << std::endl;
 }
 
+// protected
+Gate::Gate() : value{ false }, alreadyUpdated{ false }, gateLine{ 0 }, gateColumn{ 0 }, logicalFunction{ "" } {}
+
+
 
 // ACCESSEURS
-// private
+// protected
 void Gate::setValue(const bool value) { this->value = value; }
 void Gate::setLogicalFunction(const std::string function) { this->logicalFunction = function; }
 
