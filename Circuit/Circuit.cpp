@@ -55,7 +55,9 @@ void Circuit::simulateCircuit() {
 	unsigned int counter = 0;
 
 	while (!circuitCompleted) {
-		if (counter > this->getLogicalGates().size()) { throw std::invalid_argument{"Invalid list of logical gates : the program cannot end."}; }
+		if (counter > this->getLogicalGates().size()) {
+			throw std::invalid_argument{"Invalid list of logical gates : the program cannot end."};
+		}
 		circuitCompleted = true;
 
 		// Updating the logical gates for which the inputs are ready (i.e. intpus are either InputGate or updated LogicalGate)
@@ -71,23 +73,22 @@ void Circuit::simulateCircuit() {
 				}
 
 				if (canBeUpdated) {
+					std::cout << "-----------------------------------------------------" << std::endl << std::endl;
+					// Press enter to continue
+					std::cout << "Press enter to update the next gate.";
+					std::cin.ignore(1000, '\n');
+					std::cout << std::endl;
+
 					// Updating the gate (its level, logical function and value)
 					logicalGate->updateGate();
 					logicalGate->setAlreadyUpdated(true);
-					std::cout << "-----------------------------------------------------" << std::endl << std::endl;
 					std::cout << logicalGate;
-
 
 					// Updating the drawing
 					this->drawing.findCoordinates(logicalGate);
 					logicalGate->drawGate(this->drawing);
 					this->drawing.addWire(logicalGate);
 					this->drawing.print();
-
-					// Press enter to continue
-					std::cout << "Press enter to update the next gate.";
-					std::cin.ignore(1000, '\n');
-					std::cout << std::endl;
 				}
 			}
 		}
@@ -95,6 +96,10 @@ void Circuit::simulateCircuit() {
 	}
 	// Updating the value of the outputs
 	std::cout << "-----------------------OUTPUTS-----------------------" << std::endl << std::endl;
+	// Press enter to continue
+	std::cout << "Press enter to update the outputs.";
+	std::cin.ignore(1000, '\n');
+	std::cout << std::endl;
 
 	for (OutputGate* outputGate : this->getOutputGates()) {
 		if (std::find(this->getInputGates().begin(), this->getInputGates().end(), outputGate->getGate())

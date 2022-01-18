@@ -6,6 +6,10 @@
 #include "../Gates/LogicalGates/NotGate.hpp"
 #include "../Gates/LogicalGates/AndGate.hpp"
 #include "../Gates/LogicalGates/OrGate.hpp"
+#include "../Gates/LogicalGates/XorGate.hpp"
+#include "../Gates/LogicalGates/NorGate.hpp"
+#include "../Gates/LogicalGates/NandGate.hpp"
+#include "../Gates/LogicalGates/NxorGate.hpp"
 #include "Circuit.hpp"
 
 #include <regex>

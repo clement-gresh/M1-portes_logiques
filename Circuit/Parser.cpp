@@ -13,7 +13,7 @@ const int parser::PARAMETER_NUMBER{ 6 };
 
 const int parser::GATE_NOT{ 0 };
 
-const std::vector<std::string> parser::gateNames{ "not", "and", "or" } ;
+const std::vector<std::string> parser::gateNames{ "not", "and", "or", "xor", "nor", "nand", "nxor"};
 const std::vector< std::vector <std::regex> > parser::regexList{ createRegexList() };
 const std::vector<std::string> parser::errorList{ createErrorMessages() };
 
@@ -276,6 +276,18 @@ Gate* const parser::createGate(const int gateType, std::vector<Gate*> const gate
 		break;
 	case 2:
 		lg = new OrGate(gates.at(0), gates.at(1));
+		break;
+	case 3:
+		lg = new XorGate(gates.at(0), gates.at(1));
+		break;
+	case 4:
+		lg = new NorGate(gates.at(0), gates.at(1));
+		break;
+	case 5:
+		lg = new NandGate(gates.at(0), gates.at(1));
+		break;
+	case 6:
+		lg = new NxorGate(gates.at(0), gates.at(1));
 		break;
 	}
 	logicalGates.push_back(lg);
