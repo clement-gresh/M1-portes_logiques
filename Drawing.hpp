@@ -10,16 +10,20 @@ class LogicalGate;
 class Gate;
 
 class Drawing{
+	friend class Circuit;
+
 private:
 	static const int GATE_HEIGHT;
 	static const int GATE_WIDTH; // Has to be an even number
-	int inputNumber;
+	const int inputNumber;
 	int height;
 	int width;
 	std::vector <std::vector <std::string>> drawingArray;
 
-public:
 	// CONSTRUCTORS
+	Drawing(const Drawing& clone);
+	Drawing(const Drawing* clone);
+	Drawing();
 	Drawing(int const inputNumber);
 
 	// METHODS
@@ -31,6 +35,8 @@ public:
 	void addWire(OutputGate* const lg);
 	void drawVLine(int column, int lineBegin, int lineEnd);
 	void drawHLine(int line, int columnBegin, int columnEnd);
+
+public:
 	void draw(int line, int column, std::string s);
 	void print();
 

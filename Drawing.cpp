@@ -7,9 +7,24 @@
 const int Drawing::GATE_HEIGHT{ 9 };
 const int Drawing::GATE_WIDTH{ 12 };
 
-// CONSTRUCTOR
-Drawing::Drawing(int const inputNumber) : inputNumber{inputNumber}, height { inputNumber }, width{ 1 },
-					 drawingArray{ std::vector <std::vector <std::string>>(inputNumber, std::vector <std::string>(GATE_WIDTH, " "))} {}
+// CONSTRUCTORS
+Drawing::Drawing(const Drawing& clone) : inputNumber{ clone.getInputNumber() }, height{ clone.getHeight() },
+					width{ clone.getWidth() }, drawingArray{ clone.getDrawingArray() } {
+	std::cout << "Attention : construction d'un dessin par COPIE (reference) !" << std::endl;
+}
+
+Drawing::Drawing(const Drawing* clone) : inputNumber{ clone->getInputNumber() }, height{ clone->getHeight() },
+					width{ clone->getWidth() }, drawingArray{ clone->getDrawingArray() } {
+	std::cout << "Attention : construction d'un dessin par COPIE (pointeur) !" << std::endl;
+}
+
+Drawing::Drawing() : inputNumber{ 0 }, height{ 0 }, width{ 0 }, drawingArray{ std::vector <std::vector <std::string>>() } {
+	std::cout << "Attention : construction d'un dessin par defaut !" << std::endl;
+}
+
+Drawing::Drawing(int const inputNumber) : inputNumber{ inputNumber }, height{ inputNumber }, width{ 1 },
+		drawingArray{ std::vector <std::vector <std::string>>(inputNumber, std::vector <std::string>(GATE_WIDTH, " ")) } {}
+
 
 // METHODS
 // Adds a certain number of lines to the drawing

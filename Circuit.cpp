@@ -1,6 +1,16 @@
 #include "Circuit.hpp"
 
 // CONSTRUCTORS
+// private
+Circuit::Circuit() : inputGates{ std::vector<InputGate*>() }, logicalGates{ std::vector<LogicalGate*>() },
+					outputGates{ std::vector<OutputGate*>() }, drawing{ 0 }{
+	std::cout << "Attention : construction d'un circuit par defaut !" << std::endl;
+}
+
+// public
+Circuit::Circuit(const Circuit& clone) : Circuit{ clone.getInputGates(), clone.getLogicalGates(), clone.getOutputGates() } {}
+Circuit::Circuit(const Circuit* clone) : Circuit{ clone->getInputGates(), clone->getLogicalGates(), clone->getOutputGates() } {}
+
 Circuit::Circuit(const std::vector<InputGate*>& inputGates, const std::vector<LogicalGate*>& logicalGates,
 				 const std::vector<OutputGate*>& outputGates)
 	: inputGates{ inputGates }, logicalGates{ logicalGates }, outputGates{ outputGates }, drawing{ inputGates.size() } {}
@@ -10,12 +20,6 @@ Circuit::~Circuit(){
 	for (InputGate* ig : this->inputGates) { delete ig; }
 	for (LogicalGate* lg : this->logicalGates) { delete lg; }
 	for (OutputGate* og : this->outputGates) { delete og; }
-	this->inputGates.clear();
-	this->logicalGates.clear();
-	this->outputGates.clear();
-	std::vector<InputGate*>().swap(this->inputGates);
-	std::vector<LogicalGate*>().swap(this->logicalGates);
-	std::vector<OutputGate*>().swap(this->outputGates);
 }
 
 // METHODS

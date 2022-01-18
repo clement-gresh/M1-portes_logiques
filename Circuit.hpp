@@ -9,14 +9,17 @@
 
 class Circuit{
 private:
-	std::vector<InputGate*> inputGates;
-	std::vector<LogicalGate*> logicalGates;
-	std::vector<OutputGate*> outputGates;
+	const std::vector<InputGate*> inputGates;
+	const std::vector<LogicalGate*> logicalGates;
+	const std::vector<OutputGate*> outputGates;
     Drawing drawing;
 
+    //CONSTRUCTORS
+    Circuit();
 
 public:
-    // CONSTRUCTORS
+    Circuit(const Circuit& clone);
+    Circuit(const Circuit* clone);
     Circuit(const std::vector<InputGate*>& inputGates, const std::vector<LogicalGate*>& logicalGates,
             const std::vector<OutputGate*>& outputGates);
 
