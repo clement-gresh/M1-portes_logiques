@@ -31,7 +31,7 @@ const std::vector< std::vector <std::regex> > parser::createRegexList() {
 	regexListReturn.push_back({ std::regex{ "^(\\s)*=(\\s)*" } });				// Equal sign
 
 	std::vector <std::regex> temp;
-	for (std::string gateName : gateNames) { temp.push_back(std::regex{ "^(\\s)*" + gateName + "(\\s)*" }); }		// Possible logical gate names
+	for (const std::string gateName : gateNames) { temp.push_back(std::regex{ "^(\\s)*" + gateName + "(\\s)*" }); }		// Possible logical gate names
 	regexListReturn.push_back(temp);
 
 	regexListReturn.push_back({ std::regex{ "^(\\s)*\\((\\s)*" } });			// Opening parenthesis
@@ -51,7 +51,7 @@ const std::vector<std::string> parser::createErrorMessages() {
 	expressionErrorsReturn.push_back("Expecting the sign equal '=' after the name of the output (a single capital letter).");
 
 	std::string gateNameError{ "Expecting the name of an input (a single lower case letter) or a logical door : " };
-	for (std::string gateName : gateNames) { gateNameError.append(gateName + " "); }
+	for (const std::string gateName : gateNames) { gateNameError.append(gateName + " "); }
 	expressionErrorsReturn.push_back(gateNameError);
 
 	expressionErrorsReturn.push_back("Expecting an opening parenthesis '(' before the parameter(s) of a logical gate.");

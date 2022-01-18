@@ -10,7 +10,7 @@ std::string const LogicalGate::logicalFunction(std::string const door) {
 	std::string function = door + "(";
 	int gateNumber = 0;
 
-	for (Gate* gate : this->getGates()) {
+	for (const Gate* gate : this->getGates()) {
 		if (gateNumber == 0) { function.append(gate->getLogicalFunction()); }
 		else { function.append(", ").append(gate->getLogicalFunction()); }
 		gateNumber = gateNumber + 1;

@@ -17,7 +17,8 @@ private:
 
 public:
     // CONSTRUCTORS
-    Circuit(std::vector<InputGate*>& inputGates, std::vector<LogicalGate*>& logicalGates, std::vector<OutputGate*>& outputGates);
+    Circuit(const std::vector<InputGate*>& inputGates, const std::vector<LogicalGate*>& logicalGates,
+            const std::vector<OutputGate*>& outputGates);
 
     // DESTRUCTOR
     virtual ~Circuit();

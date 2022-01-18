@@ -12,7 +12,6 @@ private:
 	static const char defaultName;
 	Gate* const gate;
 
-
 public:
 	// CONSTRUCTORS
 	OutputGate(const char name, Gate* const gate);

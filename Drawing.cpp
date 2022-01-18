@@ -38,7 +38,7 @@ void Drawing::addColumn(int nbr) {
 void Drawing::findCoordinates(LogicalGate* const lg){
 	// Line
 	int max = this->inputNumber - 1;
-	for (Gate* gate : lg->getGates()) {
+	for (const Gate* gate : lg->getGates()) {
 		if (gate->getGateLine() > max)
 			max = gate->getGateLine();
 	}
@@ -94,8 +94,6 @@ void Drawing::findCoordinates(OutputGate* const og){
 
 	// Line
 	int line = og->getGate()->getGateLine();
-	std::cout << "Drawing line / column : " << this->height << ", " << this->width << std::endl;
-	std::cout << "line debut : " << line << std::endl; // debug
 
 	if (line < this->inputNumber) {
 		line = this->inputNumber + GATE_HEIGHT - 2;
@@ -106,12 +104,6 @@ void Drawing::findCoordinates(OutputGate* const og){
 		og->setGateLine(line);
 	}
 	if (line + 2 > this->height) { this->addLine(GATE_HEIGHT); }
-
-	//debug
-	std::cout << "line fin : " << line << std::endl;
-	std::cout << "Drawing line / column : " << this->height << ", " <<  this->width <<  std::endl;
-	std::cout << "OutputGate line / column : " << og->getGateLine() << ", " << og->getGateColumn() << std::endl;
-	//fin debug
 }
 
 // Adds the "wires" between the logical gate and its input(s)
@@ -120,7 +112,7 @@ void Drawing::addWire(LogicalGate* const lg){
 	int gateNumber = 1;
 	int arrivalLine = lg->getGateLine() - 1;
 
-	for (Gate* gate : lg->getGates()) {
+	for (const Gate* gate : lg->getGates()) {
 		int arrivalColumn = lg->getGateColumn() + offsetC;
 		int column = gate->getGateColumn();
 		int line = gate->getGateLine();
@@ -210,8 +202,8 @@ void Drawing::draw(int line, int column, std::string s){
 // Prints the current drawing on the screen
 void Drawing::print(){
 	std::cout << std::endl ;
-	for (std::vector<std::string> line : this->drawingArray) {
-		for (std::string column : line) {
+	for (const std::vector<std::string> line : this->drawingArray) {
+		for (const std::string column : line) {
 			std::cout << column;
 		}
 		std::cout << std::endl;

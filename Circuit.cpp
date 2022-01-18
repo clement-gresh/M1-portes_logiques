@@ -1,8 +1,8 @@
 #include "Circuit.hpp"
 
 // CONSTRUCTORS
-Circuit::Circuit(std::vector<InputGate*>& inputGates, std::vector<LogicalGate*>& logicalGates,
-				 std::vector<OutputGate*>& outputGates)
+Circuit::Circuit(const std::vector<InputGate*>& inputGates, const std::vector<LogicalGate*>& logicalGates,
+				 const std::vector<OutputGate*>& outputGates)
 	: inputGates{ inputGates }, logicalGates{ logicalGates }, outputGates{ outputGates }, drawing{ inputGates.size() } {}
 
 // DESTRUCTOR
@@ -27,6 +27,7 @@ void Circuit::simulateCircuit() {
 	}
 
 	// Assigning a value to each input and adding them to the drawing
+	std::cout << std::endl << "-----------------------INPUTS-----------------------" << std::endl << std::endl;
 	int line = 0;
 	for (InputGate* inputGate : this->getInputGates()) {
 		// Asking the user to set a value to the input
@@ -46,11 +47,6 @@ void Circuit::simulateCircuit() {
 		line = line + 1;
 	}
 
-	//debug
-	std::cout << "-----------------------INPUTS-----------------------" << std::endl << std::endl;
-	this->drawing.print();
-	//fin debug
-
 	// Updating the logical gates and adding them to the drawing
 	bool circuitCompleted = false;
 
@@ -62,7 +58,7 @@ void Circuit::simulateCircuit() {
 			if (!logicalGate->getAlreadyUpdated()) {
 				bool canBeUpdated = true;
 
-				for (Gate* input : logicalGate->getGates()) {
+				for (const Gate* input : logicalGate->getGates()) {
 					if (!input->getAlreadyUpdated()) {
 						canBeUpdated = false;
 						circuitCompleted = false;
@@ -91,8 +87,9 @@ void Circuit::simulateCircuit() {
 			}
 		}
 	}
-
 	// Updating the value of the outputs
+	std::cout << "-----------------------OUTPUTS-----------------------" << std::endl << std::endl;
+
 	for (OutputGate* outputGate : this->getOutputGates()) {
 		outputGate->updateGate();
 		this->drawing.findCoordinates(outputGate);
@@ -101,7 +98,6 @@ void Circuit::simulateCircuit() {
 		std::cout << outputGate;
 	}
 
-	std::cout << "-----------------------OUTPUTS-----------------------" << std::endl << std::endl;
 	this->drawing.print();
 
 	// Saving the circuit in a file
@@ -118,13 +114,15 @@ void Circuit::saveFile() {
 	std::ofstream output_file;
 	output_file.open(save + ".txt");
 
-	for (OutputGate* outputGate : this->getOutputGates()) { 
+	for (const OutputGate* outputGate : this->getOutputGates()) { 
 		output_file << outputGate->getLogicalFunction() << "\n";
 		output_file.flush();
 	}
+	output_file << std::endl << std::endl;
+	output_file.flush();
 
-	for (std::vector<std::string> line : this->drawing.getDrawingArray()) {
-		for (std::string column : line) {
+	for (const std::vector<std::string> line : this->drawing.getDrawingArray()) {
+		for (const std::string column : line) {
 			output_file << column;
 			output_file.flush();
 		}

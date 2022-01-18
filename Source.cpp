@@ -46,12 +46,13 @@ int main(int argc, char** argv)
 		AndGate* and4 = new AndGate(and1, and2);
 		AndGate* and5 = new AndGate(orr, and3);
 		AndGate* and6 = new AndGate(and4, and5);
-		OutputGate* A = new OutputGate('A', orr);
+		AndGate* and7 = new AndGate(and1, c);
+		OutputGate* A = new OutputGate('A', and7);
 		OutputGate* B = new OutputGate('d', and3);
 		OutputGate* C = new OutputGate('C', and6);
 
 		std::vector<InputGate*> inputGates = { a, b, c, d };
-		std::vector<LogicalGate*> logicalGates = { orr, and1, and2, and3, and4, and5, and6 };
+		std::vector<LogicalGate*> logicalGates = { orr, and1, and2, and3, and4, and5, and7, and6 };
 		std::vector<OutputGate*> outputGates = { A, B, C };
 
 		circuit = new Circuit(inputGates, logicalGates, outputGates);
