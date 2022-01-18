@@ -97,6 +97,14 @@ void Circuit::simulateCircuit() {
 	std::cout << "-----------------------OUTPUTS-----------------------" << std::endl << std::endl;
 
 	for (OutputGate* outputGate : this->getOutputGates()) {
+		if (std::find(this->getInputGates().begin(), this->getInputGates().end(), outputGate->getGate())
+			== this->getInputGates().end()
+			&& std::find(this->getLogicalGates().begin(), this->getLogicalGates().end(), outputGate->getGate())
+			== this->getLogicalGates().end())
+		{
+			throw std::invalid_argument{ "Invalid list of gates. The program cannot end because the input of the following gate is not present : "
+				+ outputGate->getName() };
+		}
 		outputGate->updateGate();
 		this->drawing.findCoordinates(outputGate);
 		outputGate->drawGate(this->drawing);
