@@ -45,20 +45,20 @@ int main(int argc, char** argv)
 			InputGate* b = new InputGate('w');
 			InputGate* c = new InputGate('c');
 			InputGate* d = new InputGate('F');
-			OrGate* orr = new OrGate(a, b);
-			XorGate* and1 = new XorGate(c, d);
-			NandGate* and2 = new NandGate(b, d);
-			NotGate* and3 = new NotGate(a);
-			NorGate* and4 = new NorGate(and1, and2);
-			NxorGate* and5 = new NxorGate(orr, and3);
-			AndGate* and6 = new AndGate(and4, and5);
-			AndGate* and7 = new AndGate(and1, c);
-			OutputGate* A = new OutputGate('A', and7);
-			OutputGate* B = new OutputGate('d', and3);
-			OutputGate* C = new OutputGate('C', and6);
+			OrGate* or1 = new OrGate(a, b);
+			XorGate* xor1 = new XorGate(c, d);
+			NandGate* nand1 = new NandGate(b, d);
+			NotGate* not1 = new NotGate(a);
+			NorGate* nor1 = new NorGate(xor1, nand1);
+			NxorGate* nxor1 = new NxorGate(or1, not1);
+			AndGate* and2 = new AndGate(nor1, nxor1);
+			XorGate* xor2 = new XorGate(xor1, c);
+			OutputGate* A = new OutputGate('A', xor2);
+			OutputGate* B = new OutputGate('d', not1);
+			OutputGate* C = new OutputGate('C', and2);
 
 			std::vector<InputGate*> inputGates = { a, b, c, d };
-			std::vector<LogicalGate*> logicalGates = { orr, and1, and2, and3, and4, and5, and7, and6 };
+			std::vector<LogicalGate*> logicalGates = { or1, xor1, nand1, not1, nor1, nxor1, xor2, and2 };
 			std::vector<OutputGate*> outputGates = { A, B, C };
 
 			circuit = new Circuit(inputGates, logicalGates, outputGates);
@@ -70,7 +70,6 @@ int main(int argc, char** argv)
 			std::cout << "!!! Exception thrown !!!" << std::endl << e.what() << std::endl;
 			std::cout << std::endl << "-----------------------------------------------------" << std::endl << std::endl;
 		}
-
 
 		// Asking the user if they want to simulate another circuit
 		std::string s2 = "Do you want to simulate another circuit ? Otherwise the program will be terminated. (y / n) ";
