@@ -3,9 +3,7 @@
 // CONSTRUCTORS
 // private
 Circuit::Circuit() : inputGates{ std::vector<InputGate*>() }, logicalGates{ std::vector<LogicalGate*>() },
-					outputGates{ std::vector<OutputGate*>() }, drawing{ 1 }{
-	std::cout << "Attention : construction d'un circuit par defaut !" << std::endl;
-}
+					outputGates{ std::vector<OutputGate*>() }, drawing{ 1 }{}
 
 // public
 Circuit::Circuit(const Circuit& clone) : Circuit{ clone.getInputGates(), clone.getLogicalGates(), clone.getOutputGates() } {}

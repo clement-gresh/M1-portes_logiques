@@ -8,17 +8,9 @@ const char OutputGate::defaultName{ 'Z' };
 
 // CONSTRUCTORS
 // private
-OutputGate::OutputGate(const OutputGate& clone) : IOGate{ clone.getName() }, gate{ clone.getGate() } {
-	std::cout << "Attention : construction d'une porte de sortie par COPIE (reference) !" << std::endl;
-}
-
-OutputGate::OutputGate(const OutputGate* clone) : IOGate{ clone->getName() }, gate{ clone->getGate() } {
-	std::cout << "Attention : construction d'une porte de sortie par COPIE (pointeur) !" << std::endl;
-}
-
-OutputGate::OutputGate() : IOGate{ ' ' }, gate{ nullptr } {
-	std::cout << "Attention : construction d'une porte de sortie par defaut !" << std::endl;
-}
+OutputGate::OutputGate(const OutputGate& clone) : IOGate{ clone.getName() }, gate{ clone.getGate() } {}
+OutputGate::OutputGate(const OutputGate* clone) : IOGate{ clone->getName() }, gate{ clone->getGate() } {}
+OutputGate::OutputGate() : IOGate{ ' ' }, gate{ nullptr } {}
 
 // public
 OutputGate::OutputGate(const char name, Gate* const gate) :
@@ -30,8 +22,8 @@ void OutputGate::updateGate() {
 	// Same value its input
 	this->setValue( this->getGate()->getValue() );
 	
-	// Same depth as its input (or at least 1)
-	this->setGateColumn( std::max(static_cast<int>(this->getGate()->getGateColumn()), 1) );
+	// Same column as its input (or at least 4)
+	this->setGateColumn( std::max(static_cast<int>(this->getGate()->getGateColumn()), 4) );
 
 	// One level above its input
 	unsigned int max = 0;

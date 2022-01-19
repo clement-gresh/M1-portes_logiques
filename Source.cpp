@@ -57,10 +57,11 @@ int main(int argc, char** argv)
 			OutputGate* A = new OutputGate('A', xor2);
 			OutputGate* B = new OutputGate('d', not1);
 			OutputGate* C = new OutputGate('C', and2);
+			OutputGate* G = new OutputGate('G', b);
 
 			std::vector<InputGate*> inputGates = { a, b, c, d };
 			std::vector<LogicalGate*> logicalGates = { or1, xor1, nand1, not1, nor1, nxor1, xor2, and2 };
-			std::vector<OutputGate*> outputGates = { A, B, C };
+			std::vector<OutputGate*> outputGates = { A, B, C, G };
 
 			circuit = new Circuit(inputGates, logicalGates, outputGates);
 		}

@@ -2,13 +2,8 @@
 
 // CONSTRUCTEURS
 // private
-Gate::Gate(const Gate& clone) : Gate{} {
-	std::cout << "Attention : construction d'une porte par COPIE (reference) !" << std::endl;
-}
-
-Gate::Gate(const Gate* clone) : Gate{} {
-	std::cout << "Attention : construction d'une porte par COPIE (pointeur) !" << std::endl;
-}
+Gate::Gate(const Gate& clone) : Gate{} {}
+Gate::Gate(const Gate* clone) : Gate{} {}
 
 // protected
 Gate::Gate() : value{ false }, alreadyUpdated{ false }, gateLine{ 0 }, gateColumn{ 0 }, logicalFunction{ "" } {}

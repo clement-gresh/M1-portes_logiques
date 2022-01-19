@@ -6,17 +6,9 @@ const char InputGate::defaultName{ 'z' };
 
 // CONSTRUCTORS
 // private
-InputGate::InputGate(const InputGate& clone) : IOGate{ clone.getName() } {
-	std::cout << "Attention : construction d'une porte d'entree par COPIE (reference) !" << std::endl;
-}
-
-InputGate::InputGate(const InputGate* clone) : IOGate{ clone->getName() } {
-	std::cout << "Attention : construction d'une porte d'entree par COPIE (pointeur) !" << std::endl;
-}
-
-InputGate::InputGate() : IOGate{ ' ' } {
-	std::cout << "Attention : construction d'une porte d'entree par defaut !" << std::endl;
-}
+InputGate::InputGate(const InputGate& clone) : IOGate{ clone.getName() } {}
+InputGate::InputGate(const InputGate* clone) : IOGate{ clone->getName() } {}
+InputGate::InputGate() : IOGate{ ' ' } {}
 
 // public
 InputGate::InputGate(const char name) :

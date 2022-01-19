@@ -9,18 +9,12 @@ const int Drawing::GATE_WIDTH{ 12 };
 
 // CONSTRUCTORS
 Drawing::Drawing(const Drawing& clone) : inputNumber{ clone.getInputNumber() }, height{ clone.getHeight() },
-					width{ clone.getWidth() }, drawingArray{ clone.getDrawingArray() } {
-	std::cout << "Attention : construction d'un dessin par COPIE (reference) !" << std::endl;
-}
+					width{ clone.getWidth() }, drawingArray{ clone.getDrawingArray() } {}
 
 Drawing::Drawing(const Drawing* clone) : inputNumber{ clone->getInputNumber() }, height{ clone->getHeight() },
-					width{ clone->getWidth() }, drawingArray{ clone->getDrawingArray() } {
-	std::cout << "Attention : construction d'un dessin par COPIE (pointeur) !" << std::endl;
-}
+					width{ clone->getWidth() }, drawingArray{ clone->getDrawingArray() } {}
 
-Drawing::Drawing() : inputNumber{ 0 }, height{ 0 }, width{ 0 }, drawingArray{ std::vector <std::vector <std::string>>() } {
-	std::cout << "Attention : construction d'un dessin par defaut !" << std::endl;
-}
+Drawing::Drawing() : inputNumber{ 0 }, height{ 0 }, width{ 0 }, drawingArray{ std::vector <std::vector <std::string>>() } {}
 
 Drawing::Drawing(const unsigned int inputNumber) : inputNumber{ inputNumber }, height{ inputNumber }, width{ 1 },
 		drawingArray{ std::vector <std::vector <std::string>>(inputNumber, std::vector <std::string>(GATE_WIDTH, " ")) } {}
@@ -102,8 +96,8 @@ void Drawing::findCoordinates(OutputGate* const og){
 	// Column
 	unsigned int column = og->getGate()->getGateColumn();
 	if (column == 0) {
-		og->setGateColumn(GATE_WIDTH - 5);
-		if (this->width < GATE_WIDTH) { this->addColumn(GATE_WIDTH); }
+		this->addColumn(GATE_WIDTH);
+		og->setGateColumn(this->width - 5);
 	}
 	else { og->setGateColumn(column); }
 
@@ -172,7 +166,7 @@ void Drawing::addWire(const OutputGate* const og){
 	unsigned int arrivalLine = og->getGateLine();
 	unsigned int arrivalColumn = og->getGateColumn();
 	unsigned int line = og->getGate()->getGateLine();
-	unsigned int column = og->getGateColumn();
+	unsigned int column = og->getGate()->getGateColumn();
 
 	// Starts with an horizontal line coming from the gate (if its an input)
 	if (line < this->inputNumber) {
