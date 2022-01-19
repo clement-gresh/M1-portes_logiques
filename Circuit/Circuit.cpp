@@ -31,7 +31,7 @@ void Circuit::simulateCircuit() {
 	}
 
 	// Assigning a value to each input and adding them to the drawing
-	std::cout << std::endl << "-----------------------INPUTS-----------------------" << std::endl << std::endl;
+	std::cout << std::endl << "----------------------------------INPUTS----------------------------------" << std::endl << std::endl;
 	int line = 0;
 	for (InputGate* inputGate : this->getInputGates()) {
 		// Asking the user to set a value to the input
@@ -73,7 +73,7 @@ void Circuit::simulateCircuit() {
 				}
 
 				if (canBeUpdated) {
-					std::cout << "-----------------------------------------------------" << std::endl << std::endl;
+					std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
 					// Press enter to continue
 					std::cout << "Press enter to update the next gate.";
 					std::cin.ignore(1000, '\n');
@@ -95,7 +95,7 @@ void Circuit::simulateCircuit() {
 		counter = counter + 1;
 	}
 	// Updating the value of the outputs
-	std::cout << "-----------------------OUTPUTS-----------------------" << std::endl << std::endl;
+	std::cout << "----------------------------------OUTPUTS----------------------------------" << std::endl << std::endl;
 	// Press enter to continue
 	std::cout << "Press enter to update the outputs.";
 	std::cin.ignore(1000, '\n');

@@ -5,7 +5,9 @@
 int main(int argc, char** argv)
 {
 	while (true) {
-		Circuit* circuit;
+	
+		std::cout << std::endl << std::endl << "-----------------------------------START-----------------------------------" << std::endl << std::endl;
+		Circuit* circuit; 
 
 		// Asking the user if they want to enter the logical expression of the circuit
 		std::string s = "Do you want to write down the logical expression of the circuit - e.g.  A = or(a, and(b, c))  ?\n";
