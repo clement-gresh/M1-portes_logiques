@@ -5,7 +5,6 @@
 int main(int argc, char** argv)
 {
 	while (true) {
-	
 		std::cout << std::endl << std::endl << "-----------------------------------START-----------------------------------" << std::endl << std::endl;
 		Circuit* circuit; 
 
