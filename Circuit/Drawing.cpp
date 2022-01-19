@@ -144,16 +144,16 @@ void Drawing::addWire(LogicalGate* const lg){
 		int columnDifference = arrivalColumn - column;
 		int lineDifference = arrivalLine - line;
 
+		// If the first input is an input gate or is on the right of the gate,
+		// then it gets connected to the right "entrance" of the gate
+		if (gateNumber == 1 && (columnDifference < 0 || line < this->inputNumber)) {
+			arrivalColumn = arrivalColumn + 2;
+			offsetC = -3;
+		}
+
 		if (columnDifference != 0) {
 			if (columnDifference > 0) { this->drawHLine(line, column + 1, arrivalColumn - 1); }
-			else {
-				// If the first input is on the right of the gate, then it gets connected to the right "entrance" of the gate
-				if (gateNumber == 1) {
-					arrivalColumn = arrivalColumn + 2;
-					offsetC = -3;
-				}
-				this->drawHLine(line, arrivalColumn + 1, column - 1);
-			}
+			else { this->drawHLine(line, arrivalColumn + 1, column - 1); }
 
 			this->draw(line, arrivalColumn, "*");
 			line = line + 1;

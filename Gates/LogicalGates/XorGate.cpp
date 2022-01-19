@@ -23,4 +23,4 @@ void XorGate::updateGate() {
 	);
 }
 
-void XorGate::drawGate(Drawing& d) { this->draw(d, "NOR", 1); }
+void XorGate::drawGate(Drawing& d) { this->draw(d, "XOR", 1); }

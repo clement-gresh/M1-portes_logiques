@@ -20,7 +20,7 @@ IOGate::IOGate(const char name) : Gate{}, name { name } {}
 // METHODS
 char IOGate::checkNameFormating(const char name, const std::regex format, const char defaultName) {
 	if (!std::regex_match(&name, format)) {
-		std::cout << "Attention : le nom \"" << name << "\" est invalide pour cette porte I/O. Nom donne a la porte : "
+		std::cout << "Warning : the name \"" << name << "\" is invalid for this I/O gate. Name given instead : "
 			<< defaultName << std::endl;
 		return defaultName;
 	}

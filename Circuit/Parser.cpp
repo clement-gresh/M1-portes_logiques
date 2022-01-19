@@ -48,17 +48,12 @@ const std::vector<std::string> parser::createErrorMessages() {
 
 	expressionErrorsReturn.push_back("Expression must start with the name of the output (a single capital letter).");
 	expressionErrorsReturn.push_back("Expecting the sign equal '=' after the name of the output (a single capital letter).");
-
-	std::string gateNameError{ "Expecting the name of an input (a single lower case letter) or a logical door : " };
-	for (const std::string gateName : gateNames) { gateNameError.append(gateName + " "); }
-	expressionErrorsReturn.push_back(gateNameError);
-
+	expressionErrorsReturn.push_back("Expecting the name of an input (a single lower case letter) or a logical gate.");
 	expressionErrorsReturn.push_back("Expecting an opening parenthesis '(' before the parameter(s) of a logical gate.");
 	expressionErrorsReturn.push_back("Expecting a closing parenthesis ')' after the parameter(s) of a logical gate.");
 	expressionErrorsReturn.push_back("Expecting the name of an input (a single lower case letter).");
 	expressionErrorsReturn.push_back("Incorrect number of parameters for this gate : expecting 1, two provided.");
 	expressionErrorsReturn.push_back("Incorrect number of parameters for this gate : expecting 2, only one provided.");
-
 	return expressionErrorsReturn;
 }
 
