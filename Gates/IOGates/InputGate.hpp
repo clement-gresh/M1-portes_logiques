@@ -4,7 +4,7 @@
 #include "IOGate.hpp"
 #include "../../Circuit/Drawing.hpp"
 
-class InputGate : public IOGate {
+class InputGate final : public IOGate {
 private:
 	static const std::regex format;
 	static const char defaultName;

@@ -3,7 +3,7 @@
 // CONSTRUCTORS
 // private
 Circuit::Circuit() : inputGates{ std::vector<InputGate*>() }, logicalGates{ std::vector<LogicalGate*>() },
-					outputGates{ std::vector<OutputGate*>() }, drawing{ 0 }{
+					outputGates{ std::vector<OutputGate*>() }, drawing{ 1 }{
 	std::cout << "Attention : construction d'un circuit par defaut !" << std::endl;
 }
 
@@ -13,7 +13,7 @@ Circuit::Circuit(const Circuit* clone) : Circuit{ clone->getInputGates(), clone-
 
 Circuit::Circuit(const std::vector<InputGate*>& inputGates, const std::vector<LogicalGate*>& logicalGates,
 				 const std::vector<OutputGate*>& outputGates)
-	: inputGates{ inputGates }, logicalGates{ logicalGates }, outputGates{ outputGates }, drawing{ inputGates.size() } {}
+	: inputGates{ inputGates }, logicalGates{ logicalGates }, outputGates{ outputGates }, drawing{ static_cast<unsigned int>(inputGates.size()) } {}
 
 // DESTRUCTOR
 Circuit::~Circuit(){

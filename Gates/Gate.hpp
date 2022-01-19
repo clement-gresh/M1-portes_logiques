@@ -7,8 +7,8 @@ class Gate {
 protected:
 	bool value;
 	bool alreadyUpdated;
-	int gateLine;
-	int gateColumn;
+	unsigned int gateLine;
+	unsigned int gateColumn;
 	std::string logicalFunction;
 
 private:
@@ -31,8 +31,8 @@ public:
 	// ACCESSORS
 	const bool getValue() const;
 	const bool getAlreadyUpdated() const;
-	const int getGateLine() const;
-	const int getGateColumn() const;
+	const unsigned int getGateLine() const;
+	const unsigned int getGateColumn() const;
 	const std::string getLogicalFunction() const;
 
 	void setAlreadyUpdated(const bool alreadyUpdated);

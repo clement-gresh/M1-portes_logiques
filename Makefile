@@ -3,7 +3,7 @@ CFLAGS= -Wall
 
 all : circuit
 
-circuit : Source.o Parser.o Circuit.o Drawing.o Gate.o UpdateInterface.o IOGate.o InputGate.o OutputGate.o LogicalGate.o AndGate.o NandGate.o NorGate.o NotGate.o NxorGate.o OrGate.o XorGate.o
+circuit : Source.o Parser.o Circuit.o Drawing.o Gate.o IOGate.o InputGate.o OutputGate.o LogicalGate.o AndGate.o NandGate.o NorGate.o NotGate.o NxorGate.o OrGate.o XorGate.o
 	$(CPP) $(CFLAGS) -o $@ $^
 
 
@@ -26,9 +26,6 @@ Drawing.o : ./Circuit/Drawing.cpp ./Circuit/Drawing.hpp
 Gate.o : ./Gates/Gate.cpp ./Gates/Gate.hpp
 	$(CPP) $(CFLAGS) -c $<
 	
-UpdateInterface.o : ./Gates/UpdateInterface.hpp
-	$(CPP) $(CFLAGS) -c $<
-
 
 # IOGate
 IOGate.o : ./Gates/IOGates/IOGate.cpp ./Gates/IOGates/IOGate.hpp
@@ -37,12 +34,12 @@ IOGate.o : ./Gates/IOGates/IOGate.cpp ./Gates/IOGates/IOGate.hpp
 InputGate.o : ./Gates/IOGates/InputGate.cpp ./Gates/IOGates/InputGate.hpp
 	$(CPP) $(CFLAGS) -c $<
 
-OutputGate.o : ./Gates/IOGates/OutputGate.cpp ./Gates/IOGates/OutputGate.hpp
+OutputGate.o : ./Gates/IOGates/OutputGate.cpp ./Gates/IOGates/OutputGate.hpp ./Gates/UpdateInterface.hpp
 	$(CPP) $(CFLAGS) -c $<
 
 
 # LogicalGate
-LogicalGate.o : ./Gates/LogicalGates/LogicalGate.cpp ./Gates/LogicalGates/LogicalGate.hpp
+LogicalGate.o : ./Gates/LogicalGates/LogicalGate.cpp ./Gates/LogicalGates/LogicalGate.hpp ./Gates/UpdateInterface.hpp
 	$(CPP) $(CFLAGS) -c $<
 
 AndGate.o : ./Gates/LogicalGates/AndGate.cpp ./Gates/LogicalGates/AndGate.hpp

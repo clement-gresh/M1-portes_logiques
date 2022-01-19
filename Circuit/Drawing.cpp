@@ -22,7 +22,7 @@ Drawing::Drawing() : inputNumber{ 0 }, height{ 0 }, width{ 0 }, drawingArray{ st
 	std::cout << "Attention : construction d'un dessin par defaut !" << std::endl;
 }
 
-Drawing::Drawing(int const inputNumber) : inputNumber{ inputNumber }, height{ inputNumber }, width{ 1 },
+Drawing::Drawing(const unsigned int inputNumber) : inputNumber{ inputNumber }, height{ inputNumber }, width{ 1 },
 		drawingArray{ std::vector <std::vector <std::string>>(inputNumber, std::vector <std::string>(GATE_WIDTH, " ")) } {}
 
 
@@ -33,7 +33,7 @@ void Drawing::addLine(int nbr){
 		this->height = this->height + 1;
 		this->drawingArray.push_back({" "});
 
-		for (int j = 1; j < this->width; j++) {
+		for (unsigned int j = 1; j < this->width; j++) {
 			this->drawingArray.at(this->height - 1).push_back(" ");
 		}
 	}
@@ -41,7 +41,7 @@ void Drawing::addLine(int nbr){
 
 // Adds a certain number of columns to the drawing
 void Drawing::addColumn(int nbr) {
-	for (int i = 0; i < this->height; i++) {
+	for (unsigned int i = 0; i < this->height; i++) {
 		for (int j = 0; j < nbr; j++) {
 			this->drawingArray.at(i).push_back(" ");
 		}
@@ -52,7 +52,7 @@ void Drawing::addColumn(int nbr) {
 // Finds the line and column of the logical gate (and adds lines and columns to the drawing if necessary)
 void Drawing::findCoordinates(LogicalGate* const lg){
 	// Line
-	int max = this->inputNumber - 1;
+	unsigned int max = this->inputNumber - 1;
 	for (const Gate* gate : lg->getGates()) {
 		if (gate->getGateLine() > max)
 			max = gate->getGateLine();
@@ -63,7 +63,7 @@ void Drawing::findCoordinates(LogicalGate* const lg){
 	// Column
 	// If one of the input gates is an input, adds a column to the drawing and puts the logical gate there
 	float average = 0;
-	int number = 0;
+	unsigned int number = 0;
 	for (Gate* gate : lg->getGates()) {
 		if (gate->getGateColumn() == 0) {
 			this->addColumn(GATE_WIDTH);
@@ -75,7 +75,7 @@ void Drawing::findCoordinates(LogicalGate* const lg){
 	}
 	// Else, the gate column is between the input gates (if no other gate is already there)
 	if (number == lg->getGates().size()) {
-		int column = static_cast<int>(average);
+		unsigned int column = static_cast<unsigned int>(average);
 		bool found = false;
 
 		while (!found) {
@@ -100,7 +100,7 @@ void Drawing::findCoordinates(LogicalGate* const lg){
 // Finds the line and column of the output gate (and adds lines and columns to the drawing if necessary)
 void Drawing::findCoordinates(OutputGate* const og){
 	// Column
-	int column = og->getGate()->getGateColumn();
+	unsigned int column = og->getGate()->getGateColumn();
 	if (column == 0) {
 		og->setGateColumn(GATE_WIDTH - 5);
 		if (this->width < GATE_WIDTH) { this->addColumn(GATE_WIDTH); }
@@ -108,7 +108,7 @@ void Drawing::findCoordinates(OutputGate* const og){
 	else { og->setGateColumn(column); }
 
 	// Line
-	int line = og->getGate()->getGateLine();
+	unsigned int line = og->getGate()->getGateLine();
 
 	if (line < this->inputNumber) {
 		line = this->inputNumber + GATE_HEIGHT - 2;
@@ -125,12 +125,12 @@ void Drawing::findCoordinates(OutputGate* const og){
 void Drawing::addWire(LogicalGate* const lg){
 	int offsetC = -1;
 	int gateNumber = 1;
-	int arrivalLine = lg->getGateLine() - 1;
+	unsigned int arrivalLine = lg->getGateLine() - 1;
 
 	for (const Gate* gate : lg->getGates()) {
-		int arrivalColumn = lg->getGateColumn() + offsetC;
-		int column = gate->getGateColumn();
-		int line = gate->getGateLine();
+		unsigned int arrivalColumn = lg->getGateColumn() + offsetC;
+		unsigned int column = gate->getGateColumn();
+		unsigned int line = gate->getGateLine();
 
 		// Starts with a vertical line coming from the gate (if its not an input)
 		if (line > this->inputNumber) {
@@ -142,7 +142,6 @@ void Drawing::addWire(LogicalGate* const lg){
 
 		// Then an horizontal line
 		int columnDifference = arrivalColumn - column;
-		int lineDifference = arrivalLine - line;
 
 		// If the first input is an input gate or is on the right of the gate,
 		// then it gets connected to the right "entrance" of the gate
@@ -170,10 +169,10 @@ void Drawing::addWire(LogicalGate* const lg){
 
 // Adds the "wires" between the ouptut gate and its input
 void Drawing::addWire(OutputGate* const og){
-	int arrivalLine = og->getGateLine();
-	int arrivalColumn = og->getGateColumn();
-	int line = og->getGate()->getGateLine();
-	int column = og->getGateColumn();
+	unsigned int arrivalLine = og->getGateLine();
+	unsigned int arrivalColumn = og->getGateColumn();
+	unsigned int line = og->getGate()->getGateLine();
+	unsigned int column = og->getGateColumn();
 
 	// Starts with an horizontal line coming from the gate (if its an input)
 	if (line < this->inputNumber) {
@@ -228,7 +227,7 @@ void Drawing::print(){
 
 
 // ACCESSORS
-const int Drawing::getInputNumber() const { return this->inputNumber; }
-const int Drawing::getHeight() const { return this->height; }
-const int Drawing::getWidth() const { return this->width; }
+const unsigned int Drawing::getInputNumber() const { return this->inputNumber; }
+const unsigned int Drawing::getHeight() const { return this->height; }
+const unsigned int Drawing::getWidth() const { return this->width; }
 const std::vector<std::vector<std::string>> Drawing::getDrawingArray() const { return this->drawingArray; }

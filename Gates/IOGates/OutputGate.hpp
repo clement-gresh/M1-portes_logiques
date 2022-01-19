@@ -6,7 +6,7 @@
 #include "../LogicalGates/LogicalGate.hpp"
 #include "../UpdateInterface.hpp"
 
-class OutputGate : public IOGate, UpdateInterface {
+class OutputGate final : public IOGate, UpdateInterface {
 private:
 	static const std::regex format;
 	static const char defaultName;
@@ -14,7 +14,7 @@ private:
 
 	// CONSTRUCTORS
 	OutputGate(const OutputGate& clone);
-	OutputGate(const OutputGate* clone);
+	OutputGate(const OutputGate* clone);	
 	OutputGate();
 
 public:

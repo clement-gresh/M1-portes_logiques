@@ -15,16 +15,16 @@ class Drawing{
 private:
 	static const int GATE_HEIGHT;
 	static const int GATE_WIDTH; // Has to be an even number
-	const int inputNumber;
-	int height;
-	int width;
+	const unsigned int inputNumber;
+	unsigned int height;
+	unsigned int width;
 	std::vector <std::vector <std::string>> drawingArray;
 
 	// CONSTRUCTORS
 	Drawing(const Drawing& clone);
 	Drawing(const Drawing* clone);
 	Drawing();
-	Drawing(int const inputNumber);
+	Drawing(const unsigned int inputNumber);
 
 	// METHODS
 	void addLine(int nbr);
@@ -41,9 +41,9 @@ public:
 	void print();
 
 	// ACCESSORS
-	const int getInputNumber() const;
-	const int getHeight() const;
-	const int getWidth() const;
+	const unsigned int getInputNumber() const;
+	const unsigned int getHeight() const;
+	const unsigned int getWidth() const;
 	const std::vector <std::vector <std::string>> getDrawingArray() const;
 };
 

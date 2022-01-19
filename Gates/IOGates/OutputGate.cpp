@@ -31,10 +31,10 @@ void OutputGate::updateGate() {
 	this->setValue( this->getGate()->getValue() );
 	
 	// Same depth as its input (or at least 1)
-	this->setGateColumn( std::max(this->getGate()->getGateColumn(), 1) );
+	this->setGateColumn( std::max(static_cast<int>(this->getGate()->getGateColumn()), 1) );
 
 	// One level above its input
-	int max = 0;
+	unsigned int max = 0;
 	if (gate->getGateLine() > max) { max = gate->getGateLine(); }
 	this->setGateLine(max + 1);
 

@@ -32,8 +32,8 @@ void Gate::draw(Drawing& d, const std::string s, const int offset){
 // public
 const bool Gate::getValue() const { return value; }
 const bool Gate::getAlreadyUpdated() const { return this->alreadyUpdated; }
-const int Gate::getGateLine() const { return this->gateLine; }
-const int Gate::getGateColumn() const { return this->gateColumn; }
+const unsigned int Gate::getGateLine() const { return this->gateLine; }
+const unsigned int Gate::getGateColumn() const { return this->gateColumn; }
 const std::string Gate::getLogicalFunction() const { return this->logicalFunction; }
 
 void Gate::setAlreadyUpdated(const bool alreadyUpdated) { this->alreadyUpdated = alreadyUpdated; }

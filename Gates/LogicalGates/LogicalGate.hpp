@@ -18,6 +18,9 @@ protected:
 	LogicalGate(const std::vector<Gate*> gates);
 
 public:
+	// DESTRUCTOR
+	virtual ~LogicalGate() = default;
+	
 	// METHODS
 	std::string const logicalFunction(std::string const door);
 
