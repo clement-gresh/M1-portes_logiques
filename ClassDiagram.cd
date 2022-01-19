@@ -31,6 +31,9 @@
   </Class>
   <Class Name="InputGate">
     <Position X="20.75" Y="4.25" Width="2" />
+    <Members>
+      <Method Name="drawGate" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAACIAAA=</HashCode>
       <FileName>Gates\IOGates\InputGate.hpp</FileName>
@@ -39,7 +42,9 @@
   <Class Name="OutputGate">
     <Position X="23.5" Y="4.25" Width="2.25" />
     <Members>
+      <Method Name="drawGate" Hidden="true" />
       <Method Name="getGate" Hidden="true" />
+      <Method Name="updateGate" Hidden="true" />
     </Members>
     <InheritanceLine Type="UpdateInterface" ManuallyRouted="true">
       <Path>
@@ -70,6 +75,10 @@
   </Class>
   <Class Name="AndGate">
     <Position X="15.75" Y="4.25" Width="2" />
+    <Members>
+      <Method Name="drawGate" Hidden="true" />
+      <Method Name="updateGate" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAJAAA=</HashCode>
       <FileName>Gates\LogicalGates\AndGate.hpp</FileName>
@@ -77,6 +86,10 @@
   </Class>
   <Class Name="NotGate">
     <Position X="13.25" Y="4.25" Width="2" />
+    <Members>
+      <Method Name="drawGate" Hidden="true" />
+      <Method Name="updateGate" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAEIAAA=</HashCode>
       <FileName>Gates\LogicalGates\NotGate.hpp</FileName>
@@ -113,6 +126,10 @@
   </Class>
   <Class Name="NandGate">
     <Position X="10.75" Y="4.25" Width="2" />
+    <Members>
+      <Method Name="drawGate" Hidden="true" />
+      <Method Name="updateGate" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AAAAAIAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
       <FileName>Gates\LogicalGates\NandGate.hpp</FileName>
@@ -120,6 +137,10 @@
   </Class>
   <Class Name="NorGate">
     <Position X="8.25" Y="4.25" Width="2" />
+    <Members>
+      <Method Name="drawGate" Hidden="true" />
+      <Method Name="updateGate" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAEIAAA=</HashCode>
       <FileName>Gates\LogicalGates\NorGate.hpp</FileName>
@@ -127,6 +148,10 @@
   </Class>
   <Class Name="NxorGate">
     <Position X="5.75" Y="4.25" Width="2" />
+    <Members>
+      <Method Name="drawGate" Hidden="true" />
+      <Method Name="updateGate" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAEAAAAAAAAAAAAIAAA=</HashCode>
       <FileName>Gates\LogicalGates\NxorGate.hpp</FileName>
@@ -134,6 +159,10 @@
   </Class>
   <Class Name="OrGate">
     <Position X="3.25" Y="4.25" Width="2" />
+    <Members>
+      <Method Name="drawGate" Hidden="true" />
+      <Method Name="updateGate" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAQAAAAAAAAIAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
       <FileName>Gates\LogicalGates\OrGate.hpp</FileName>
@@ -141,6 +170,10 @@
   </Class>
   <Class Name="XorGate">
     <Position X="0.75" Y="4.25" Width="2" />
+    <Members>
+      <Method Name="drawGate" Hidden="true" />
+      <Method Name="updateGate" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAABAAAAAAIAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
       <FileName>Gates\LogicalGates\XorGate.hpp</FileName>
