@@ -31,8 +31,8 @@ private:
 	void addColumn(int nbr);
 	void findCoordinates(LogicalGate* const lg);
 	void findCoordinates(OutputGate* const og);
-	void addWire(LogicalGate* const lg);
-	void addWire(OutputGate* const lg);
+	void addWire(const LogicalGate* const lg);
+	void addWire(const OutputGate* const lg);
 	void drawVLine(int column, int lineBegin, int lineEnd);
 	void drawHLine(int line, int columnBegin, int columnEnd);
 

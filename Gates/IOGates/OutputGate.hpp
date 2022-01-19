@@ -30,7 +30,7 @@ public:
 
 
 // operator OVERLOAD
-std::ostream& operator<<(std::ostream& out, OutputGate* const gate);
+std::ostream& operator<<(std::ostream& out, const OutputGate* gate);
 
 #endif
 

@@ -50,7 +50,7 @@ Gate* const OutputGate::getGate() const { return this->gate; }
 
 
 // operator OVERLOAD
-std::ostream& operator<<(std::ostream& out, OutputGate* const OutputGate) {
+std::ostream& operator<<(std::ostream& out, const OutputGate* OutputGate) {
 	out << "The value of the Output Gate \"" << OutputGate->getName() << "\"  is : " << OutputGate->getValue() << std::endl;
 	out << "Logical function : " << OutputGate->getLogicalFunction() << std::endl << std::endl;
 	return out;

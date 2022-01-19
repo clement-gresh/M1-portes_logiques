@@ -98,14 +98,15 @@
   <Class Name="Circuit">
     <Position X="18.25" Y="7.25" Width="2" />
     <Members>
+      <Field Name="drawing" Hidden="true" />
       <Method Name="getDrawing" Hidden="true" />
       <Method Name="getInputGates" Hidden="true" />
       <Method Name="getLogicalGates" Hidden="true" />
       <Method Name="getOutputGates" Hidden="true" />
+      <Field Name="inputGates" Hidden="true" />
+      <Field Name="logicalGates" Hidden="true" />
+      <Field Name="outputGates" Hidden="true" />
     </Members>
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-    </Compartments>
     <TypeIdentifier>
       <HashCode>gAAAAAAAIAAAAAAAAAAEAAAAAAAEACAAgIAEgCwAAAA=</HashCode>
       <FileName>Circuit\Circuit.hpp</FileName>

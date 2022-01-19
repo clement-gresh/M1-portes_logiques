@@ -122,7 +122,7 @@ void Drawing::findCoordinates(OutputGate* const og){
 }
 
 // Adds the "wires" between the logical gate and its input(s)
-void Drawing::addWire(LogicalGate* const lg){
+void Drawing::addWire(const LogicalGate* const lg){
 	int offsetC = -1;
 	int gateNumber = 1;
 	unsigned int arrivalLine = lg->getGateLine() - 1;
@@ -168,7 +168,7 @@ void Drawing::addWire(LogicalGate* const lg){
 
 
 // Adds the "wires" between the ouptut gate and its input
-void Drawing::addWire(OutputGate* const og){
+void Drawing::addWire(const OutputGate* const og){
 	unsigned int arrivalLine = og->getGateLine();
 	unsigned int arrivalColumn = og->getGateColumn();
 	unsigned int line = og->getGate()->getGateLine();
