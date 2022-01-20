@@ -35,6 +35,7 @@ private:
 	void addWire(const OutputGate* const lg);
 	void drawVLine(int column, int lineBegin, int lineEnd);
 	void drawHLine(int line, int columnBegin, int columnEnd);
+	void reinitialize();
 
 public:
 	void draw(int line, int column, std::string s);

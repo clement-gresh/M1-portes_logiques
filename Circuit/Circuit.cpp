@@ -24,6 +24,7 @@ Circuit::~Circuit(){
 // Updates all the gates composing the circuit and displays them on the screen
 void Circuit::simulateCircuit() {
 	// Reinitializing the circuit
+	this->drawing.reinitialize();
 	for (LogicalGate* gate : this->getLogicalGates()) {
 		gate->setAlreadyUpdated(false);
 	}

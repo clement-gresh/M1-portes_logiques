@@ -197,6 +197,12 @@ void Drawing::drawHLine(int line, int columnBegin, int columnEnd){
 	}
 }
 
+void Drawing::reinitialize(){
+	this->height = this->inputNumber;
+	this->width = 1;
+	this->drawingArray = std::vector <std::vector <std::string>>(this->inputNumber, std::vector <std::string>(GATE_WIDTH, " "));
+}
+
 // Draws a string on a specific cell
 void Drawing::draw(int line, int column, std::string s){ this->drawingArray.at(line).at(column) = s; }
 

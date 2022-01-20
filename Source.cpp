@@ -46,7 +46,7 @@ int main(int argc, char** argv)
 			InputGate* b = new InputGate('w');
 			InputGate* c = new InputGate('c');
 			InputGate* d = new InputGate('F');
-			InputGate* j = new InputGate('L');
+			InputGate* j = new InputGate('n');
 			OrGate* or1 = new OrGate(a, b);
 			XorGate* xor1 = new XorGate(c, d);
 			NandGate* nand1 = new NandGate(b, d);
@@ -68,15 +68,23 @@ int main(int argc, char** argv)
 			circuit = new Circuit(inputGates, logicalGates, outputGates);
 		}
 
-		try { circuit->simulateCircuit(); }
-		catch (const std::invalid_argument& e) {
-			std::cout << std::endl << "-----------------------------------------------------" << std::endl << std::endl;
-			std::cout << "!!! Exception thrown !!!" << std::endl << e.what() << std::endl;
-			std::cout << std::endl << "-----------------------------------------------------" << std::endl << std::endl;
+		std::string rerun = "y";
+
+		while (rerun.compare("y") == 0) {
+			try { circuit->simulateCircuit(); }
+			catch (const std::invalid_argument& e) {
+				std::cout << std::endl << "-----------------------------------------------------" << std::endl << std::endl;
+				std::cout << "!!! Exception thrown !!!" << std::endl << e.what() << std::endl;
+				std::cout << std::endl << "-----------------------------------------------------" << std::endl << std::endl;
+			}
+
+			// Asking the user if they want to rerun the same circuit
+			std::string s3 = "Do you want to re-run this circuit ? (y/n) ";
+			rerun = parser::userInput(s3, std::regex{ "^[yn]$" });
 		}
 
 		// Asking the user if they want to simulate another circuit
-		std::string s2 = "Do you want to simulate another circuit ? Otherwise the program will be terminated. (y / n) ";
+		std::string s2 = "Do you want to simulate another circuit ? Otherwise the program will be terminated. (y/n) ";
 		std::string exit = parser::userInput(s2, std::regex{ "^[yn]$" });
 		if (exit.compare("n") == 0) { return 0; }
 	}
