@@ -2,7 +2,6 @@
 
 using namespace parser;
 
-
 const int parser::OUTPUT_NAME{ 0 };
 const int parser::EQUAL_SIGN{ 1 };
 const int parser::GATE_NAME{ 2 };
@@ -25,7 +24,6 @@ std::vector<OutputGate*> parser::outputGates{};
 // Creating the list of regex used to check the expression
 const std::vector< std::vector <std::regex> > parser::createRegexList() {
 	std::vector< std::vector <std::regex> > regexListReturn;
-
 	regexListReturn.push_back({ std::regex{ "^[A-Z]" } });						// Output name
 	regexListReturn.push_back({ std::regex{ "^(\\s)*=(\\s)*" } });				// Equal sign
 
@@ -35,9 +33,7 @@ const std::vector< std::vector <std::regex> > parser::createRegexList() {
 
 	regexListReturn.push_back({ std::regex{ "^(\\s)*\\((\\s)*" } });			// Opening parenthesis
 	regexListReturn.push_back({ std::regex{ "(\\s)*\\)(\\s)*$" } });			// Closing parenthesis
-
 	regexListReturn.push_back({ std::regex{ "^(\\s)*[a-z](\\s)*$" } });			// Input name
-
 	return regexListReturn;
 }
 
@@ -45,7 +41,6 @@ const std::vector< std::vector <std::regex> > parser::createRegexList() {
 // Creating the list of error messages corresponding to the regex used to check the expression
 const std::vector<std::string> parser::createErrorMessages() {
 	std::vector<std::string> expressionErrorsReturn;
-
 	expressionErrorsReturn.push_back("Expression must start with the name of the output (a single capital letter).");
 	expressionErrorsReturn.push_back("Expecting the sign equal '=' after the name of the output (a single capital letter).");
 	expressionErrorsReturn.push_back("Expecting the name of an input (a single lower case letter) or a logical gate.");
@@ -72,12 +67,10 @@ const std::string parser::userInput(const std::string message, const std::regex 
 	}
 	std::cin.clear();
 	std::cin.ignore(1000, '\n');
-
 	return input;
 }
 
-
-
+// Checking that the expression matches the syntax of a logical function
 const bool parser::checkLogicalFunction(std::string expression) {
 
 	// Checking the number of opening and closing parenthesis
@@ -91,7 +84,6 @@ const bool parser::checkLogicalFunction(std::string expression) {
 		return false;
 	}
 
-
 	// Checking output name and the equal sign (e.g. "C = ..." )
 	for (unsigned int i = OUTPUT_NAME; i <= EQUAL_SIGN; i++) {
 		bool expressionIsCorrect = false;
@@ -100,19 +92,16 @@ const bool parser::checkLogicalFunction(std::string expression) {
 			expression = std::regex_replace(expression, regexList.at(i).at(0), "");
 			expressionIsCorrect = true;
 		}
-
 		if (!expressionIsCorrect) {
 			std::cout << expression << " --> " << errorList.at(i) << std::endl;
 			return false;
 		}
 	}
-
-
 	return parser::checkGateExpression(expression);
 }
 
 
-// Checking the name and parameters a logical gate / input (recursiv function)
+// Checking the name and parameters of a logical gate / input (recursive function)
 const bool parser::checkGateExpression(std::string expression) {
 
 	// If the expression is an input
@@ -185,7 +174,7 @@ Circuit* parser::createCircuit(std::string expression){
 	std::regex_search(expression, match, regexList.at(OUTPUT_NAME).at(0));
 	outputName = match[0];
 
-	// Removing the output gate name and the equal sign from the expression
+	// Removing the output gate name and the equal sign
 	expression = std::regex_replace(expression, regexList.at(OUTPUT_NAME).at(0), "");
 	expression = std::regex_replace(expression, regexList.at(EQUAL_SIGN).at(0), "");
 
@@ -195,12 +184,12 @@ Circuit* parser::createCircuit(std::string expression){
 	return new Circuit(inputGates, logicalGates, outputGates);
 }
 
+// Creating gates from the name and parameters of a logical gate / input (recursive function)
 Gate* const parser::nextGates(std::string expression) {
 	// If the expression matches an input
 	if (std::regex_search(expression, regexList.at(INPUT_NAME).at(0))) {
 		std::smatch match;
 		std::string inputName;
-
 		std::regex_search(expression, match, std::regex{ "[a-z]" }); // Look for the input name without any white space
 		inputName = match[0];
 
@@ -256,7 +245,7 @@ Gate* const parser::nextGates(std::string expression) {
 	return parser::createGate(gateType, gates);
 }
 
-
+// Creating a logical gate from its type and the list of its input(s)
 Gate* const parser::createGate(const int gateType, std::vector<Gate*> const gates) {
 	LogicalGate* lg;
 	switch (gateType) {

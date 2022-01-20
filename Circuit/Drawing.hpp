@@ -14,7 +14,7 @@ class Drawing{
 
 private:
 	static const int GATE_HEIGHT;
-	static const int GATE_WIDTH; // Has to be an even number
+	static const int GATE_WIDTH;
 	const unsigned int inputNumber;
 	unsigned int height;
 	unsigned int width;

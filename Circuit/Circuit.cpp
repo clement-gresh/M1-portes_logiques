@@ -25,18 +25,14 @@ Circuit::~Circuit(){
 void Circuit::simulateCircuit() {
 	// Reinitializing the circuit
 	this->drawing.reinitialize();
-	for (LogicalGate* gate : this->getLogicalGates()) {
-		gate->setAlreadyUpdated(false);
-	}
+	for (LogicalGate* gate : this->getLogicalGates()) { gate->setAlreadyUpdated(false); }
 
 	// Assigning a value to each input and adding them to the drawing
 	std::cout << std::endl << "----------------------------------INPUTS----------------------------------" << std::endl << std::endl;
 	int line = 0;
 	for (InputGate* inputGate : this->getInputGates()) {
 		// Asking the user to set a value to the input
-		std::string s1 = "Please enter the value of Gate \"";
-		s1.push_back(inputGate->getName());
-		s1 = s1 + "\" (0 / 1) : ";
+		std::string s1 = "Please enter the value of Gate \"" + std::string(1, inputGate->getName()) + "\" (0 / 1) : ";
 		std::string newValue = parser::userInput(s1, std::regex{ "^[01]$" } );
 
 		inputGate->setValue( (newValue.compare("0") == 0) ? 0 : 1 );
@@ -54,12 +50,13 @@ void Circuit::simulateCircuit() {
 	unsigned int counter = 0;
 
 	while (!circuitCompleted) {
+		// Checking that the circuit can end
 		if (counter > this->getLogicalGates().size()) {
 			throw std::invalid_argument{"Invalid list of logical gates : the program cannot end."};
 		}
 		circuitCompleted = true;
 
-		// Updating the logical gates for which the inputs are ready (i.e. intpus are either InputGate or updated LogicalGate)
+		// Updating the logical gates for which the inputs are ready (intpus are either InputGate or updated LogicalGate)
 		for (LogicalGate* logicalGate : this->getLogicalGates()) {
 			if (!logicalGate->getAlreadyUpdated()) {
 				bool canBeUpdated = true;
@@ -70,7 +67,6 @@ void Circuit::simulateCircuit() {
 						circuitCompleted = false;
 					}
 				}
-
 				if (canBeUpdated) {
 					std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
 					// Press enter to continue
@@ -78,7 +74,7 @@ void Circuit::simulateCircuit() {
 					std::cin.ignore(1000, '\n');
 					std::cout << std::endl;
 
-					// Updating the gate (its logical function and value)
+					// Updating the gate (its logical expression and value)
 					logicalGate->updateGate();
 					logicalGate->setAlreadyUpdated(true);
 					std::cout << logicalGate;
@@ -101,6 +97,7 @@ void Circuit::simulateCircuit() {
 	std::cout << std::endl;
 
 	for (OutputGate* outputGate : this->getOutputGates()) {
+		// Checking that the circuit can end
 		if (std::find(this->getInputGates().begin(), this->getInputGates().end(), outputGate->getGate())
 			== this->getInputGates().end()
 			&& std::find(this->getLogicalGates().begin(), this->getLogicalGates().end(), outputGate->getGate())
@@ -109,6 +106,7 @@ void Circuit::simulateCircuit() {
 			throw std::invalid_argument{ "Invalid list of gates. The program cannot end because the input of the following output gate is not present : "
 				+ std::string(1, outputGate->getName()) };
 		}
+		// Updating the gate and the drawing
 		outputGate->updateGate();
 		this->drawing.findCoordinates(outputGate);
 		outputGate->drawGate(this->drawing);
@@ -123,11 +121,10 @@ void Circuit::simulateCircuit() {
 	if (save.compare("y") == 0) { this->saveFile(); }
 }
 
+// Saves the logical expression of the outputs as well as the drawing in a file
 void Circuit::saveFile() {
-
 	std::string s = "Save as (enter the name of the file without the extension) : ";
 	std::string save = parser::userInput(s, std::regex{ "^[/.//_0-9a-zA-Z-]+$" });
-
 	std::ofstream output_file;
 	output_file.open(save + ".txt");
 
@@ -137,7 +134,6 @@ void Circuit::saveFile() {
 	}
 	output_file << std::endl << std::endl;
 	output_file.flush();
-
 	output_file << *this;
 	output_file.flush();
 	output_file.close();

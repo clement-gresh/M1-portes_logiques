@@ -12,8 +12,6 @@
 #include "../Gates/LogicalGates/NxorGate.hpp"
 #include "Circuit.hpp"
 
-#include <regex>
-
 class Circuit;
 
 namespace parser {

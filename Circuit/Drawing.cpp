@@ -2,7 +2,6 @@
 #include "../Gates/LogicalGates/LogicalGate.hpp"
 #include "../Gates/IOGates/OutputGate.hpp"
 
-
 // STATIC ATTRIBUTES
 const int Drawing::GATE_HEIGHT{ 9 };
 const int Drawing::GATE_WIDTH{ 12 };
@@ -18,7 +17,6 @@ Drawing::Drawing() : inputNumber{ 0 }, height{ 0 }, width{ 0 }, drawingArray{ st
 
 Drawing::Drawing(const unsigned int inputNumber) : inputNumber{ inputNumber }, height{ inputNumber }, width{ 1 },
 		drawingArray{ std::vector <std::vector <std::string>>(inputNumber, std::vector <std::string>(GATE_WIDTH, " ")) } {}
-
 
 // METHODS
 // Adds a certain number of lines to the drawing
@@ -48,8 +46,7 @@ void Drawing::findCoordinates(LogicalGate* const lg){
 	// Line
 	unsigned int max = this->inputNumber - 1;
 	for (const Gate* gate : lg->getGates()) {
-		if (gate->getGateLine() > max)
-			max = gate->getGateLine();
+		if (gate->getGateLine() > max) { max = gate->getGateLine(); }
 	}
 	if (max + GATE_HEIGHT > this->height) { this->addLine(GATE_HEIGHT); }
 	lg->setGateLine(max + GATE_HEIGHT);
@@ -103,7 +100,6 @@ void Drawing::findCoordinates(OutputGate* const og){
 
 	// Line
 	unsigned int line = og->getGate()->getGateLine();
-
 	if (line < this->inputNumber) { line = this->inputNumber + GATE_HEIGHT - 2; }
 	else{ line = line + GATE_HEIGHT - 2; }
 	og->setGateLine(line);
@@ -128,7 +124,6 @@ void Drawing::addWire(const LogicalGate* const lg){
 			line = line + offsetL + 2;
 			this->draw(line, column, "*");
 		}
-
 		// Then an horizontal line
 		int columnDifference = arrivalColumn - column;
 
@@ -138,7 +133,6 @@ void Drawing::addWire(const LogicalGate* const lg){
 			arrivalColumn = arrivalColumn + 2;
 			offsetC = -3;
 		}
-
 		if (columnDifference != 0) {
 			if (columnDifference > 0) { this->drawHLine(line, column + 1, arrivalColumn - 1); }
 			else { this->drawHLine(line, arrivalColumn + 1, column - 1); }
@@ -147,14 +141,11 @@ void Drawing::addWire(const LogicalGate* const lg){
 			line = line + 1;
 			gateNumber = gateNumber + 1;
 		}
-
 		// Then a vertical line
 		this->drawVLine(arrivalColumn, line, arrivalLine);
-
 		offsetC = offsetC + 2;
 	}	
 }
-
 
 // Adds the "wires" between the ouptut gate and its input
 void Drawing::addWire(const OutputGate* const og){
@@ -168,7 +159,6 @@ void Drawing::addWire(const OutputGate* const og){
 		this->drawHLine(line, column + 1, arrivalColumn - 1);
 		this->draw(line, arrivalColumn, "*");
 	}
-
 	// Then a vertical line
 	this->drawVLine(arrivalColumn, line + 1, arrivalLine - 1);
 }
@@ -197,6 +187,7 @@ void Drawing::drawHLine(int line, int columnBegin, int columnEnd){
 	}
 }
 
+// Reinitializes the attributes of the object (in particular, erazes the "drawing")
 void Drawing::reinitialize(){
 	this->height = this->inputNumber;
 	this->width = 1;

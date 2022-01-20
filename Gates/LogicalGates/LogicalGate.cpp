@@ -1,6 +1,5 @@
 #include "LogicalGate.hpp"
 
-
 // CONSTRUCTORS
 // private
 LogicalGate::LogicalGate(const LogicalGate& clone) : Gate{}, gates{ clone.getGates() } {}
@@ -11,7 +10,7 @@ LogicalGate::LogicalGate() : Gate{}, gates{ std::vector<Gate*>{} } {}
 LogicalGate::LogicalGate(const std::vector<Gate*> gates) : Gate{}, gates{ gates } {}
 
 // METHODS
-// Return the logical function corresponding to the gate
+// Returns the logical expression corresponding to the gate
 std::string const LogicalGate::logicalFunction(std::string const door) {
 	std::string function = door + "(";
 	int gateNumber = 0;
@@ -27,7 +26,6 @@ std::string const LogicalGate::logicalFunction(std::string const door) {
 
 // ACCESSORS
 const std::vector<Gate*> LogicalGate::getGates() const { return this->gates; }
-
 
 // Operator OVERLOAD
 std::ostream& operator<<(std::ostream& out, const LogicalGate* gate) {

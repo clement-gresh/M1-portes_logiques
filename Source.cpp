@@ -19,14 +19,11 @@ int main(int argc, char** argv)
 			while (!expressionIsCorrect) {
 				std::cout << "Enter the logical expression of the circuit (type 'exit' to load the default circuit)." << std::endl;
 				std::cout << "The gates that can be used are : ";
-				for (std::string s : parser::gateNames) {
-					std::cout << s << " ";
-				}
+				for (std::string s : parser::gateNames) { std::cout << s << " "; }
 				std::cout << std::endl;
+
 				std::getline(std::cin, input);
-
 				if (input.compare("exit") == 0) { break; }
-
 				expressionIsCorrect = parser::checkLogicalFunction(input);
 				std::cout << std::endl;
 			}
@@ -45,8 +42,7 @@ int main(int argc, char** argv)
 			InputGate* a = new InputGate('a');
 			InputGate* b = new InputGate('w');
 			InputGate* c = new InputGate('c');
-			InputGate* d = new InputGate('F');
-			InputGate* j = new InputGate('n');
+			InputGate* d = new InputGate('f');
 			OrGate* or1 = new OrGate(a, b);
 			XorGate* xor1 = new XorGate(c, d);
 			NandGate* nand1 = new NandGate(b, d);
@@ -56,10 +52,9 @@ int main(int argc, char** argv)
 			AndGate* and2 = new AndGate(nor1, nxor1);
 			XorGate* xor2 = new XorGate(xor1, c);
 			OutputGate* A = new OutputGate('A', xor2);
-			OutputGate* B = new OutputGate('d', not1);
+			OutputGate* B = new OutputGate('D', not1);
 			OutputGate* C = new OutputGate('C', and2);
 			OutputGate* G = new OutputGate('G', b);
-			OutputGate* K = new OutputGate('K', j);
 
 			std::vector<InputGate*> inputGates = { a, b, c, d };
 			std::vector<LogicalGate*> logicalGates = { or1, xor1, nand1, not1, nor1, nxor1, xor2, and2 };
@@ -68,8 +63,8 @@ int main(int argc, char** argv)
 			circuit = new Circuit(inputGates, logicalGates, outputGates);
 		}
 
+		// Lauching the simulation
 		std::string rerun = "y";
-
 		while (rerun.compare("y") == 0) {
 			try { circuit->simulateCircuit(); }
 			catch (const std::invalid_argument& e) {
@@ -78,7 +73,7 @@ int main(int argc, char** argv)
 				std::cout << std::endl << "-----------------------------------------------------" << std::endl << std::endl;
 			}
 
-			// Asking the user if they want to rerun the same circuit
+			// Asking the user if they want to re-run the same circuit
 			std::string s3 = "Do you want to re-run this circuit ? (y/n) ";
 			rerun = parser::userInput(s3, std::regex{ "^[yn]$" });
 		}
