@@ -95,36 +95,6 @@
       <FileName>Gates\LogicalGates\NotGate.hpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Circuit">
-    <Position X="18.25" Y="7.25" Width="2" />
-    <Members>
-      <Field Name="drawing" Hidden="true" />
-      <Method Name="getDrawing" Hidden="true" />
-      <Method Name="getInputGates" Hidden="true" />
-      <Method Name="getLogicalGates" Hidden="true" />
-      <Method Name="getOutputGates" Hidden="true" />
-      <Field Name="inputGates" Hidden="true" />
-      <Field Name="logicalGates" Hidden="true" />
-      <Field Name="outputGates" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>gAAAAAAAIAAAAAAAAAAEAAAAAAAEACAAgIAEgCwAAAA=</HashCode>
-      <FileName>Circuit\Circuit.hpp</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Drawing">
-    <Position X="18" Y="10.5" Width="2.5" />
-    <Members>
-      <Method Name="getDrawingArray" Hidden="true" />
-      <Method Name="getHeight" Hidden="true" />
-      <Method Name="getInputNumber" Hidden="true" />
-      <Method Name="getWidth" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>QAQwAAACAAAEAAQhQgIAgAAAAAAAQAACAAAAAIAIAAI=</HashCode>
-      <FileName>Circuit\Drawing.hpp</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="NandGate">
     <Position X="10.75" Y="4.25" Width="2" />
     <Members>

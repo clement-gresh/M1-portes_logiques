@@ -87,7 +87,6 @@ void Circuit::simulateCircuit() {
 					this->drawing.findCoordinates(logicalGate);
 					logicalGate->drawGate(this->drawing);
 					this->drawing.addWire(logicalGate);
-					//this->drawing.print(); debug
 					std::cout << *this;
 				}
 			}
@@ -116,8 +115,6 @@ void Circuit::simulateCircuit() {
 		this->drawing.addWire(outputGate);
 		std::cout << outputGate;
 	}
-
-	//this->drawing.print(); debug
 	std::cout << *this;
 
 	// Saving the circuit in a file
