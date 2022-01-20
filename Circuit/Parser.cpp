@@ -118,7 +118,6 @@ const bool parser::checkGateExpression(std::string expression) {
 	// If the expression is an input
 	if (std::regex_search(expression, regexList.at(INPUT_NAME).at(0))) { return true; }
 
-
 	// Else checking if the expression matches a logical gate
 	int gateType = -1;
 	bool expressionIsCorrect = false;
@@ -147,7 +146,6 @@ const bool parser::checkGateExpression(std::string expression) {
 			return false;
 		}
 	}
-
 
 	// Recursive calls on the parameter(s) of the logical gate + checking that the number of parameters matches the gate type
 	int parenthesis = 0;

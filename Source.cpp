@@ -46,6 +46,7 @@ int main(int argc, char** argv)
 			InputGate* b = new InputGate('w');
 			InputGate* c = new InputGate('c');
 			InputGate* d = new InputGate('F');
+			InputGate* j = new InputGate('L');
 			OrGate* or1 = new OrGate(a, b);
 			XorGate* xor1 = new XorGate(c, d);
 			NandGate* nand1 = new NandGate(b, d);
@@ -58,6 +59,7 @@ int main(int argc, char** argv)
 			OutputGate* B = new OutputGate('d', not1);
 			OutputGate* C = new OutputGate('C', and2);
 			OutputGate* G = new OutputGate('G', b);
+			OutputGate* K = new OutputGate('K', j);
 
 			std::vector<InputGate*> inputGates = { a, b, c, d };
 			std::vector<LogicalGate*> logicalGates = { or1, xor1, nand1, not1, nor1, nxor1, xor2, and2 };

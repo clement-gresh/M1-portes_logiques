@@ -19,7 +19,7 @@ OutputGate::OutputGate(const char name, Gate* const gate) :
 
 // METHODS
 void OutputGate::updateGate() {
-	// Same value its input
+	// Same value as its input
 	this->setValue( this->getGate()->getValue() );
 	
 	// Same column as its input (or at least 4)

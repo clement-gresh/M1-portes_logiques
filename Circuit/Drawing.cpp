@@ -55,7 +55,7 @@ void Drawing::findCoordinates(LogicalGate* const lg){
 	lg->setGateLine(max + GATE_HEIGHT);
 
 	// Column
-	// If one of the input gates is an input, adds a column to the drawing and puts the logical gate there
+	// If one of the inputs is an InputGate, adds a column to the drawing and puts the logical gate there
 	float average = 0;
 	unsigned int number = 0;
 	for (Gate* gate : lg->getGates()) {
@@ -67,13 +67,13 @@ void Drawing::findCoordinates(LogicalGate* const lg){
 		number = number + 1;
 		average = average + (gate->getGateColumn() - average) / number;
 	}
-	// Else, the gate column is between the input gates (if no other gate is already there)
+	// Else, the gate column is between its inputs (if no other gate is already there)
 	if (number == lg->getGates().size()) {
 		unsigned int column = static_cast<unsigned int>(average);
 		bool found = false;
 
 		while (!found) {
-			// Checking that 7 consecutive cells are empty
+			// Checking that 7 consecutive cells are empty (3 for the gate name + 2 for its value + 2 white spaces)
 			if (column + 5 > this->width) { this->addColumn(GATE_WIDTH); }
 
 			for (int i = -3; i < 4; i++) {
@@ -104,14 +104,9 @@ void Drawing::findCoordinates(OutputGate* const og){
 	// Line
 	unsigned int line = og->getGate()->getGateLine();
 
-	if (line < this->inputNumber) {
-		line = this->inputNumber + GATE_HEIGHT - 2;
-		og->setGateLine(line);
-	}
-	else{
-		line = line + GATE_HEIGHT - 2;
-		og->setGateLine(line);
-	}
+	if (line < this->inputNumber) { line = this->inputNumber + GATE_HEIGHT - 2; }
+	else{ line = line + GATE_HEIGHT - 2; }
+	og->setGateLine(line);
 	if (line + 2 > this->height) { this->addLine(GATE_HEIGHT); }
 }
 
@@ -202,10 +197,8 @@ void Drawing::drawHLine(int line, int columnBegin, int columnEnd){
 	}
 }
 
-// Draws a string on a specifi cell
-void Drawing::draw(int line, int column, std::string s){
-	this->drawingArray.at(line).at(column) = s;
-}
+// Draws a string on a specific cell
+void Drawing::draw(int line, int column, std::string s){ this->drawingArray.at(line).at(column) = s; }
 
 // Prints the current drawing on the screen
 void Drawing::print(){

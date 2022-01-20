@@ -77,7 +77,7 @@ void Circuit::simulateCircuit() {
 					std::cin.ignore(1000, '\n');
 					std::cout << std::endl;
 
-					// Updating the gate (its level, logical function and value)
+					// Updating the gate (its logical function and value)
 					logicalGate->updateGate();
 					logicalGate->setAlreadyUpdated(true);
 					std::cout << logicalGate;
