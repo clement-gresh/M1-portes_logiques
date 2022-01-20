@@ -87,7 +87,8 @@ void Circuit::simulateCircuit() {
 					this->drawing.findCoordinates(logicalGate);
 					logicalGate->drawGate(this->drawing);
 					this->drawing.addWire(logicalGate);
-					this->drawing.print();
+					//this->drawing.print(); debug
+					std::cout << *this;
 				}
 			}
 		}
@@ -116,7 +117,8 @@ void Circuit::simulateCircuit() {
 		std::cout << outputGate;
 	}
 
-	this->drawing.print();
+	//this->drawing.print(); debug
+	std::cout << *this;
 
 	// Saving the circuit in a file
 	std::string s = "Do you want to save this circuit in a file? (y/n) ";
@@ -139,14 +141,8 @@ void Circuit::saveFile() {
 	output_file << std::endl << std::endl;
 	output_file.flush();
 
-	for (const std::vector<std::string> line : this->drawing.getDrawingArray()) {
-		for (const std::string column : line) {
-			output_file << column;
-			output_file.flush();
-		}
-		output_file << std::endl;
-		output_file.flush();
-	}
+	output_file << *this;
+	output_file.flush();
 	output_file.close();
 }
 
@@ -155,3 +151,8 @@ const std::vector<InputGate*>& Circuit::getInputGates() const { return this->inp
 const std::vector<LogicalGate*>& Circuit::getLogicalGates() const { return this->logicalGates; }
 const std::vector<OutputGate*>& Circuit::getOutputGates() const { return this->outputGates; }
 const Drawing& Circuit::getDrawing() const { return this->drawing; }
+
+std::ostream& operator<<(std::ostream& out, const Circuit& circuit){
+	out << circuit.getDrawing();
+	return out;
+}

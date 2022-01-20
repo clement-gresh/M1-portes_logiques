@@ -39,7 +39,6 @@ private:
 
 public:
 	void draw(int line, int column, std::string s);
-	void print();
 
 	// ACCESSORS
 	const unsigned int getInputNumber() const;
@@ -47,6 +46,9 @@ public:
 	const unsigned int getWidth() const;
 	const std::vector <std::vector <std::string>> getDrawingArray() const;
 };
+
+// operator OVERLOAD
+std::ostream& operator<<(std::ostream& out, const Drawing& drawing);
 
 #endif
 

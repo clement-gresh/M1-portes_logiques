@@ -37,5 +37,7 @@ public:
     const Drawing& getDrawing() const;
 };
 
+// operator OVERLOAD
+std::ostream& operator<<(std::ostream& out, const Circuit& circuit);
 
 #endif

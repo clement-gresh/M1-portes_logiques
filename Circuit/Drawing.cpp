@@ -206,21 +206,21 @@ void Drawing::reinitialize(){
 // Draws a string on a specific cell
 void Drawing::draw(int line, int column, std::string s){ this->drawingArray.at(line).at(column) = s; }
 
-// Prints the current drawing on the screen
-void Drawing::print(){
-	std::cout << std::endl ;
-	for (const std::vector<std::string> line : this->drawingArray) {
-		for (const std::string column : line) {
-			std::cout << column;
-		}
-		std::cout << std::endl;
-	}
-	std::cout << std::endl << std::endl << std::endl;
-}
-
-
 // ACCESSORS
 const unsigned int Drawing::getInputNumber() const { return this->inputNumber; }
 const unsigned int Drawing::getHeight() const { return this->height; }
 const unsigned int Drawing::getWidth() const { return this->width; }
 const std::vector<std::vector<std::string>> Drawing::getDrawingArray() const { return this->drawingArray; }
+
+// operator OVERLOAD
+std::ostream& operator<<(std::ostream& out, const Drawing& drawing) {
+	out << std::endl;
+	for (const std::vector<std::string> line : drawing.getDrawingArray()) {
+		for (const std::string column : line) {
+			out << column;
+		}
+		out << std::endl;
+	}
+	out << std::endl << std::endl << std::endl;
+	return out;
+}
