@@ -1,5 +1,4 @@
 Clement Gresh
-clement.gresh@gmail.com
 Langage à Objet Avance, M1 IMPAIRS, Universite Paris 7 Diderot
 2021-2022
 
